@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+
+
+<div layout:fragment="content">
+    <form th:action="@{/member/memberJoinForm.html}" method="post">
+        <table width="800">
+            <tr height="40">
+                <td align="center"><b>[일반 회원 가입]</b></td>
+            </tr>
+        </table>
+        <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">회원 ID</td>
+                <td><input type="text" name="memberId"/>&nbsp;
+                    <a href="javascript:id_check()">[ID 중복 검사]</a></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">비밀번호</td>
+                <td><input type="password" name="password" id="pw"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">비밀번호 확인</td>
+                <td><input type="password" name="" id="pwCheck"/>&nbsp;&nbsp;<span
+                        id="same"></span></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">이 름</td>
+                <td><input type="text" name="name"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">성 별</td>
+                <td>
+                    남 성 &nbsp<input type="radio" name="gender" value="1" checked/>&nbsp
+                    여 성 &nbsp<input type="radio" name="gender" value="2"/>
+                </td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">생년월일</td>
+                <td><input type="tel" name=""/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">휴대전화</td>
+                <td><input type="tel" name="phone"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">이메일</td>
+                <td><input type="email" name="email"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td width="5%" align="center">*</td>
+                <td width="15%">주 소</td>
+                <td>
+                    <input type="text" size="10" name="addr" id="postcode" placeholder="우편번호"
+                           readonly="readonly">
+                    <input type="button" value="우편번호 찾기"><br><br/>
+                    <input type="text" size="30" name="wRoadAddress" id="roadAddress" placeholder="도로명주소"
+                           readonly="readonly">
+                    <input type="text" size="30" name="wJibunAddress" id="jibunAddress" placeholder="지번주소"
+                           readonly="readonly">
+                    <br/><span id="guide" style="color:#999;font-size:10px;"></span>
+                    <br/><br/><input type="text" name="wRestAddress" placeholder="나머지 주소" size="70"/>
+                </td>
+            </tr>
+
+        </table>
+        <br/>
+        <table>
+            <tr height="40">
+                <td>
+                    <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
+                    <button type="button" class="btn btn-success" onclick="location.href='/insert'">회원가입</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</html>
