@@ -1,4 +1,4 @@
-package com.example.fc.vo;
+package com.example.fc.member.memberVo;
 
 
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Vo_member {
+public class MemberVo {
 
     private String name;
     private String email;
@@ -18,6 +18,6 @@ public class Vo_member {
     private String gender;
     private String birth;
     private String role;
-    private String memberId;
+    private String member_id;
 
 }

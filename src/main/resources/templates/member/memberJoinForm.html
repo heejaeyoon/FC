@@ -6,7 +6,7 @@
 
 
 <div layout:fragment="content">
-    <form th:action="@{/member/memberJoinForm.html}" method="post">
+    <form action="/insert" method="post">
         <table width="800">
             <tr height="40">
                 <td align="center"><b>[일반 회원 가입]</b></td>
@@ -16,8 +16,8 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">회원 ID</td>
-                <td><input type="text" name="memberId"/>&nbsp;
-                    <a href="javascript:id_check()">[ID 중복 검사]</a></td>
+                <td><input type="text" name="member_id"/>&nbsp;
+                    <a>[ID 중복 검사]</a></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -59,8 +59,8 @@
                 <td width="5%" align="center">*</td>
                 <td width="15%">성 별</td>
                 <td>
-                    남 성 &nbsp<input type="radio" name="gender" value="1" checked/>&nbsp
-                    여 성 &nbsp<input type="radio" name="gender" value="2"/>
+                    남 성 &nbsp<input type="radio" name="gender" value="남자" checked/>&nbsp
+                    여 성 &nbsp<input type="radio" name="gender" value="여자"/>
                 </td>
             </tr>
             <tr height="7">
@@ -119,8 +119,9 @@
         <table>
             <tr height="40">
                 <td>
+                     <input type="hidden" name="role" value="일반"/>
                     <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
-                    <button type="button" class="btn btn-success" onclick="location.href='/insert'">회원가입</button>
+                    <button type="submit" class="btn btn-success">회원가입</button>
                 </td>
             </tr>
         </table>
