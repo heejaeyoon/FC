@@ -24,7 +24,7 @@ public class MemberService {
          memberDao.memberJoin(memberVo);
     }
 
-    public MemberVo Login(MemberVo memberVo){
+    public MemberVo memberLogin(MemberVo memberVo){
         return memberDao.memberLogin(memberVo);
     }
 }

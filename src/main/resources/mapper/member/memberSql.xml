@@ -26,9 +26,6 @@
 
     <!-- 로그인 -->
     <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
-        select name,addr,phone,gender,birth,role from member where email = #{email} and password = #{password};
+        select name,addr,phone,gender,birth,role,email from member where email = #{email} and password = #{password};
     </select>
-
-
-
 </mapper>
