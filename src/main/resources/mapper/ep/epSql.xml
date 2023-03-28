@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fc.ep.epDao.EpDao">
+
+    <!--
+    <resultMap id="map_vo_member" type="com.example.fc.vo.MemberVo">
+        <result column="member_id" property="member_id" jdbcType="NVARCHAR" javaType="String" />
+        <result column="name" property="name" jdbcType="NVARCHAR" javaType="String" />
+        <result column="password" property="password" jdbcType="NVARCHAR" javaType="String" />
+        <result column="email" property="email" jdbcType="NVARCHAR" javaType="String" />
+    </resultMap>
+    -->
+
+    <select id="epList" resultType="com.example.fc.ep.epVo.EpVO">
+        select * from ep_recruit;
+    </select>
+    
+    <!-- 기업 > 모집공고 Insert -->
+    <insert id="save" parameterType="com.example.fc.ep.epVo.EpVO">
+        INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day, addr, detail, ep_name, create_date, update_date)
+        VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{work_day}, #{addr}, #{detail}, #{ep_name}, now(), now() );
+    </insert>
+
+    <!-- 로그인 -->
+<!--    <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">-->
+<!--        select name,addr,phone,gender,birth,role from member where email = #{email} and password = #{password};-->
+<!--    </select>-->
+
+
+
+</mapper>

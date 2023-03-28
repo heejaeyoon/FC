@@ -14,5 +14,5 @@ public interface MemberDao {
     public int memberJoin(MemberVo memberVo);
 
     /* 로그인 */
-    public MemberVo memberLogin(MemberVo memberVo);
+    MemberVo memberLogin(MemberVo memberVo);
 }
