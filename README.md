@@ -2,7 +2,8 @@
 
 ####2023-03-24 
 ---
-FreelanceContact라는 주제 선정 후 ERD 1차설계 완료
+1.FreelanceContact라는 주제 선정 후 ERD 1차설계 완료
+
 ###2023-03-27  
 ---
 -user테이블명 
