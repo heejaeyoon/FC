@@ -15,4 +15,8 @@ public interface MemberDao {
 
     /* 로그인 */
     MemberVo memberLogin(MemberVo memberVo);
+
+    // dao == crud =>  xml에서 쿼리문 작성;
+    // dto == 가져온 데이터를 읽고 쓰기 => getter, setter;
+    // vo == 오직 읽기전용 => setter 없음.
 }
