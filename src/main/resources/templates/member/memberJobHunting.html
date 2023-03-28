@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko" charset="utf-8"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+<head>
+    <style>
+        .stack {
+            display: flex;
+        }
+
+        .submitDiv {
+            display: flex;
+            justify-content: end;
+        }
+    </style>
+</head>
+<div layout:fragment="content" class="container">
+    <form id="jobHuntingData" method="post">
+        <div>
+            <label>
+                제목
+                <input type="text" name="title">
+            </label>
+        </div>
+
+        <!-- onchange를 적용하여 옵션 벨류 값을 얻음. 얻어진 value는 fetch를 이용하여 값을 넘김-->
+        <div class="stack">
+            기술스택
+            <select onchange="selectStack(this)" class="selection">
+                <option name="options" value="JavaScript">JavaScript</option>
+                <option value="TypeScript">TypeScript</option>
+                <option value="Vue">Vue</option>
+                <option value="Nodejs">Nodejs</option>
+                <option value="Spring">Spring</option>
+                <option value="Java">Java</option>
+                <option value="Nextjs">Nextjs</option>
+                <option value="Nestjs">Nestjs</option>
+                <option value="Express">Express</option>
+                <option value="Go">Go</option>
+                <option value="C">C</option>
+                <option value="Python">Python</option>
+                <option value="Django">Django</option>
+                <option value="Swift">Swift</option>
+                <option value="Kotlin">Kotlin</option>
+                <option value="MySQL">MySQL</option>
+                <option value="MongDB">MongDB</option>
+                <option value="php">php</option>
+                <option value="GraphQL">GraphQL</option>
+                <option value="Firebase">Firebase</option>
+                <option value="ReactNative">ReactNative</option>
+                <option value="Unity">Unity</option>
+                <option value="Flutter">Flutter</option>
+                <option value="AWS">AWS</option>
+                <option value="Kubernetes">Kubernetes</option>
+                <option value="Docker">Docker</option>
+                <option value="Git">Git</option>
+                <option value="Figma">Figma</option>
+                <option value="Zeplin">Zeplin</option>
+            </select>
+        </div>
+
+        <div>
+            게시글 기간
+            <input type="radio" id="1month" name="period" value="1개월">
+            <label for="1month">3개월 이하</label>
+
+            <input type="radio" id="3month" name="period" value="3개월" checked>
+            <label for="3month">6개월 이하</label>
+
+            <input type="radio" id="6month" name="period" value="6개월">
+            <label for="6month">12개월 이하</label>
+
+        </div>
+
+        <div>
+
+            모집상태
+            <input type="radio" id="public" name="recruit" value="공개">
+            <label for="public">공개</label>
+
+            <input type="radio" id="private" name="recruit" value="비공개" checked>
+            <label for="private">비공개</label>
+
+        </div>
+
+        <div>
+
+            성별
+            <input type="radio" id="any" name="gender" value="무관" checked>
+            <label for="any">무관</label>
+
+            <input type="radio" id="male" name="gender" value="남성">
+            <label for="male">남성</label>
+
+            <input type="radio" id="female" name="gender" value="여성">
+            <label for="female">여성</label>
+
+        </div>
+
+        <div>
+            <label>
+                계약금
+                <input type="text" name="payment">
+                원
+            </label>
+        </div>
+
+        <div>
+            <label>
+                계약기간
+                <input type="text" name="work_day">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                회사주소
+                <input type="text" name="addr">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                채용제목
+                <input type="text" name="title">
+            </label>
+        </div>
+
+        <div>
+            <label for="detail">상세요강</label>
+            <textarea id="detail" name="detail" rows="5" cols="60"></textarea>
+        </div>
+
+        <div class="submitDiv">
+            <input type="submit" value="올리기">
+        </div>
+
+    </form>
+
+    <script>
+        /*게시판에서 기술 선택 js*/
+        let stackValue = document.querySelector('.stack');
+        let stackOpton;
+        function selectStack() {
+            let selection = document.querySelector('.selection');
+            let stack = selection.options[selection.selectedIndex].value;
+            console.log(stack);
+            stackValue.innerHTML += stack + " ";
+            stackOpton += stackValue.innerHTML; /*내가 선택한 기술 옵션값을 저장 */
+        }
+
+
+        let formData = new FormData(document.querySelector('#jobHuntingData'));
+
+        fetch.post('/memberJobHunting',{
+            method:'POST',
+            headers:{
+                'Content-Type' : 'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body : new URLSearchParams({
+
+            })
+        });
+    </script>
+</div>
+</html>
