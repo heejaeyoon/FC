@@ -19,7 +19,7 @@
     </select>
     
     <!-- 유저 회원가입 Insert -->
-    <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo">
+    <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo" >
         INSERT INTO member(name,email,member_id,password,addr,phone,gender,birth,role)
         values (#{name}, #{email}, #{member_id}, #{password},#{addr},#{phone},#{gender},#{birth},#{role});
     </insert>

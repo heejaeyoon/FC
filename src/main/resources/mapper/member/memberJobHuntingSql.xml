@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fc.member.memberDao.MemberJobHuntingDao">
+
+    <insert id="insertJobHunting" parameterType="com.example.fc.member.memberVo.MemberJobHuntingVo">
+        insert into job_hunting (title, stack, period, payment, detail, member_id) values (#{title}, #{stack}, #{period}, #{payment}, #{detail}, '1');
+    </insert>
+
+    <select id="findJobHuntingId" resultType="java.lang.Integer">
+        select member_board from job_hunting where title = #{title} and stack = #{stack} and detail = #{detail};
+    </select>
+
+    <insert id="insertMemberStack" parameterType="java.util.HashMap">
+        insert into member_stack (member_board, stack) values (#{string_member_board}, #{stack});
+    </insert>
+
+</mapper>
