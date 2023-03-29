@@ -20,41 +20,26 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-        @GetMapping("/")
-        public String member(){
-            return "ex";
-        }
+    @GetMapping("/")
+    public String member() {
+        return "ex";
+    }
 
+    @GetMapping("/myPage")
+    public String myPage() {
+        return "/member/memberMyPageForm";
 
-//    @GetMapping("/member")
-//    public String memberForm(){
-//        return "/member/memberJoinForm";
-//    }
-
-//    @GetMapping("/member2")
-//    public String memberForm2(Model model) {
-//        List<Vo_member> list = new ArrayList<>();
-//        list = memberService.doMemberList();
-//
-//        log.info("vo_member");
-//        for(Vo_member vo_member : list) {
-//            log.info(vo_member.getName());
-//            log.info(vo_member.getEmail());
-//            log.info(vo_member.getPassword());
-//        }
-//        model.addAttribute("list",list);
-//        return "/member/memberForm2";
-//    }
+    }
 
     /* 회원가입 */
     @GetMapping("/insert")
-    public String memberJoin(){
+    public String memberJoin() {
         return "/member/memberJoinForm";
     }
 
     @PostMapping("/insert")
-    public String memberJoin(MemberVo memberVo){
-        log.info("회원가입 폼에서 입력받은 데이터: {}",memberVo);
+    public String memberJoin(MemberVo memberVo) {
+        log.info("회원가입 폼에서 입력받은 데이터: {}", memberVo);
         memberService.memberJoin(memberVo);
 
         return "/member/memberForm2";
@@ -63,24 +48,24 @@ public class MemberController {
 
     /* 로그인 */
     @GetMapping("/login")
-    public String login() {
+    public String memberLogin() {
         return "/member/memberLoginForm";
     }
 
     @PostMapping("/login")
-    public String login(MemberVo memberVo, HttpSession session, Model model){
+    public String memberLogin(MemberVo memberVo, HttpSession session, Model model) {
         String returnURL = "";
-        if(session.getAttribute("memberLogin") != null){
+        if (session.getAttribute("memberLogin") != null) {
             //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
             session.removeAttribute("memberLogin");
         }
         MemberVo vo = memberService.memberLogin(memberVo);
-        model.addAttribute("memberLogined",vo);
+        model.addAttribute("memberLogined", vo);
         System.out.println(vo);
 
-        if(vo != null){
+        if (vo != null) {
             //세션에 memberLogin 이란 이름으로 memberVo 객체를 저장해 놓는다.
-            session.setAttribute("memberLogin",vo);
+            session.setAttribute("memberLogin", vo);
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
             //로그인 성공시
             returnURL = "/ex";
@@ -94,7 +79,7 @@ public class MemberController {
     }
 
     @GetMapping("/logout")
-    public String memberLogout(HttpSession session){
+    public String memberLogout(HttpSession session) {
         session.invalidate(); //세션 전체를 날려버린다.
 //        session.removeAttribute("memberLogin"); //하나씩 날릴려면 이렇게 사용해도 된다
         return "/member/memberLoginForm";
