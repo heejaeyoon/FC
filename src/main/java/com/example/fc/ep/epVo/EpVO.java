@@ -9,17 +9,18 @@ import lombok.*;
 @ToString
 @Builder
 public class EpVO {
-    private Long ep_board;
+    private Long epBoard;
     private String title;
     private String stack;
     private String period;
     private String recruit;
     private String gender;
     private String payment;
-    private String work_day;
+    private String workDayStart;
+    private String workDayEnd;
     private String addr;
     private String detail;
-    private String create_date;
-    private String ep_name;
-    private String update_date;
+    private String createDate;
+    private String epName;
+    private String updateDate;
 }

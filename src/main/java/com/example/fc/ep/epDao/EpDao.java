@@ -11,4 +11,6 @@ public interface EpDao {
     public List<EpVO> epList();
 
     public int save(EpVO epRecruitVO);
+
+    public EpVO epFindById(Long epBoard);
 }

@@ -13,21 +13,23 @@
         <result column="email" property="email" jdbcType="NVARCHAR" javaType="String" />
     </resultMap>
     -->
-
+    <!-- 기업 > 모집 공고 리스트 -->
     <select id="epList" resultType="com.example.fc.ep.epVo.EpVO">
         select * from ep_recruit;
     </select>
     
     <!-- 기업 > 모집공고 Insert -->
     <insert id="save" parameterType="com.example.fc.ep.epVo.EpVO">
-        INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day, addr, detail, ep_name, create_date, update_date)
-        VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{work_day}, #{addr}, #{detail}, #{ep_name}, now(), now() );
+        INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day_start, work_day_end, addr, detail, ep_name, create_date, update_date)
+        VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, #{epName}, now(), now() );
     </insert>
 
-    <!-- 로그인 -->
-<!--    <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">-->
-<!--        select name,addr,phone,gender,birth,role from member where email = #{email} and password = #{password};-->
-<!--    </select>-->
+    <!--    기업 > 모집 공고 -->
+    <select id="epFindById" resultType="com.example.fc.ep.epVo.EpVO" parameterType="java.lang.Long">
+        select * from ep_recruit where ep_board = #{epBoard};
+    </select>
+
+
 
 
 

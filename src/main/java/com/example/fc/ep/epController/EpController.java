@@ -10,28 +10,46 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
-@RequestMapping("/ep")
+@RequestMapping("/epRecruit")
 @RequiredArgsConstructor
 @Log4j2
 public class EpController {
     final private EpDao epDao;
     @GetMapping("/epRecruitForm")
     public String recruitForm() {
-        return "/ep/epRecruitForm";
+        return "/epRecruit/epRecruitForm";
     }
 
     @PostMapping("/epRecruitAction")
     public String epRecruitAction(EpVO epVO) {
         log.info("구인등록 액션!!" + epVO);
         epDao.save(epVO);
-        return "redirect:/ep/epRecruitForm";
+        return "redirect:/epRecruit/epRecruitForm";
     }
 
     @GetMapping("/epRecruitList")
     public String EpRecruitList(Model model) {
+        List<EpVO> epVOList = epDao.epList();
+        epVOList.forEach(i -> {
+            log.info("--------->" + i);
+        });
+
+        model.addAttribute("epList", epVOList);
 //        epRecruitMapper
-        return "";
+        return "/epRecruit/epRecruitList";
+    }
+
+    @GetMapping("epBoard")
+    public String getEpBoard(Model model, Long epBoard) {
+        System.out.println("epBoard>>>>" + epBoard);
+        EpVO epRecruitOne = epDao.epFindById(epBoard);
+
+        model.addAttribute("epRecruit", epRecruitOne);
+        return "epRecruit/epRecruitPoster";
     }
 }

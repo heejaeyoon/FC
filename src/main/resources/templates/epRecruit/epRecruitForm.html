@@ -5,11 +5,11 @@
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
 <div layout:fragment="content">
-    <form action="/ep/epRecruitAction" method="post">
+    <form action="/epRecruit/epRecruitAction" method="post">
         <div>
             <label>
                 회사명
-                <input type="text" name="ep_name">
+                <input type="text" name="epName">
             </label>
         </div>
 
@@ -89,20 +89,23 @@
         </div>
 
         <div>
+            <label for="intPay">계약금</label>
+            <input id="intPay" type="number" name="payment" step="100000" min="0">
+            <input id="stringPay" type="text" disabled style="color: gray">
+            원
             <label>
-                계약금
-                <input id="intPay" type="number" name="payment" step="100000" min="0">
-                <input id="stringPay" type="text" readonly style="color: gray">
-                원
+                <input id="payCheckBox" type="checkbox" name="payment" value="추후협상" onclick="payChecked()">
+                추후 협상시 체크
             </label>
+
         </div>
 
         <div>
             <label>
                 계약기간
-                <input id="startDate" type="date" name="work_day">
+                <input id="startDate" type="date" name="workDayStart">
                 ~
-                <input id="endDate" type="date" name="work_day">
+                <input id="endDate" type="date" name="workDayEnd">
 
             </label>
         </div>
@@ -140,13 +143,25 @@
             let intPay = document.getElementById("intPay");
             intPay.addEventListener("input", function (e) {
                 let intPayVal = parseInt(document.getElementById("intPay").value);
-                if ( 0 <= intPayVal ) {
+                if (0 <= intPayVal) {
                     strPay.value = intPayVal.toLocaleString('ko-KR');
                 } else {
                     strPay.value = 0;
                 }
 
             });
+
+            function payChecked() {
+                const payChecked = document.querySelector("#payCheckBox").checked;
+
+                if (payChecked === true) {
+                    intPay.value = 0;
+                    strPay.value = 0;
+                    intPay.disabled = true;
+                } else {
+                    intPay.disabled = false;
+                }
+            }
 
             document.querySelector("#startDate").value = new Date().toISOString().substring(0, 10);
             document.querySelector("#endDate").value = new Date().toISOString().substring(0, 10);
@@ -155,7 +170,6 @@
     </th:block>
 
 </div>
-
 
 
 </html>
