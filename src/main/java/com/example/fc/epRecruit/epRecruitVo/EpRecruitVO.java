@@ -1,4 +1,4 @@
-package com.example.fc.ep.epVo;
+package com.example.fc.epRecruit.epRecruitVo;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class EpVO {
+public class EpRecruitVO {
     private Long epBoard;
     private String title;
     private String stack;

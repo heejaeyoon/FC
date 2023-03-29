@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.fc.ep.epDao.EpDao">
+<mapper namespace="com.example.fc.epRecruit.epRecruitDao.EpRecruitDao">
 
     <!--
     <resultMap id="map_vo_member" type="com.example.fc.vo.MemberVo">
@@ -14,18 +14,18 @@
     </resultMap>
     -->
     <!-- 기업 > 모집 공고 리스트 -->
-    <select id="epList" resultType="com.example.fc.ep.epVo.EpVO">
+    <select id="epList" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
         select * from ep_recruit;
     </select>
     
     <!-- 기업 > 모집공고 Insert -->
-    <insert id="save" parameterType="com.example.fc.ep.epVo.EpVO">
+    <insert id="save" parameterType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
         INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day_start, work_day_end, addr, detail, ep_name, create_date, update_date)
         VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, #{epName}, now(), now() );
     </insert>
 
     <!--    기업 > 모집 공고 -->
-    <select id="epFindById" resultType="com.example.fc.ep.epVo.EpVO" parameterType="java.lang.Long">
+    <select id="epFindById" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO" parameterType="java.lang.Long">
         select * from ep_recruit where ep_board = #{epBoard};
     </select>
 

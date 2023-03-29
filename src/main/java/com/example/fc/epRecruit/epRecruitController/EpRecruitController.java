@@ -1,8 +1,7 @@
-package com.example.fc.ep.epController;
+package com.example.fc.epRecruit.epRecruitController;
 
-import com.example.fc.ep.epDao.EpDao;
-import com.example.fc.ep.epMapper.EpMapper;
-import com.example.fc.ep.epVo.EpVO;
+import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -10,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -18,15 +16,15 @@ import java.util.List;
 @RequestMapping("/epRecruit")
 @RequiredArgsConstructor
 @Log4j2
-public class EpController {
-    final private EpDao epDao;
+public class EpRecruitController {
+    final private EpRecruitDao epDao;
     @GetMapping("/epRecruitForm")
     public String recruitForm() {
         return "/epRecruit/epRecruitForm";
     }
 
     @PostMapping("/epRecruitAction")
-    public String epRecruitAction(EpVO epVO) {
+    public String epRecruitAction(EpRecruitVO epVO) {
         log.info("구인등록 액션!!" + epVO);
         epDao.save(epVO);
         return "redirect:/epRecruit/epRecruitForm";
@@ -34,7 +32,7 @@ public class EpController {
 
     @GetMapping("/epRecruitList")
     public String EpRecruitList(Model model) {
-        List<EpVO> epVOList = epDao.epList();
+        List<EpRecruitVO> epVOList = epDao.epList();
         epVOList.forEach(i -> {
             log.info("--------->" + i);
         });
@@ -47,7 +45,7 @@ public class EpController {
     @GetMapping("epBoard")
     public String getEpBoard(Model model, Long epBoard) {
         System.out.println("epBoard>>>>" + epBoard);
-        EpVO epRecruitOne = epDao.epFindById(epBoard);
+        EpRecruitVO epRecruitOne = epDao.epFindById(epBoard);
 
         model.addAttribute("epRecruit", epRecruitOne);
         return "epRecruit/epRecruitPoster";
