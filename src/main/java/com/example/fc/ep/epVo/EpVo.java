@@ -15,5 +15,5 @@ public class EpVo {
     private String addr;
     private String phone;
     private String bn_number;
-    private String create_date;
+    private String email;
 }

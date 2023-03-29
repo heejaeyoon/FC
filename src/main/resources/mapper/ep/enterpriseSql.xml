@@ -19,14 +19,14 @@
     </select>
     
     <!-- 유저 회원가입 Insert -->
-    <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo">
-        INSERT INTO member(name,email,member_id,password,addr,phone,gender,birth,role)
-        values (#{name}, #{email}, #{member_id}, #{password},#{addr},#{phone},#{gender},#{birth},#{role});
+    <insert id="epJoin" parameterType="com.example.fc.ep.epVo.EpVo">
+        INSERT INTO ep(email,name,content, password,addr,phone,bn_number)
+        values (#{email}, #{name}, #{content},#{password},#{addr},#{phone},#{bn_number});
     </insert>
 
     <!-- 로그인 -->
-    <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
-        select name,addr,phone,gender,birth,role,email from member where email = #{email} and password = #{password};
+    <select id="epLogin" resultType="com.example.fc.ep.epVo.EpVo">
+        select ep_id,email,name,content, password,addr,phone,bn_number from ep where email = #{email} and password = #{password};
     </select>
 
 

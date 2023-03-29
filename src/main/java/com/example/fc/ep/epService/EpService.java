@@ -19,4 +19,11 @@ public class EpService {
     list =epDao.doEPList();
     return list;
     }
+    public void  EPjoin(EpVo epVo){
+        epDao.epJoin(epVo);
+    }
+
+    public  EpVo Login(EpVo epVo){
+        return  epDao.epLogin(epVo);
+    }
 }

@@ -63,8 +63,4 @@ public class MemberController {
         }
 
     }
-    @GetMapping("/ep")
-    public String ep(){
-        return "/ep/enterpriseJoinForm";
-    }
 }
