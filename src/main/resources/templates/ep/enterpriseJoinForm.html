@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
 
-<div layout:fragment="content">
+<div layout:fragment="content" class="container">
     <form action="/insert" method="post">
         <table width="800">
             <tr height="40">
@@ -15,8 +15,8 @@
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">기업 ID</td>
-                <td><input type="text" name="member_id"/>&nbsp;
+                <td width="15%">이 메 일</td>
+                <td><input type="text" name="email"/>&nbsp;
                     <a>[ID 중복 검사]</a></td>
             </tr>
             <tr height="7">
@@ -57,8 +57,8 @@
             </tr>
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">기 업 명</td>
-                <td><input type="text" name="name"/></td>
+                <td width="15%">사업자 번호</td>
+                <td><input type="text" name="bn_number"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -67,7 +67,7 @@
             </tr>
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">기업전화번호</td>
+                <td width="15%">대표 번호</td>
                 <td><input type="tel" name="phone"/></td>
             </tr>
             <tr height="7">
