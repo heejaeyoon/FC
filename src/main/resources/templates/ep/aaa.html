@@ -9,14 +9,14 @@
     <form action="/epInsert" method="post">
         <table width="800">
             <tr height="40">
-                <td align="center"><b>[기업 회원 가입]</b></td>
+                <td align="center"><b>정보수정</b></td>
             </tr>
         </table>
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">이 메 일</td>
-                <td><input type="text" name="email"/>&nbsp;
+                <td><input type="text" name="email" th:value="${session.memberLogin.email}"  required />&nbsp;
                     <a>[ID 중복 검사]</a></td>
             </tr>
             <tr height="7">
@@ -27,7 +27,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">비밀번호</td>
-                <td><input type="password" name="password" id="pw"/></td>
+                <td><input type="password" name="password" id="pw" required/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -37,7 +37,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">비밀번호 확인</td>
-                <td><input type="password" name="" id="pwCheck"/>&nbsp;&nbsp;<span
+                <td><input type="password" name="" id="pwCheck"  required/>&nbsp;&nbsp;<span
                         id="same"></span></td>
             </tr>
             <tr height="7">
@@ -48,7 +48,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">기 업 명</td>
-                <td><input type="text" name="name"/></td>
+                <td><input type="text" name="name"  /></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -96,7 +96,7 @@
         <table>
             <tr height="40">
                 <td>
-                     <input type="hidden" name="role" value="기업"/>
+                     <input type="hidden" name="role" value="일반"/>
                     <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
                     <button type="submit" class="btn btn-success">회원가입</button>
                 </td>

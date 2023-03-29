@@ -23,14 +23,19 @@
             </form>
 
             <div class="text-end">
-                <div th:unless="${session.memberLogin}">
+                <div th:if="${session.memberLogin}">
+                    <span th:text="${session.memberLogin}"/>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/insert'">멤버수정</button>
+                </div>
+                <div th:if="${session.epLogin}">
+                    <span th:text="${session.epLogin}"/>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/insert'">기업수정</button>
+                </div>
+                <div th:if="${session.memberLogin} and ${session.epLogin}">
                 <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인</button>
                 <button type="button" class="btn btn-warning" onclick="location.href='/insert'">회원가입</button>
-                </div>
-                <div th:if="${session.memberLogin}">
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그아웃</button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/insert'">마이페이지</button>
-
                 </div>
             </div>
         </div>

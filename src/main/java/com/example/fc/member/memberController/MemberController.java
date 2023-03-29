@@ -3,7 +3,6 @@ package com.example.fc.member.memberController;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +61,15 @@ public class MemberController {
             System.out.println("로그인 실패");
             return "/member/loginForm";
         }
+        }
+        @GetMapping("/logout")
+        public String logout(HttpSession Session) {
+            Session.removeAttribute("memberLogin");
+            return "/ex";
 
+    }
+    @GetMapping("/modify")
+    public String modify() {
+        return "/ep/aaa";
     }
 }
