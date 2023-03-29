@@ -3,6 +3,7 @@ package com.example.fc.member.memberController;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,7 +26,7 @@ public class MemberController {
 
     /* 회원가입 */
     @GetMapping("/insert")
-    public String memberJoin(){
+    public String memberJoin(HttpSession session){
         return "/member/memberJoinForm";
     }
 
