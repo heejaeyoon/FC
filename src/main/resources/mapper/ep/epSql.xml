@@ -7,8 +7,8 @@
 
     <!-- 기업 회원가입 Insert -->
     <insert id="epJoin" parameterType="com.example.fc.ep.epVo.EpVo">
-        INSERT INTO ep(email,name,content, password,addr,phone,bn_number)
-        values (#{email}, #{name}, #{content},#{password},#{addr},#{phone},#{bn_number});
+        INSERT INTO ep(email,name,content, password,addr,phone,bn_number,role)
+        values (#{email}, #{name}, #{content},#{password},#{addr},#{phone},#{bn_number},#{role});
     </insert>
 
     <!-- 로그인 -->
@@ -16,6 +16,16 @@
         select ep_id,email,name,content, password,addr,phone,bn_number from ep where email = #{email} and password = #{password};
     </select>
 
+    <!--정보수정-->
+    <update id="epModify" parameterType="com.example.fc.ep.epVo.EpVo">
+        UPDATE ep SET email=#{email}, password =#{password}, name = #{name},content = #{content},addr = #{addr},phone=#{phone},bn_number=#{bn_number}
+        WHERE email = #{email}
 
+    </update>
+    <delete id="epDelete" parameterType="com.example.fc.ep.epVo.EpVo">
+        DELETE FROM ep
+        WHERE email = #{email}
+
+    </delete>
 
 </mapper>

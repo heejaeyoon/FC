@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
+
 @Controller // 컨트롤러는 값만 넘겨주는 역할
 @Slf4j
 public class MemberController {
@@ -46,8 +47,8 @@ public class MemberController {
     @PostMapping("/login")
     public String memberLogin(MemberVo memberVo, HttpSession session) {
         //로그인시 받아온 값을 서비스로 넘겨줌
-
-
+        
+        
         String returnURL = "";
         if (session.getAttribute("memberLogin") != null) {
             //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
@@ -70,33 +71,8 @@ public class MemberController {
         }
         return returnURL;
     }
-    
-    
-  /*  @PostMapping("/login")
-    public String memberLogin(MemberVo memberVo, HttpSession session) {
-        String returnURL = "";
-        if (session.getAttribute("memberLogin") != null) {
-            //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
-            session.removeAttribute("memberLogin");
-        }
-        MemberVo vo = memberService.memberLogin(memberVo);
-        System.out.println(vo);
 
-        if (vo != null) {
-            //세션에 memberLogin 이란 이름으로 memberVo 객체를 저장해 놓는다.
-            session.setAttribute("memberLogin", vo);
-            System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
-            //로그인 성공시
-            returnURL = "/ex";
-            System.out.println("session 저장 값 : " + session.getAttribute( "memberLogin" ));
-        } else {
-            //로그인 실패시
-            System.out.println("로그인 실패");
-            returnURL = "LoginForm";
-        }
-        return returnURL;
-    }*/
-
+    
 //    로그아웃
     @GetMapping("/logout")
     public String memberLogout(HttpSession session) {
@@ -129,8 +105,9 @@ public class MemberController {
 
     @PostMapping("/delete")
     public String memberDelete(MemberVo memberVo,HttpSession session){
-        memberService
-                .memberDelete(memberVo);
+
+        memberService.memberDelete(memberVo);
+                  
         session.removeAttribute("memberLogin");
         log.info("--------------------들어온 값" + memberVo.getId());
         return "/loginForm";

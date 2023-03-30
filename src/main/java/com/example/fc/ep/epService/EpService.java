@@ -18,4 +18,12 @@ public class EpService {
     public  EpVo epLogin(EpVo epVo){
         return  epDao.epLogin(epVo);
     }
+    
+    public void epModify(EpVo epVo){
+        epDao.epModify(epVo);
+    }
+
+        public  int epDelete(EpVo epVo){
+            return epDao.epDelete(epVo);}
+
 }
