@@ -39,8 +39,8 @@ public class EpController {
     }
 
     @PostMapping("/epLogin")
-    public String epLogin(EpVo epVo, HttpSession Session){
 
+    public String epLogin(EpVo epVo, HttpSession Session){
         if (Session.getAttribute("epLogin") != null){
             Session.removeAttribute("epLogin");
         }

@@ -21,7 +21,6 @@
         UPDATE ep SET email=#{email}, password =#{password}, name = #{name},content = #{content},addr = #{addr},phone=#{phone},bn_number=#{bn_number}
         WHERE email = #{email}
 
-
     </update>
     <delete id="epDelete" parameterType="com.example.fc.ep.epVo.EpVo">
         DELETE FROM ep

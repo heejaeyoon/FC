@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+
+@Controller // 컨트롤러는 값만 넘겨주는 역할
 @Slf4j
 public class MemberController {
 
@@ -35,7 +36,6 @@ public class MemberController {
         memberService.memberJoin(memberVo);
 
         return "/member/memberForm2";
-
     }
 
     /* 로그인 */
@@ -46,6 +46,9 @@ public class MemberController {
 
     @PostMapping("/login")
     public String memberLogin(MemberVo memberVo, HttpSession session) {
+        //로그인시 받아온 값을 서비스로 넘겨줌
+        
+        
         String returnURL = "";
         if (session.getAttribute("memberLogin") != null) {
             //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
@@ -69,6 +72,7 @@ public class MemberController {
         return returnURL;
     }
 
+    
 //    로그아웃
     @GetMapping("/logout")
     public String memberLogout(HttpSession session) {
@@ -101,7 +105,9 @@ public class MemberController {
 
     @PostMapping("/delete")
     public String memberDelete(MemberVo memberVo,HttpSession session){
+
         memberService.memberDelete(memberVo);
+                  
         session.removeAttribute("memberLogin");
         log.info("--------------------들어온 값" + memberVo.getId());
         return "/loginForm";
