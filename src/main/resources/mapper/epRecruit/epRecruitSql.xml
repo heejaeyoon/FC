@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fc.epRecruit.epRecruitDao.EpRecruitDao">
+
+    <!--
+    <resultMap id="map_vo_member" type="com.example.fc.vo.MemberVo">
+        <result column="member_id" property="member_id" jdbcType="NVARCHAR" javaType="String" />
+        <result column="name" property="name" jdbcType="NVARCHAR" javaType="String" />
+        <result column="password" property="password" jdbcType="NVARCHAR" javaType="String" />
+        <result column="email" property="email" jdbcType="NVARCHAR" javaType="String" />
+    </resultMap>
+    -->
+    <!-- 기업 > 모집 공고 리스트 -->
+    <select id="epList" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
+        select * from ep_recruit;
+    </select>
+
+    <!-- 기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다  -->
+    <select id="epRecruitLastId" resultType="java.lang.Long">
+        SELECT MAX(ep_board) FROM ep_recruit;
+    </select>
+
+    
+    <!-- 기업 > 모집공고 Insert -->
+    <insert id="save" parameterType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
+        INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day_start, work_day_end, addr, detail, ep_name, create_date, update_date)
+        VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, #{epName}, now(), now() );
+    </insert>
+
+    <!--    기업 > 모집 공고 -->
+    <select id="epFindById" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO" parameterType="java.lang.Long">
+        select * from ep_recruit where ep_board = #{epBoard};
+    </select>
+
+
+
+
+
+</mapper>

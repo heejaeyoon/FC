@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+
+<div layout:fragment="content">
+    <div class="container">
+        <h1>구인 포스터</h1>
+        <div class="recruitPoster">
+            <div class="posterHeader">
+                <p  th:text="${epRecruit.getEpBoard()}"></p>
+                <div class="h2" th:text="${epRecruit.getEpName()}"></div>
+                <div class="h1" th:text="${epRecruit.getTitle()}"></div>
+            </div>
+        </div>
+    <div th:text="${epRecruit.getStack()}"></div>
+
+    </div>
+
+</div>
+
+
+</html>
