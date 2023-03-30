@@ -9,18 +9,18 @@
 </head>
 
 <div layout:fragment="content">
-    <form action="/insert" method="post">
+    <form action="/modify" method="post" id="memberModify">
         <table width="800">
             <tr height="40">
-                <td align="center"><b>[일반 회원 가입]</b></td>
+                <td align="center"><b>[일반 회원 수정]</b></td>
             </tr>
         </table>
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">Email</td>
-                <td><input type="text" name="email" placeholder="user@example.com" required/>&nbsp;
-                    <a>[ID 중복 검사]</a></td>
+                <input type="hidden" name="id" th:value="${session.memberLogin.id}" }>
+                <td><input th:value="${session.memberLogin.email}" type="text" name="email"/>&nbsp;
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -30,7 +30,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">닉네임</td>
-                <td><input type="text" name="nickName"  required/>&nbsp;
+                <td><input th:value="${session.memberLogin.nickName}" type="text" name="nickName" required/>&nbsp;
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -40,7 +40,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">비밀번호</td>
-                <td><input type="password" name="password" id="pw"/></td>
+                <td><input th:value="${session.memberLogin.password}" type="password" name="password" id="pw"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -61,7 +61,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">이 름</td>
-                <td><input type="text" name="name"/></td>
+                <td><input th:value="${session.memberLogin.name}" type="text" name="name"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -84,7 +84,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">생년월일</td>
-                <td><input type="tel" name=""/></td>
+                <td><input th:value="${session.memberLogin.birth}" type="tel" name=""/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -94,7 +94,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">휴대전화</td>
-                <td><input type="tel" name="phone"/></td>
+                <td><input th:value="${session.memberLogin.phone}" type="tel" name="phone"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -118,21 +118,22 @@
                     <input type="text" size="30" name="wJibunAddress" id="jibunAddress" placeholder="지번주소"
                            readonly="readonly">
                     <br/><span id="guide" style="color:#999;font-size:10px;"></span>
-                    <br/><br/><input type="text" name="wRestAddress" placeholder="나머지 주소" size="70"/>
-                </td>
-            </tr>
-
-        </table>
-        <br/>
-        <table>
-            <tr height="40">
-                <td>
-                     <input type="hidden" name="role" value="일반"/>
-                    <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
-                    <button type="submit" class="btn btn-success">회원가입</button>
+                    <br/><br/><input th:value="${session.memberLogin.addr}" type="text" name="wRestAddress"
+                                     placeholder="나머지 주소" size="70"/>
                 </td>
             </tr>
         </table>
     </form>
+    <span>
+            <input type="hidden" name="role" value="일반"/>
+        <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
+            <button type="submit" class="btn btn-success" form="memberModify">회원수정</button>
+        </span>
+    <span>
+            <form action="/delete" method="post">
+                <input type="hidden" name="id" th:value="${session.memberLogin.id}" }>
+                <button class="btn btn-danger">회원탈퇴</button>
+            </form>
+    </span>
 </div>
 </html>

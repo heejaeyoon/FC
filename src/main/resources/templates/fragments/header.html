@@ -7,7 +7,9 @@
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"/>
+                </svg>
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -19,20 +21,34 @@
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                       aria-label="Search">
             </form>
 
-            <div class="text-end" th:unless="${memberLogined}"><!--로그인한 사용자의 정보를 객체로 모두 보낸다. = > 모든 정보를 빼다 쓸 수 있다.-->
-                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인</button>
+            <div class="text-end">
+            <div th:if="${session.memberLogin}">
+                <span>[[${session.memberLogin.nickName}]]님 환영합니다.</span>
+                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
+            </div>
+
+            <div th:if="${session.epLogin}">
+                <span>[[${session.epLogin.name}]]님 환영합니다.</span>
+                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그아웃
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/insert'">기업 페이지</button>
+            </div>
+
+            <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
+                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인
+                </button>
                 <button type="button" class="btn btn-warning" onclick="location.href='/insert'">회원가입</button>
             </div>
 
-            <div class="text-end" th:if="${memberLogined}">
-                <span>[[${memberLogined.name}]]님 환영합니다.</span> <!--바로 스트링으로 표현해줌, 타임리프 문법-->
-                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃</button>
-                <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
-            </div>
+
         </div>
+    </div>
     </div>
 </header>
 </html>
