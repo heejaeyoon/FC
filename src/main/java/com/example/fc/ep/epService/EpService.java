@@ -19,8 +19,8 @@ public class EpService {
         return  epDao.epLogin(epVo);
     }
     
-    public  int epUpdate(EpVo epVo){
-        return epDao.epUpdate(epVo);
+    public void epModify(EpVo epVo){
+        epDao.epModify(epVo);
     }
 
         public  int epDelete(EpVo epVo){

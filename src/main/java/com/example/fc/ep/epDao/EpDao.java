@@ -19,7 +19,7 @@ public interface EpDao {
     // dto == 가져온 데이터를 읽고 쓰기 => getter, setter;
     // vo == 오직 읽기전용 => setter 없음.
 
-    int epUpdate(EpVo epVo);
+    int epModify(EpVo epVo);
     int epDelete(EpVo epVo);
 
 }
