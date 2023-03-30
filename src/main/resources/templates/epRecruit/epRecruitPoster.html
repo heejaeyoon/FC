@@ -7,7 +7,13 @@
 <div layout:fragment="content">
     <div class="container">
         <h1>구인 포스터</h1>
-    <div th:text="${epRecruit.getTitle()}"></div>
+        <div class="recruitPoster">
+            <div class="posterHeader">
+                <p  th:text="${epRecruit.getEpBoard()}"></p>
+                <div class="h2" th:text="${epRecruit.getEpName()}"></div>
+                <div class="h1" th:text="${epRecruit.getTitle()}"></div>
+            </div>
+        </div>
     <div th:text="${epRecruit.getStack()}"></div>
 
     </div>

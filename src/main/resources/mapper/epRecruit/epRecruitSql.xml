@@ -17,6 +17,12 @@
     <select id="epList" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
         select * from ep_recruit;
     </select>
+
+    <!-- 기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다  -->
+    <select id="epRecruitLastId" resultType="java.lang.Long">
+        SELECT MAX(ep_board) FROM ep_recruit;
+    </select>
+
     
     <!-- 기업 > 모집공고 Insert -->
     <insert id="save" parameterType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">

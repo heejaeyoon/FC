@@ -13,4 +13,6 @@ public interface EpRecruitDao {
     public int save(EpRecruitVO epRecruitVO);
 
     public EpRecruitVO epFindById(Long epBoard);
+
+    public Long epRecruitLastId();
 }
