@@ -10,6 +10,7 @@ import lombok.*;
 @ToString
 public class MemberVo {
 
+    private long id;
     private String name;
     private String email;
     private String password;
@@ -18,6 +19,7 @@ public class MemberVo {
     private String gender;
     private String birth;
     private String role;
-    private String member_id;
+    private String nickName;
+
 
 }

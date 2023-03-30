@@ -3,31 +3,65 @@
       xmlns:th="http://www.thymeleaf.org"/>
 //      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+
 <header class="p-3 text-bg-dark">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"/>
+                </svg>
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-                <li><a href="/epRecruit/epRecruitForm" class="nav-link px-2 text-white">구인등록</a></li>
-                <li><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인리스트</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">구직</a></li>
+                <li><a href="#" class="nav-link px-2 text-white">구인</a></li>
+                <li><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">추가기능</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">고객지원</a></li>
+                <li>
+
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                data-bs-toggle="dropdown" aria-expanded="false">고객지원</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="#">공지사항</a></li>
+                            <li><a class="dropdown-item" href="#">FAQ</a></li>
+                            <li><a class="dropdown-item" href="#">1:1 문의</a></li>
+                        </ul>
+                    </div>
+                </li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
+                       aria-label="Search">
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인</button>
-                <button type="button" class="btn btn-warning" onclick="location.href='/insert'">회원가입</button>
-            </div>
+                <div th:if="${session.memberLogin}">
+                    <span>[[${session.memberLogin.nickName}]]님 환영합니다.</span>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
+                    </button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
+                </div>
+
+                <div th:if="${session.epLogin}">
+                    <span>[[${session.epLogin.name}]]님 환영합니다.</span>
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
+                    </button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/epModify'">기업 페이지</button>
+                </div>
+
+                <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
+                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인
+                    </button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/epInsert'">회원가입</button>
+                </div>
+
+
+
         </div>
+    </div>
     </div>
 </header>
 </html>
