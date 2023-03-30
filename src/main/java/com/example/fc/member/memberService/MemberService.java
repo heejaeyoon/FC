@@ -18,7 +18,7 @@ public class MemberService {
     /* insert , update는 리턴타입이 int이므로 리턴받지 않고 실행만 할 수 있음 */
     /* 회원 가입 */
     public void memberJoin(MemberVo memberVo){
-         memberDao.memberJoin(memberVo);
+        memberDao.memberJoin(memberVo);
     }
 
     /* 회원 수정 */
