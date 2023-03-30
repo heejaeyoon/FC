@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+
+
+<div layout:fragment="content" class="container">
+    <form  method="post">
+        <table width="800">
+            <tr height="40">
+                <td align="center"><b>기업 정보수정</b></td>
+            </tr>
+        </table>
+        <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">이 메 일</td>
+                <td><input type="text" name="email" th:value="${session.epLogin.email}"  required />&nbsp;
+                    <a>[ID 중복 검사]</a></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">비밀번호</td>
+                <td><input type="password" name="password" id="pw" th:value="${session.epLogin.password}"  required/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">비밀번호 확인</td>
+                <td><input type="password" name="" id="pwCheck"  />&nbsp;&nbsp;<span
+                        id="same"></span></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">기 업 명</td>
+                <td><input type="text" name="name" th:value="${session.epLogin.name}" /></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">사업자 번호</td>
+                <td><input type="text" name="bn_number" th:value="${session.epLogin.bn_number}"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">대표 번호</td>
+                <td><input type="tel" name="phone" th:value="${session.epLogin.phone}"/></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr>
+                <td width="5%" align="center">*</td>
+                <td width="15%">회 사 주 소</td>
+                <td>
+                    <input type="text" size="10" name="addr" id="postcode" placeholder="우편번호"
+                           readonly="readonly">
+                    <input type="button" value="우편번호 찾기"><br><br/>
+                    <input type="text" size="30" name="wRoadAddress" id="roadAddress" placeholder="도로명주소"
+                           readonly="readonly">
+                    <input type="text" size="30" name="wJibunAddress" id="jibunAddress" placeholder="지번주소"
+                           readonly="readonly">
+                    <br/><span id="guide" style="color:#999;font-size:10px;"></span>
+                    <br/><br/><input type="text" name="wRestAddress" placeholder="나머지 주소" size="70"/>
+                </td>
+            </tr>
+
+        </table>
+        <br/>
+        <table>
+            <tr height="40">
+                <td>
+<!--                     <input type="hidden" name="role" value="일반"/>-->
+<!--                    &lt;!&ndash; href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다&ndash;&gt;-->
+<!--                    <button type="submit" class="btn btn-success">수정하기</button>-->
+                    <input type="submit" class="btn btn-success"  value="수정" formaction="/epModify" method="post">
+                    <input type="submit" class="btn btn-success"  value="삭제" formaction="/epDelete" method="post">
+                </td>
+            </tr>
+        </table>
+    </form>
+<!--    <form action="/epDelete" method="post">-->
+<!--        <input type="hidden" name="role" th:value="${session.epLogin.email}"/>-->
+<!--        <button type="submit" class="btn btn-success">삭제하기</button>-->
+<!--    </form>-->
+
+</div>
+</html>

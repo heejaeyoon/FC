@@ -30,7 +30,6 @@ public class EpController {
         epService.epJoin(epVo);
 
         return "/ex";
-
     }
 
     /* 로그인 */
@@ -40,14 +39,12 @@ public class EpController {
     }
 
     @PostMapping("/epLogin")
-    public String epLogin(EpVo epVo, HttpSession Session, Model model){
-        System.out.println();
 
+    public String epLogin(EpVo epVo, HttpSession Session){
         if (Session.getAttribute("epLogin") != null){
             Session.removeAttribute("epLogin");
         }
         EpVo vo = epService.epLogin(epVo);
-        model.addAttribute("epLogin",vo);
         System.out.println("vo = " + vo);
 
         if (vo != null) {
@@ -60,4 +57,25 @@ public class EpController {
         }
 
     }
+    @GetMapping("/epModify")
+    public String epModify(){
+        System.out.println("epService = " + epService);
+        return "/ep/epModify";
+    }
+    @PostMapping("/epModify")
+    public String epModify(EpVo epVo, HttpSession Session){
+        int vo = epService.epUpdate(epVo);
+        Session.setAttribute("epModify",vo);
+        System.out.println("업데이트 성공했습니다");
+            return "/ex";
+    }
+    @PostMapping("/epDelete")
+    public String epDelete(EpVo epVo, HttpSession Session, Model model){
+        int vo = epService.epDelete(epVo);
+        System.out.println("지우기~!! 성공했습니다");
+        Session.removeAttribute("epLogin");
+
+        return "/ex";
+    }
+
 }
