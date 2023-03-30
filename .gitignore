@@ -56,3 +56,5 @@ build
 *.iml
 out
 gen
+.gradle
+build

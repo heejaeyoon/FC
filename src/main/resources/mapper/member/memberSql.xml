@@ -5,30 +5,33 @@
 
 <mapper namespace="com.example.fc.member.memberDao.MemberDao">
 
-    <!--
-    <resultMap id="map_vo_member" type="com.example.fc.vo.MemberVo">
-        <result column="member_id" property="member_id" jdbcType="NVARCHAR" javaType="String" />
-        <result column="name" property="name" jdbcType="NVARCHAR" javaType="String" />
-        <result column="password" property="password" jdbcType="NVARCHAR" javaType="String" />
-        <result column="email" property="email" jdbcType="NVARCHAR" javaType="String" />
-    </resultMap>
-    -->
 
+<!--    select문은 ResultSet이 리턴되며, ResultSet에 저장된 검색결과를 어떤 자바객체에 매핑할지 지정해야한다.-->
+<!--    따라서 반드시 resultType 속성을 넣어주어야한다-->
+ <!--   이 resultType 속성은 당연히 쿼리 명령어가 등록되는 SELECT엘리먼트에서만 사용할 수 있고 절대 생략할 수 없는 속성이다.
+     parameterType은 생략이 가능.-->
     <select id="doMemberList" resultType="com.example.fc.member.memberVo.MemberVo">
         select * from member;
     </select>
     
-    <!-- 유저 회원가입 Insert -->
+    <!-- 멤버 회원가입 insert -->
     <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo">
-        INSERT INTO member(name,email,member_id,password,addr,phone,gender,birth,role)
-        values (#{name}, #{email}, #{member_id}, #{password},#{addr},#{phone},#{gender},#{birth},#{role});
+        insert into member(name,email,password,addr,phone,gender,birth,role,nickName)
+        values (#{name}, #{email},#{password},#{addr},#{phone},#{gender},#{birth},#{role},#{nickName});
     </insert>
+    
+    <!-- 멤버 수정 modify -->
+    <update id="memberModify" parameterType="com.example.fc.member.memberVo.MemberVo">
+        update member set name=#{name},email=#{email},password=#{password},addr=#{addr},phone=#{phone},birth=#{birth},nickName=#{nickName} where id = #{id};
+    </update>
+
+    <!-- 멤버 탈퇴-->
+    <delete id="memberDelete">
+        delete from member where id = #{id}
+    </delete>
 
     <!-- 로그인 -->
     <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
-        select name,addr,phone,gender,birth,role,email from member where email = #{email} and password = #{password};
+        select id,name,addr,phone,gender,birth,role,email,nickName,password from member where email = #{email} and password = #{password};
     </select>
-
-
-
 </mapper>

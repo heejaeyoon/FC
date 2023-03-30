@@ -1,3 +1,4 @@
+
 package com.example.fc.ep.epVo;
 
 import lombok.*;
@@ -16,4 +17,5 @@ public class EpVo {
     private String phone;
     private String bn_number;
     private String email;
+    private String role;
 }

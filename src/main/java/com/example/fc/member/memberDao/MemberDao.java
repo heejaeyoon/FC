@@ -8,15 +8,15 @@ import java.util.List;
 @Mapper
 public interface MemberDao {
 
-    public List<MemberVo> doMemberList();
-
     /* 회원가입 */
     public int memberJoin(MemberVo memberVo);
 
+    /* 회원수정 */
+    public int memberModify(MemberVo memberVo);
+
+    /* 회원탈퇴 */
+    public int memberDelete(MemberVo memberVo);
+
     /* 로그인 */
     MemberVo memberLogin(MemberVo memberVo);
-
-    // dao == crud =>  xml에서 쿼리문 작성;
-    // dto == 가져온 데이터를 읽고 쓰기 => getter, setter;
-    // vo == 오직 읽기전용 => setter 없음.
 }

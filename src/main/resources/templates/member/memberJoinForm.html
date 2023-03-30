@@ -4,6 +4,9 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
+<head>
+    <link th:href="@{/css/joinForm.css}" rel="stylesheet">
+</head>
 
 <div layout:fragment="content">
     <form action="/insert" method="post">
@@ -15,9 +18,19 @@
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">회원 ID</td>
-                <td><input type="text" name="member_id"/>&nbsp;
+                <td width="15%">Email</td>
+                <td><input type="text" name="email" placeholder="user@example.com" required/>&nbsp;
                     <a>[ID 중복 검사]</a></td>
+            </tr>
+            <tr height="7">
+                <td colspan="3">
+                    <hr/>
+                </td>
+            </tr>
+            <tr class="register" height="30">
+                <td width="5%" align="center">*</td>
+                <td width="15%">닉네임</td>
+                <td><input type="text" name="nickName"  required/>&nbsp;
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -88,14 +101,9 @@
                     <hr/>
                 </td>
             </tr>
-            <tr class="register" height="30">
-                <td width="5%" align="center">*</td>
-                <td width="15%">이메일</td>
-                <td><input type="email" name="email"/></td>
-            </tr>
             <tr height="7">
                 <td colspan="3">
-                    <hr/>
+
                 </td>
             </tr>
             <tr>
