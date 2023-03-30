@@ -64,8 +64,8 @@ public class EpController {
     }
     @PostMapping("/epModify")
     public String epModify(EpVo epVo, HttpSession Session){
-        int vo = epService.epUpdate(epVo);
-        Session.setAttribute("epModify",vo);
+        epService.epModify(epVo);
+        Session.setAttribute("epLogin",epVo);
         System.out.println("업데이트 성공했습니다");
             return "/ex";
     }

@@ -17,7 +17,7 @@
     </select>
 
     <!--정보수정-->
-    <update id="epUpdate" parameterType="com.example.fc.ep.epVo.EpVo">
+    <update id="epModify" parameterType="com.example.fc.ep.epVo.EpVo">
         UPDATE ep SET email=#{email}, password =#{password}, name = #{name},content = #{content},addr = #{addr},phone=#{phone},bn_number=#{bn_number}
         WHERE email = #{email}
 
