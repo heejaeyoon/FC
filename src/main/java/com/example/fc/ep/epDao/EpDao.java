@@ -22,4 +22,7 @@ public interface EpDao {
     int epModify(EpVo epVo);
     int epDelete(EpVo epVo);
 
+    int idCheck(EpVo epVo) throws Exception;
+
+
 }

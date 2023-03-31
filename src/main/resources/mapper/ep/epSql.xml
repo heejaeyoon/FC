@@ -27,5 +27,10 @@
         WHERE email = #{email}
 
     </delete>
+    <!--중복체크-->
+    <select id="idCheck" parameterType="com.example.fc.ep.epVo.EpVo" resultType="java.lang.Integer">
+        select count(*) From ep where email =#{email}
+    </select>
+
 
 </mapper>

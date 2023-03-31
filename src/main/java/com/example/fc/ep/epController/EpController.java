@@ -6,9 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -39,7 +40,6 @@ public class EpController {
     }
 
     @PostMapping("/epLogin")
-
     public String epLogin(EpVo epVo, HttpSession Session){
         if (Session.getAttribute("epLogin") != null){
             Session.removeAttribute("epLogin");
@@ -70,12 +70,21 @@ public class EpController {
             return "/ex";
     }
     @PostMapping("/epDelete")
-    public String epDelete(EpVo epVo, HttpSession Session, Model model){
+    public String epDelete(EpVo epVo, HttpSession Session){
         int vo = epService.epDelete(epVo);
         System.out.println("지우기~!! 성공했습니다");
         Session.removeAttribute("epLogin");
 
         return "/ex";
     }
+    @ResponseBody // 값 변환을 위해 꼭 필요함
+    @GetMapping("/idCheck") // 아이디 중복확인을 위한 값으로 따로 매핑
+    public int idCheck(EpVo epVo) throws Exception{
+        System.out.println("epVo값 = " + epVo);
+        int result = epService.idCheck(epVo); // 중복확인한 값을 int로 받음
+        System.out.println("result +++++++++= 6+++++++++++++++++++::::" + result);
+        return result;
+    }
+
 
 }

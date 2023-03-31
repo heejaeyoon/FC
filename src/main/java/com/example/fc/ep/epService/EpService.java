@@ -26,4 +26,11 @@ public class EpService {
         public  int epDelete(EpVo epVo){
             return epDao.epDelete(epVo);}
 
+    public int idCheck(EpVo epVo) throws Exception{
+        System.out.println("epVo service = " + epVo);
+        int result = epDao.idCheck(epVo);
+        return result;
+    }
+
+
 }

@@ -16,8 +16,11 @@
       <tr class="register" height="30">
         <td width="5%" align="center">*</td>
         <td width="15%">이 메 일</td>
-        <td><input type="text" name="email"/>&nbsp;
-          <a>[ID 중복 검사]</a></td>
+<!--        oninput은 클릭할때 마다 함수를 실행하는 속성-->
+        <td><input oninput="emailCheckReset()" type="email" name="email" id="email" placeholder="중복검사를 해주세요" required/>&nbsp;
+<!--          <a><button id="epIdCheck" class="btn btn-primary" onclick="confirmId(event)">중복확인</button></a></td>-->
+          <input type="button" id="btnCheck" class="btn btn-default" value="중복검사"/>
+          <span id="result"></span>
       </tr>
       <tr height="7">
         <td colspan="3">
@@ -27,7 +30,7 @@
       <tr class="register" height="30">
         <td width="5%" align="center">*</td>
         <td width="15%">비밀번호</td>
-        <td><input type="password" name="password" id="pw"/></td>
+        <td><input type="password" name="password" id="pw" required/></td>
       </tr>
       <tr height="7">
         <td colspan="3">
@@ -48,7 +51,7 @@
       <tr class="register" height="30">
         <td width="5%" align="center">*</td>
         <td width="15%">기 업 명</td>
-        <td><input type="text" name="name"/></td>
+        <td><input type="text" name="name" required/></td>
       </tr>
       <tr height="7">
         <td colspan="3">
@@ -99,10 +102,78 @@
           <input type="hidden" name="role" value="role"/>
 
           <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
-          <button type="submit" class="btn btn-success">회원가입</button>
+          <button id="submitBtn" type="submit" class="btn btn-success" >회원가입</button>
         </td>
       </tr>
     </table>
   </form>
 </div>
 </html>
+<script>
+  let idck = 0;
+
+  function emailCheckReset() {
+    idck = 0;
+  }
+
+
+
+  $('#btnCheck').click(function () {
+    /*이메일 중복검사 할 이메일값 value값*/
+     let email = $('#email').val();
+
+      if ($('#email').val() != '') {
+    let regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+    console.log('@@@')
+
+      // 아이디를 서버로 전송 > DB 유효성 검사 > 결과 반환받기
+      $.ajax({
+
+        type: 'GET',
+        url: '/idCheck',
+        /*보낼 데이터 : {파라미터이름 : 실제 데이터값(=위의 이메일) } */
+        data: {email : email},
+        dataType: 'json',/*받는타입*/
+        success: function(result) {
+          if(!regEmail.test(email)){
+            $('#result').text("이메일이 유효하지 않습니다.");}
+          else{
+
+          if (result == '0') {
+            $('#result').text('사용 가능한 아이디입니다.');
+            //아이디가 중복하지 않으면  idck = 1
+            idck = 1;
+          }else{
+            $('#result').text('이미 사용중인 아이디입니다.');
+
+          }
+          }},
+
+        error: function(a, b, c) {
+          console.log(a, b, c);
+        }
+
+      });
+
+    } else {
+      alert('아이디를 입력하세요.');
+      $('#email').focus();
+    }
+
+  });
+   // 회원가입 버튼에 아이디를 맞춰줌
+  $('#submitBtn').click(function () {
+  if(confirm("회원가입을 하시겠습니까?")) {
+    if (idck == 0) {
+      alert('아이디 정보를 확인 해주세요');
+    } else {
+      alert("회원가입을 축하합니다");
+      $("#submitBtn").submit();}
+    }
+  });
+
+
+
+
+
+</script>
