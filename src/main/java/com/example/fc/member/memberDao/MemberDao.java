@@ -1,5 +1,6 @@
 package com.example.fc.member.memberDao;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberVo.MemberVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,4 +20,6 @@ public interface MemberDao {
 
     /* 로그인 */
     MemberVo memberLogin(MemberVo memberVo);
+
+    int idCheck(MemberVo memberVo) throws Exception;
 }

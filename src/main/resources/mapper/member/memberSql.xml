@@ -34,4 +34,9 @@
     <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
         select id,name,addr,phone,gender,birth,role,email,nickName,password from member where email = #{email} and password = #{password};
     </select>
+
+    <!--중복체크-->
+    <select id="idCheck" parameterType="com.example.fc.member.memberVo.MemberVo" resultType="java.lang.Integer">
+        select count(*) From member where email =#{email}
+    </select>
 </mapper>
