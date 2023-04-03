@@ -9,12 +9,12 @@
         insert into job_hunting (title, stack, period, payment, detail, member_id) values (#{title}, #{stack}, #{period}, #{payment}, #{detail}, '1');
     </insert>
 
-    <select id="findJobHuntingId" resultType="java.lang.Integer">
-        select member_board from job_hunting where title = #{title} and stack = #{stack} and detail = #{detail};
+    <select id="findJobHuntingMemberBoard" resultType="java.lang.Integer">
+        select member_board from job_hunting where title = #{title} and detail = #{detail};
     </select>
 
     <insert id="insertMemberStack" parameterType="java.util.HashMap">
-        insert into member_stack (member_board, stack) values (#{string_member_board}, #{stack});
+        insert into member_stack (member_board, stack) values (#{stringMemberBoard}, #{stack});
     </insert>
 
 </mapper>

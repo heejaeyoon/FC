@@ -23,6 +23,7 @@ public class MemberJobHuntingVo {
     private String applicationPeriod;
     private Date updateDate;
     private String hunting;
+    private int fileAttached; //파일 첨부상태 : 0 미첨부, 1 첨부
 
 
 

@@ -17,14 +17,17 @@
         .inputInfo {
             width: 750px;
         }
-        .myStacks{
+
+        .myStacks {
             width: 634px;
         }
-        .textAreaInfo{
-            width:750px;
+
+        .textAreaInfo {
+            width: 750px;
             height: 500px;
         }
-        .container{
+
+        .container {
             margin-top: 10px;
         }
 
@@ -32,7 +35,7 @@
 </head>
 <div layout:fragment="content" class="container">
     <table>
-        <form id="jobHuntingData" onsubmit="return false">
+        <form action="/memberJobHuntingForm" method="post" enctype="multipart/form-data">
             <tr>
                 <th>제목</th>
                 <td>
@@ -128,7 +131,7 @@
                     <th>계약금</th>
                     <td>
                         <div>
-                         <input type="text" name="payment" class="inputInfo">만원
+                            <input type="text" name="payment" class="inputInfo">만원
                         </div>
                     </td>
                 </div>
@@ -136,23 +139,33 @@
             <tr>
                 <th>상세내용</th>
                 <td>
-                    <textarea class="textAreaInfo" name="detail" ></textarea>
+                    <textarea class="textAreaInfo" name="detail"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th>파일업로드</th>
+                <td>
+                    <input type="file" class="inputInfo" name="file" multiple/>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <div class="submitDiv">
-                        <input type="submit" value="올리기" onclick="submitData()">
+                        <!--<input type="submit" value="올리기" onclick="submitData()">-->
+                        <input type="submit" value="올리기">
                     </div>
                 </td>
             </tr>
         </form>
     </table>
-    <script>
+</div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
         /*게시판에서 기술 선택 js*/
-        let stackValue = document.querySelector('.myStacks');
 
+        // ('.myStacks').value;
         function selectStack() {
+            let stackValue = document.getElementsByClassName('myStacks')[0];
             let selection = document.querySelector('.selection');
             let stack = selection.options[selection.selectedIndex].value;
             console.log(stack);
@@ -160,20 +173,26 @@
         }
 
 
-        async function submitData() {
-            /*form 데이터를 보내기위 한 변수 설정*/
-            const data = document.querySelector('#jobHuntingData');
-            const formData = new FormData(data);
-            const payload = new URLSearchParams(formData);
-
-            fetch('/memberJobHuntingForm', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-                },
-                body: payload
-            }).then(result => console.log(result));
-        }
+        /*   async function submitData() {
+               /!*form 데이터를 보내기위 한 변수 설정*!/
+               const data = document.querySelector('#jobHuntingData');
+               const formData = new FormData(data);
+               const payload = new URLSearchParams(formData);
+               fetch('/memberJobHuntingForm', {
+                   method: 'POST',
+                   headers: {
+                       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+                   },
+                   body: payload
+               }).then(result => result.text()).then(data => {
+                   if (data == "게시글이 작성되었습니다.") {
+                       alert(data);
+                   }
+                   if (data == "게시글 작성 실패.") {
+                       alert(data);
+                   }
+               });
+           }*/
     </script>
-</div>
+</th:block>
 </html>

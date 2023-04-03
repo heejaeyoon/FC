@@ -12,7 +12,7 @@ public interface MemberJobHuntingDao {
    public int insertJobHunting(MemberJobHuntingVo memberJobHuntingVo);
 
    // 생성된 게시글 번호 찾기
-   int findJobHuntingId(MemberJobHuntingVo jobHunt);
+   int findJobHuntingMemberBoard(MemberJobHuntingVo jobHunt);
 
    // 생선된 게시글 번호로 구직자 stack(기술) 작성(insert)
    int insertMemberStack(HashMap map);
