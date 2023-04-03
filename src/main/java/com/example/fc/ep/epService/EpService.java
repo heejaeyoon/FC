@@ -31,6 +31,8 @@ public class EpService {
         int result = epDao.idCheck(epVo);
         return result;
     }
-
+    public EpVo epPasswordCheck(EpVo epVo){return  epDao.epPasswordCheck(epVo);}
+    public EpVo epEmailCheck(EpVo epVo){return  epDao.epEmailCheck(epVo);
+    }
 
 }

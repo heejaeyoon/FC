@@ -39,4 +39,13 @@
     <select id="idCheck" parameterType="com.example.fc.member.memberVo.MemberVo" resultType="java.lang.Integer">
         select count(*) From member where email =#{email}
     </select>
+
+    <!--    비밀번호 찾기-->
+    <select id="memberPasswordCheck" resultType="com.example.fc.member.memberVo.MemberVo">
+        select password,email,name From member where email = #{email} and name = #{name};
+    </select>
+    <!--      이메일 찾기-->
+    <select id="memberEmailCheck" resultType="com.example.fc.member.memberVo.MemberVo">
+        select password, name,email From member where name = #{name} and phone = #{phone};
+    </select>
 </mapper>

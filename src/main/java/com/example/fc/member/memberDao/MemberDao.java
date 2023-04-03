@@ -20,6 +20,11 @@ public interface MemberDao {
 
     /* 로그인 */
     MemberVo memberLogin(MemberVo memberVo);
-
+     /*아이디중복검사*/
     int idCheck(MemberVo memberVo) throws Exception;
+    /*패스워드 찾기*/
+    public MemberVo memberPasswordCheck(MemberVo memberVo);
+    /* 이메일 찾기*/
+    public MemberVo memberEmailCheck(MemberVo memberVo);
+
 }

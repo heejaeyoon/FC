@@ -23,14 +23,19 @@
 
     </update>
     <delete id="epDelete" parameterType="com.example.fc.ep.epVo.EpVo">
-        DELETE FROM ep
-        WHERE email = #{email}
+        DELETE FROM ep WHERE email = #{email}
 
     </delete>
     <!--중복체크-->
     <select id="idCheck" parameterType="com.example.fc.ep.epVo.EpVo" resultType="java.lang.Integer">
         select count(*) From ep where email =#{email}
     </select>
-
-
+<!--    비밀번호 찾기-->
+    <select id="epPasswordCheck" resultType="com.example.fc.ep.epVo.EpVo">
+        select password,email,name From ep where email = #{email} and name = #{name};
+    </select>
+<!--      이메일 찾기-->
+    <select id="epEmailCheck" resultType="com.example.fc.ep.epVo.EpVo">
+        select password, name,email From ep where name = #{name} and bn_number = #{bn_number};
+    </select>
 </mapper>
