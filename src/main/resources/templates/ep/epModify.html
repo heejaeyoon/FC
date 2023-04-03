@@ -4,33 +4,19 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
-<head>
-    <link th:href="@{/css/joinForm.css}" rel="stylesheet">
-</head>
 
-<div layout:fragment="content">
-    <form action="/insert" method="post">
+<div layout:fragment="content" class="container">
+    <form  method="post">
         <table width="800">
             <tr height="40">
-                <td align="center"><b>[일반 회원 가입]</b></td>
+                <td align="center"><b>기업 정보수정</b></td>
             </tr>
         </table>
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt;">
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">Email</td>
-                <td><input type="text" name="email" placeholder="user@example.com" required/>&nbsp;
-                    <a>[ID 중복 검사]</a></td>
-            </tr>
-            <tr height="7">
-                <td colspan="3">
-                    <hr/>
-                </td>
-            </tr>
-            <tr class="register" height="30">
-                <td width="5%" align="center">*</td>
-                <td width="15%">닉네임</td>
-                <td><input type="text" name="nickName"  required/>&nbsp;
+                <td width="15%">이 메 일</td>
+                <td><input type="text" name="email" th:value="${session.epLogin.email}"  required />&nbsp;
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -40,7 +26,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">비밀번호</td>
-                <td><input type="password" name="password" id="pw"/></td>
+                <td><input type="password" name="password" id="pw" th:value="${session.epLogin.password}"  required/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -50,7 +36,7 @@
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
                 <td width="15%">비밀번호 확인</td>
-                <td><input type="password" name="" id="pwCheck"/>&nbsp;&nbsp;<span
+                <td><input type="password" name="" id="pwCheck"  />&nbsp;&nbsp;<span
                         id="same"></span></td>
             </tr>
             <tr height="7">
@@ -60,8 +46,8 @@
             </tr>
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">이 름</td>
-                <td><input type="text" name="name"/></td>
+                <td width="15%">기 업 명</td>
+                <td><input type="text" name="name" th:value="${session.epLogin.name}" /></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -70,11 +56,8 @@
             </tr>
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">성 별</td>
-                <td>
-                    남 성 &nbsp<input type="radio" name="gender" value="남자" checked/>&nbsp
-                    여 성 &nbsp<input type="radio" name="gender" value="여자"/>
-                </td>
+                <td width="15%">사업자 번호</td>
+                <td><input type="text" name="bn_number" th:value="${session.epLogin.bn_number}"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
@@ -83,32 +66,17 @@
             </tr>
             <tr class="register" height="30">
                 <td width="5%" align="center">*</td>
-                <td width="15%">생년월일</td>
-                <td><input type="tel" name=""/></td>
+                <td width="15%">대표 번호</td>
+                <td><input type="tel" name="phone" th:value="${session.epLogin.phone}"/></td>
             </tr>
             <tr height="7">
                 <td colspan="3">
                     <hr/>
-                </td>
-            </tr>
-            <tr class="register" height="30">
-                <td width="5%" align="center">*</td>
-                <td width="15%">휴대전화</td>
-                <td><input type="tel" name="phone"/></td>
-            </tr>
-            <tr height="7">
-                <td colspan="3">
-                    <hr/>
-                </td>
-            </tr>
-            <tr height="7">
-                <td colspan="3">
-
                 </td>
             </tr>
             <tr>
                 <td width="5%" align="center">*</td>
-                <td width="15%">주 소</td>
+                <td width="15%">회 사 주 소</td>
                 <td>
                     <input type="text" size="10" name="addr" id="postcode" placeholder="우편번호"
                            readonly="readonly">
@@ -127,12 +95,19 @@
         <table>
             <tr height="40">
                 <td>
-                     <input type="hidden" name="role" value="member"/>
-                    <!-- href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다-->
-                    <button type="submit" class="btn btn-success">회원가입</button>
+<!--                     <input type="hidden" name="role" value="일반"/>-->
+<!--                    &lt;!&ndash; href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다&ndash;&gt;-->
+<!--                    <button type="submit" class="btn btn-success">수정하기</button>-->
+                    <input type="submit" class="btn btn-success"  value="수정" formaction="/epModify" method="post">
+                    <input type="submit" class="btn btn-success"  value="삭제" formaction="/epDelete" method="post">
                 </td>
             </tr>
         </table>
     </form>
+<!--    <form action="/epDelete" method="post">-->
+<!--        <input type="hidden" name="role" th:value="${session.epLogin.email}"/>-->
+<!--        <button type="submit" class="btn btn-success">삭제하기</button>-->
+<!--    </form>-->
+
 </div>
 </html>
