@@ -14,6 +14,7 @@
         select * from member;
     </select>
     
+
     <!-- 멤버 회원가입 insert -->
     <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo">
         insert into member(name,email,password,addr,phone,gender,birth,role,nickName)
