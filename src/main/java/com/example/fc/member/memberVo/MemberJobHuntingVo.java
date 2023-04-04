@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class MemberJobHuntingVo {
-    private Long userBoard;
+    private Long memberBoard;
     private String title;
     private String stack;
     private String period;
