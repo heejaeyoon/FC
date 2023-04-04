@@ -14,6 +14,7 @@
         select * from member;
     </select>
     
+
     <!-- 멤버 회원가입 insert -->
     <insert id="memberJoin" parameterType="com.example.fc.member.memberVo.MemberVo">
         insert into member(name,email,password,addr,phone,gender,birth,role,nickName)
@@ -33,5 +34,19 @@
     <!-- 로그인 -->
     <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
         select id,name,addr,phone,gender,birth,role,email,nickName,password from member where email = #{email} and password = #{password};
+    </select>
+
+    <!--중복체크-->
+    <select id="idCheck" parameterType="com.example.fc.member.memberVo.MemberVo" resultType="java.lang.Integer">
+        select count(*) From member where email =#{email}
+    </select>
+
+    <!--    비밀번호 찾기-->
+    <select id="memberPasswordCheck" resultType="com.example.fc.member.memberVo.MemberVo">
+        select password,email,name From member where email = #{email} and name = #{name};
+    </select>
+    <!--      이메일 찾기-->
+    <select id="memberEmailCheck" resultType="com.example.fc.member.memberVo.MemberVo">
+        select password, name,email From member where name = #{name} and phone = #{phone};
     </select>
 </mapper>
