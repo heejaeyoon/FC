@@ -4,12 +4,17 @@ import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
@@ -23,6 +28,12 @@ public class MemberController {
     @GetMapping("/")
     public String member() {
         return "ex";
+    }
+
+    /* 회원가입 전 회원/기업 선택 */
+    @GetMapping("/joinSelect")
+    public String joinSelect(){
+        return "joinForm";
     }
 
 
@@ -42,9 +53,19 @@ public class MemberController {
 
     /* 로그인 */
     @GetMapping("/login")
-    public String memberLogin(HttpSession session) {
+    public String memberLogin(HttpSession session, Model model, HttpServletRequest request) {
+
+        String userType2 = request.getParameter("userType2");
+
+        if(userType2 == null){
+            userType2 = "0";
+        }
+
+        int userType = Integer.parseInt(userType2);
+
         session.removeAttribute("mPasswordFind");
         session.removeAttribute("mEmailFind");
+        model.addAttribute("userType", userType);
         return "/loginForm";
     }
 
