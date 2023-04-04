@@ -1,5 +1,6 @@
 package com.example.fc.member.memberService;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberDao.MemberDao;
 import com.example.fc.member.memberVo.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,4 +36,12 @@ public class MemberService {
     public MemberVo memberLogin(MemberVo memberVo){
         return memberDao.memberLogin(memberVo);
     }
+
+    public int idCheck(MemberVo memberVo) throws Exception{
+        System.out.println("epVo service = " + memberVo);
+        int result = memberDao.idCheck(memberVo);return result;}
+
+    public MemberVo memberPasswordCheck(MemberVo memberVo){return  memberDao.memberPasswordCheck(memberVo);}
+
+    public MemberVo memberEmailCheck(MemberVo memberVo){return  memberDao.memberEmailCheck(memberVo);}
 }

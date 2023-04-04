@@ -1,5 +1,6 @@
 package com.example.fc.member.memberController;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,7 +48,9 @@ public class MemberController {
 
     /* 로그인 */
     @GetMapping("/login")
-    public String memberLogin() {
+    public String memberLogin(HttpSession session) {
+        session.removeAttribute("mPasswordFind");
+        session.removeAttribute("mEmailFind");
         return "/loginForm";
     }
 
@@ -118,4 +122,49 @@ public class MemberController {
         log.info("--------------------들어온 값" + memberVo.getId());
         return "/loginForm";
     }
+    @ResponseBody // 값 변환을 위해 꼭 필요함
+    @GetMapping("/mIdCheck") // 아이디 중복확인을 위한 값으로 따로 매핑
+    public int idCheck(MemberVo memberVo) throws Exception{
+        System.out.println("memberVo값 = " + memberVo);
+        int result = memberService.idCheck(memberVo); // 중복확인한 값을 int로 받음
+        System.out.println("result +++++++++= 6+++++++++++++++++++::::" + result);
+        return result;
+    }
+    @GetMapping("/memberPassword")
+    public String memberPassword() {return "member/memberFindPass";
+    }
+
+    @PostMapping("/mPasswordFind")
+    public String mPasswordFind(MemberVo memberVo, HttpSession session) {
+        MemberVo vo = memberService.memberPasswordCheck(memberVo);
+        System.out.println("vo = " + vo);
+
+        if (vo != null) {
+            session.setAttribute("mPasswordFind", vo);
+            System.out.println("비밀번호 는 ============" + vo);
+            return "/member/memberFindResult";
+        } else {
+            System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
+            return "/loginForm";
+        }
+    }
+
+
+    @PostMapping("/mEmailFind")
+    public String mEmailFind(MemberVo memberVo, HttpSession session){
+        MemberVo vo = memberService.memberEmailCheck(memberVo);
+        System.out.println("vo = " + vo);
+
+        if (vo != null) {
+            session.setAttribute("mEmailFind",vo);
+            System.out.println("이메일은 는 ============"+vo);
+            return "/member/memberFindResult";
+        }else{
+            System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
+            return "/loginForm";
+        }
+
+    }
+
+
 }

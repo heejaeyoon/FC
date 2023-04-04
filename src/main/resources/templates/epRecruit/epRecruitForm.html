@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+
+<div layout:fragment="content">
+    <form action="/epRecruit/epRecruitAction" method="post">
+        <div>
+            <label>
+                회사명
+                <input type="text" name="epName">
+            </label>
+        </div>
+
+        <div>
+            기술스택
+            <input type="checkbox" id="java" name="stack[]" value="java">
+            <label for="java">java</label>
+
+            <input type="checkbox" id="javascript" name="stack[]" value="javascript">
+            <label for="javascript">javascript</label>
+
+            <input type="checkbox" id="mysql" name="stack[]" value="mysql">
+            <label for="mysql">mysql</label>
+
+            <input type="checkbox" id="oracle" name="stack[]" value="oracle">
+            <label for="oracle">oracle</label>
+
+            <input type="checkbox" id="mariaDB" name="stack[]" value="mariaDB">
+            <label for="mariaDB">mariaDB</label>
+
+            <input type="checkbox" id="spring" name="stack[]" value="spring">
+            <label for="spring">spring</label>
+
+            <input type="checkbox" id="springBoot" name="stack[]" value="springBoot">
+            <label for="springBoot">springBoot</label>
+
+            <input type="checkbox" id="myBatis" name="stack[]" value="myBatis">
+            <label for="myBatis">myBatis</label>
+
+            <input type="checkbox" id="jpa" name="stack[]" value="jpa">
+            <label for="jpa">jpa</label>
+
+            <input type="checkbox" id="thymeleaf" name="stack[]" value="thymeleaf">
+            <label for="thymeleaf">thymeleaf</label>
+
+            <input type="checkbox" id="bootstrap" name="stack[]" value="bootstrap">
+            <label for="bootstrap">bootstrap</label>
+
+        </div>
+
+        <div>
+            게시글 기간
+            <input type="radio" id="1month" name="period" value="1개월">
+            <label for="1month">1개월</label>
+
+            <input type="radio" id="3month" name="period" value="3개월" checked>
+            <label for="3month">3개월</label>
+
+            <input type="radio" id="6month" name="period" value="6개월">
+            <label for="6month">6개월</label>
+
+        </div>
+
+        <div>
+
+            모집상태
+            <input type="radio" id="public" name="recruit" value="공개">
+            <label for="public">공개</label>
+
+            <input type="radio" id="private" name="recruit" value="비공개" checked>
+            <label for="private">비공개</label>
+
+        </div>
+
+        <div>
+
+            성별
+            <input type="radio" id="any" name="gender" value="무관" checked>
+            <label for="any">무관</label>
+
+            <input type="radio" id="male" name="gender" value="남성">
+            <label for="male">남성</label>
+
+            <input type="radio" id="female" name="gender" value="여성">
+            <label for="female">여성</label>
+
+        </div>
+
+        <div>
+            <label for="intPay">계약금</label>
+            <input id="intPay" type="number" name="payment" step="100000" min="0">
+            <input id="stringPay" type="text" disabled style="color: gray">
+            원
+            <label>
+                <input id="payCheckBox" type="checkbox" name="payment" value="추후협상" onclick="payChecked()">
+                추후 협상시 체크
+            </label>
+
+        </div>
+
+        <div>
+            <label>
+                계약기간
+                <input id="startDate" type="date" name="workDayStart">
+                ~
+                <input id="endDate" type="date" name="workDayEnd">
+
+            </label>
+        </div>
+
+        <div>
+            <label>
+                회사주소
+                <input type="text" name="addr">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                채용제목
+                <input type="text" name="title">
+            </label>
+        </div>
+
+        <div>
+            <label for="detail">상세요강</label>
+            <textarea id="detail" name="detail" rows="5" cols="60"></textarea>
+        </div>
+
+        <button type="submit">제출</button>
+
+
+    </form>
+
+
+    <!-- 사용자 스크립트 추가 -->
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+
+            let strPay = document.getElementById("stringPay");
+            let intPay = document.getElementById("intPay");
+            intPay.addEventListener("input", function (e) {
+                let intPayVal = parseInt(document.getElementById("intPay").value);
+                if (0 <= intPayVal) {
+                    strPay.value = intPayVal.toLocaleString('ko-KR');
+                } else {
+                    strPay.value = 0;
+                }
+
+            });
+
+            function payChecked() {
+                const payChecked = document.querySelector("#payCheckBox").checked;
+
+                if (payChecked === true) {
+                    intPay.value = 0;
+                    strPay.value = 0;
+                    intPay.disabled = true;
+                } else {
+                    intPay.disabled = false;
+                }
+            }
+
+            document.querySelector("#startDate").value = new Date().toISOString().substring(0, 10);
+            document.querySelector("#endDate").value = new Date().toISOString().substring(0, 10);
+
+        </script>
+    </th:block>
+
+</div>
+
+
+</html>
