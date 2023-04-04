@@ -127,11 +127,12 @@ public class MemberController {
     @GetMapping("/memberPassword")
     public String memberPassword() {return "member/memberFindPass";
     }
-
+    @ResponseBody
     @PostMapping("/mPasswordFind")
     public String mPasswordFind(MemberVo memberVo, HttpSession session) {
         MemberVo vo = memberService.memberPasswordCheck(memberVo);
         System.out.println("vo = " + vo);
+        String failmessage ="";
 
         if (vo != null) {
             session.setAttribute("mPasswordFind", vo);
@@ -139,15 +140,17 @@ public class MemberController {
             return "/member/memberFindResult";
         } else {
             System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
-            return "/loginForm";
+            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+            return failmessage;
         }
     }
 
-
+    @ResponseBody
     @PostMapping("/mEmailFind")
     public String mEmailFind(MemberVo memberVo, HttpSession session){
         MemberVo vo = memberService.memberEmailCheck(memberVo);
         System.out.println("vo = " + vo);
+        String failmessage ="";
 
         if (vo != null) {
             session.setAttribute("mEmailFind",vo);
@@ -155,7 +158,8 @@ public class MemberController {
             return "/member/memberFindResult";
         }else{
             System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
-            return "/loginForm";
+            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+            return failmessage;
         }
 
     }
