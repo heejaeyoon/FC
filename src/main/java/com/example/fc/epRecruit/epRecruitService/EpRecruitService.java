@@ -2,9 +2,11 @@ package com.example.fc.epRecruit.epRecruitService;
 
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import com.example.fc.pageNation.pageVo.PageNationVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -12,8 +14,14 @@ import java.util.List;
 public class EpRecruitService {
     private final EpRecruitDao epDao;
 
-    public int epRecruitSave(EpRecruitVO epRecruitVO) {
-        return epDao.save(epRecruitVO);
+    public int epRecruitSave(EpRecruitVO epRecruitVO, HttpSession session) {
+        int res = epDao.save(epRecruitVO);
+            if (res == 1) {
+                session.getAttribute("epLogin");
+                System.out.println(session.getAttribute("epLogin"));
+            }
+
+        return res;
     }
 
     public List<EpRecruitVO> epRecruitList() {
