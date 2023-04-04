@@ -15,20 +15,22 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">구인</a></li>
-                <li><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
+                <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1" class="nav-link px-2 text-white">구인</a></li>
+                <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0" class="nav-link px-2 text-white">구직</a></li>
+                <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인</a></li>
+                <li th:if="${session.memberLogin}"><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">추가기능</a></li>
-                <li>
 
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                data-bs-toggle="dropdown" aria-expanded="false">고객지원</button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
-                            <li><a class="dropdown-item" href="#">FAQ</a></li>
-                            <li><a class="dropdown-item" href="#">1:1 문의</a></li>
-                        </ul>
-                    </div>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                            data-bs-toggle="dropdown" aria-expanded="false">고객지원
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
+                        <li><a class="dropdown-item" href="#">FAQ</a></li>
+                        <li><a class="dropdown-item" href="#">1:1 문의</a></li>
+                    </ul>
+                </div>
                 </li>
             </ul>
 
@@ -57,9 +59,9 @@
                     </button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
                 </div>
-        </div>
+            </div>
 
-    </div>
+        </div>
     </div>
 </header>
 </html>
