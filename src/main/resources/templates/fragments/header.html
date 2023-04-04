@@ -15,10 +15,13 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
+
+
                 <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1" class="nav-link px-2 text-white">구인</a></li>
                 <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0" class="nav-link px-2 text-white">구직</a></li>
                 <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인</a></li>
                 <li th:if="${session.memberLogin}"><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
+
                 <li><a href="#" class="nav-link px-2 text-white">추가기능</a></li>
 
                 <div class="dropdown">
