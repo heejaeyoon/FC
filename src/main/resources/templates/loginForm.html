@@ -16,8 +16,8 @@
                 <div class="col-12 text-center align-self-center py-5">
                     <div class="section pb-5 pt-5 pt-sm-2 text-center">
                         <h6 class="mb-0 pb-3">
-                            <span>일반 회원</span>
-                            <span>기업 회원</span></h6>
+                            <span onclick="location.href='/login?userType2=0'">일반 회원</span>
+                            <span onclick="location.href='/login?userType2=1'">기업 회원</span>
                         <input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
                         <label for="reg-log"></label>
                         <div class="card-3d-wrap mx-auto">
@@ -38,7 +38,7 @@
                                                 <i class="input-icon fa-solid fa-lock"></i>
                                             </div>
                                             <button class="button mt-4">로그인</button>
-                                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a>
+                                            <p class="mb-0 mt-4 text-center"><a href="memberPassword" class="link">이메일/비밀번호를 잊으셨나요?</a>
                                             </p>
                                             </form>
                                         </div>
@@ -60,7 +60,7 @@
                                                 <i class="input-icon fa-solid fa-lock"></i>
                                             </div>
                                             <button href="#" class="button mt-4">로그인</button>
-                                            <p class="mb-0 mt-4 text-center"><a href="#0" class="link">비밀번호를 잊으셨나요?</a>
+                                            <p class="mb-0 mt-4 text-center"><a href="epPassword" class="link">이메일/비밀번호를 잊으셨나요?</a>
                                             </p>
                                             </form>
                                         </div>
@@ -74,4 +74,20 @@
         </div>
     </div>
 </div>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+
+        $(function(){
+            var result = [[${userType}]];
+
+            //기업 로그인 창
+            if(result == 1){
+                $('#reg-log').trigger('click');
+
+            }
+        })
+
+    </script>
+</th:block>
+
 </html>
