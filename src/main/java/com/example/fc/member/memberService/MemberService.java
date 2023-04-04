@@ -31,8 +31,6 @@ public class MemberService {
         memberDao.memberDelete(memberVo);
     }
 
-
-
     /* 로그인 */
     public MemberVo memberLogin(MemberVo memberVo){
         return memberDao.memberLogin(memberVo);

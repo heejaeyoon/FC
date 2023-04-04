@@ -24,7 +24,7 @@
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
                                 data-bs-toggle="dropdown" aria-expanded="false">고객지원</button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                            <li><a class="dropdown-item" href="#">공지사항</a></li>
+                            <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
                             <li><a class="dropdown-item" href="#">FAQ</a></li>
                             <li><a class="dropdown-item" href="#">1:1 문의</a></li>
                         </ul>
@@ -55,12 +55,10 @@
                 <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인
                     </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/epInsert'">회원가입</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
                 </div>
-
-
-
         </div>
+
     </div>
     </div>
 </header>
