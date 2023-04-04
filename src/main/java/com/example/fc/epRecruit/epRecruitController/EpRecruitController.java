@@ -52,13 +52,22 @@ public class EpRecruitController {
   }
 
   @GetMapping("/epRecruitList")
-  public String EpRecruitList(Model model, @PageableDefault(page = 1, size = 10) Pageable pageable) {
+  public String EpRecruitList(Model model, @PageableDefault(page = 0, size = 6) Pageable pageable) {
     List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
 
+//    getOffset은 현제 페이지 넘버를 알려주는 함수
     final int start = (int) pageable.getOffset();
+//    getPageSize() 는 화면에 보여줄 리스트 수
     final int end = Math.min((start + pageable.getPageSize()), epRecruitList.size());
-    System.out.println(pageable.next());
-    System.out.println(pageable.previousOrFirst());
+//    System.out.println("epRecruitList.size() == " + epRecruitList.size());
+    System.out.println("getOffset == " + pageable.getOffset());
+    System.out.println("getPageSize == " + pageable.getPageSize());
+    System.out.println("getPageNumber == " + pageable.getPageNumber());
+
+
+    System.out.println("start == " + start);
+    System.out.println("end == " + end);
+
 
     final Page<EpRecruitVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
