@@ -25,7 +25,7 @@
       </div>
     </div>
 <!---->
-    <div th:if="${!epList.isEmpty()}">
+    <div class="d-flex justify-content-center" th:if="${!epList.isEmpty()}">
       <!-- 전역 변수 선언 -->
       <nav th:with="pageNumber = ${epList.pageable.pageNumber}, pageSize = ${epList.pageable.pageSize},totalPages = ${epList.totalPages},startPage = ${T(java.lang.Math).floor(pageNumber / 10) * 10 + 1},tempEndPage = ${startPage + 9 < epList.totalPages ? startPage + 9 : epList.totalPages},endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})"
            aria-label="Page navigation">
