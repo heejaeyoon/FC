@@ -25,6 +25,12 @@ public class MemberController {
         return "ex";
     }
 
+    /* 회원가입 전 회원/기업 선택 */
+    @GetMapping("/joinSelect")
+    public String joinSelect(){
+        return "joinForm";
+    }
+
 
     /* 회원가입 */
     @GetMapping("/insert")
