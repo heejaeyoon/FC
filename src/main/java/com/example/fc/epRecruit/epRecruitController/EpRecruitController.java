@@ -3,7 +3,7 @@ package com.example.fc.epRecruit.epRecruitController;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
-import com.example.fc.pageNation.pageVo.PageNationVo;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;

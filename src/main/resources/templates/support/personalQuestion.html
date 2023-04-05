@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko" charset="utf-8"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+<head>
+    <style>
+        .stack {
+            display: flex;
+        }
+
+        .submitDiv {
+            display: flex;
+            justify-content: flex-end; /* Changed to "flex-end" */
+        }
+
+        .inputInfo {
+            width: 750px;
+        }
+
+        .myStacks {
+            width: 634px;
+        }
+
+        .textAreaInfo {
+            width: 750px;
+            height: 500px;
+        }
+
+        .container {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" class="container">
+    <form action="/personalInquire" method="post">
+        <input type="hidden" th:if="${session.memberLogin}" name="email" th:value="${session.memberLogin.email}"/>
+        <input type="hidden" th:if="${session.epLogin}" name="email" th:value="${session.epLogin.email}"/>
+        <input type="hidden" name="role" th:if="${session.memberLogin}" value="일반"/>
+        <input type="hidden" name="role" th:if="${session.epLogin}" value="기업"/>
+
+        <table>
+            <tr>
+                <th>제목</th>
+                <td>
+                    <input type="text" name="title" class="inputInfo">
+                </td>
+            </tr>
+            <tr>
+                <th>상세내용</th>
+                <td>
+                    <textarea name="detail" class="textAreaInfo"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <br>
+                    <div class="submitDiv">
+                        <!-- <button style="margin-left: 280px" type="submit" class="btn btn-primary">첨부파일</button>&nbsp; -->
+                        <button type="submit" class="btn btn-success">게시글 등록</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
