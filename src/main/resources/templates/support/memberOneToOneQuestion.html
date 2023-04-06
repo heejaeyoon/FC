@@ -37,14 +37,28 @@
     <form action="/personalInquire" method="post">
         <input type="hidden" th:if="${session.memberLogin}" name="email" th:value="${session.memberLogin.email}"/>
         <input type="hidden" th:if="${session.epLogin}" name="email" th:value="${session.epLogin.email}"/>
-        <input type="hidden" name="role" th:if="${session.memberLogin}" value="일반"/>
-        <input type="hidden" name="role" th:if="${session.epLogin}" value="기업"/>
 
         <table>
             <tr>
                 <th>제목</th>
                 <td>
                     <input type="text" name="title" class="inputInfo">
+                </td>
+            </tr>
+            <tr>
+                <th>카테고리: &nbsp; </th>
+                <td>
+                    <input type="radio" id="일반" name="categories" value="일반" checked>
+                    <label for="일반">일반</label>
+
+                    <input type="radio" id="불편/신고" name="categories" value="불편/신고">
+                    <label for="불편/신고">불편/신고</label>
+
+                    <input type="radio" id="회사신고" name="categories" value="회사신고">
+                    <label for="회사신고">회사신고</label>
+
+                    <input type="radio" id="기타문의" name="categories" value="기타문의">
+                    <label for="기타문의">기타문의</label>
                 </td>
             </tr>
             <tr>
@@ -58,7 +72,7 @@
                     <br>
                     <div class="submitDiv">
                         <!-- <button style="margin-left: 280px" type="submit" class="btn btn-primary">첨부파일</button>&nbsp; -->
-                        <button type="submit" class="btn btn-success">게시글 등록</button>
+                        <button type="submit" class="btn btn-success">문의 하기</button>
                     </div>
                 </td>
             </tr>
