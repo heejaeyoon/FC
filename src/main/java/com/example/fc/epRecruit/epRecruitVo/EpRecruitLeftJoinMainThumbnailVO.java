@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Builder
-public class EpRecruitVO {
+public class EpRecruitLeftJoinMainThumbnailVO {
   private Long epBoard;
   private String title;
   private String stack;
@@ -24,4 +24,8 @@ public class EpRecruitVO {
   private String epName;
   private String updateDate;
   private String fileAttached;
+  private Long id;
+  private Long epRecruitBoard;
+  private String savePath;
+  private String thumbnailFileName;
 }

@@ -7,7 +7,7 @@
 <div layout:fragment="content">
   <!-- <form action="/epRecruit/epRecruitAction" method="post">-->
   <div class="container">
-    <form id="form" >
+    <form id="form" method="post" action="/epRecruit/epRecruitAction" enctype="multipart/form-data">
       <div class="row mb-3">
         <label class="col-sm-2 col-form-label" for="inpEpName">회사명</label>
         <div class="col-sm-10">
@@ -185,9 +185,18 @@
           <textarea class="form-control" id="detail" name="detail" rows="5" cols="60"></textarea>
         </div>
       </div>
+
+      <div class="row mb-3">
+        <label class="col-sm-2 col-form-label" for="file">사진 업로드</label>
+        <div class="col-sm-10">
+        <input class="form-control" type="file" id="file" name="file"
+               accept=".jpg, .jpeg, .png" multiple/>
+        </div>
+      </div>
+
       <div class="mb-3 text-start">
         <button class="btn btn-primary" type="button">이전페이지</button>
-        <button class="btn btn-primary float-end" type="button" onclick="submitBtn()">제출</button>
+        <button class="btn btn-primary float-end" type="submit" onclick="">제출</button>
       </div>
     </form>
   </div>
@@ -196,52 +205,52 @@
   <th:block layout:fragment="script">
     <script th:inline="javascript">
 
-        function submitBtn() {
-            let data = new FormData($("#form")[0]);
+      // function submitBtn() {
+      //     let data = new FormData($("#form")[0]);
+      //
+      //     $.ajax({
+      //         url: "/epRecruit/epRecruitActionAjax",
+      //         method: 'POST',
+      //         contentType: false,
+      //         processData: false,
+      //         data: data,
+      //         success: function (res) {
+      //             if (res === 1) {
+      //                 console.log("save")
+      //             }
+      //         },
+      //         error: function () {
+      //             alert("통신실패")
+      //         }
+      //     });
+      // }
 
-            $.ajax({
-                url: "/epRecruit/epRecruitActionAjax",
-                method: 'POST',
-                contentType: false,
-                processData: false,
-                data: data,
-                success: function (res) {
-                    if (res === 1) {
-                        console.log("save")
-                    }
-                },
-                error: function () {
-                    alert("통신실패")
-                }
-            });
+      document.querySelector("#startDate").value = new Date().toISOString().substring(0, 10);
+      document.querySelector("#endDate").value = new Date().toISOString().substring(0, 10);
+
+      let strPay = document.getElementById("stringPay");
+      let intPay = document.getElementById("intPay");
+      intPay.addEventListener("input", function (e) {
+        let intPayVal = parseInt(document.getElementById("intPay").value);
+        if (0 <= intPayVal) {
+          strPay.value = intPayVal.toLocaleString('ko-KR');
+        } else {
+          strPay.value = 0;
         }
 
-        document.querySelector("#startDate").value = new Date().toISOString().substring(0, 10);
-        document.querySelector("#endDate").value = new Date().toISOString().substring(0, 10);
+      });
 
-        let strPay = document.getElementById("stringPay");
-        let intPay = document.getElementById("intPay");
-        intPay.addEventListener("input", function (e) {
-            let intPayVal = parseInt(document.getElementById("intPay").value);
-            if (0 <= intPayVal) {
-                strPay.value = intPayVal.toLocaleString('ko-KR');
-            } else {
-                strPay.value = 0;
-            }
+      function payChecked() {
+        const payChecked = document.querySelector("#payCheckBox").checked;
 
-        });
-
-        function payChecked() {
-            const payChecked = document.querySelector("#payCheckBox").checked;
-
-            if (payChecked === true) {
-                intPay.value = 0;
-                strPay.value = 0;
-                intPay.disabled = true;
-            } else {
-                intPay.disabled = false;
-            }
+        if (payChecked === true) {
+          intPay.value = 0;
+          strPay.value = 0;
+          intPay.disabled = true;
+        } else {
+          intPay.disabled = false;
         }
+      }
 
     </script>
   </th:block>
