@@ -1,18 +1,19 @@
-package com.example.fc.member.memberService;
+package com.example.fc.memberJobHunting.memberJobHuntingservice;
 
-import com.example.fc.member.memberDao.MemberJobHuntingDao;
-import com.example.fc.member.memberDao.MemberJobHuntingFilesDao;
-import com.example.fc.member.memberVo.MemberJobHuntingFilesVo;
-import com.example.fc.member.memberVo.MemberJobHuntingVo;
+import com.example.fc.memberJobHunting.memberJobHuntingDao.MemberJobHuntingDao;
+import com.example.fc.memberJobHunting.memberJobHuntingDao.MemberJobHuntingFilesDao;
+import com.example.fc.memberJobHunting.memberJobHuntingDao.MemberJobHuntingThumnailDao;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingFilesVo;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingThumnailVo;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo;
 import lombok.RequiredArgsConstructor;
-
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -22,13 +23,18 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class MemberJobHuntingServiceImpl {
+public class MemberJobHuntingService {
 
     private final MemberJobHuntingDao memberJobHuntingDao;
     private final MemberJobHuntingFilesDao memberJobHuntingFilesDao;
 
-    @Value("${saveJobHuntingFile}")
-    String savePath;
+    private final MemberJobHuntingThumnailDao memberJobHuntingThumnailDao;
+
+    @Value("${JobHuntingUploadPath}") 
+    String savePath; //파일저장 위치
+
+    @Value("${JobHuntingUploadThumnailPath}")
+    String thumnailPath;
 
     //구직게시글 insert기능, 타임스탬프 이용함으로써 게시글 저장 날짜 자동 생성(now()사용 x)
     public int insertJobHunting(MemberJobHuntingVo jobHunt, MultipartFile[] file) throws IOException {
@@ -64,7 +70,7 @@ public class MemberJobHuntingServiceImpl {
             /*member_stack테이블에 stack 저장*/
             String[] stack = jobHunt.getStack().split(" "); //공백을 기준으로 스택을 나눔
             HashMap map = new HashMap();
-            int memberBoard = memberJobHuntingDao.findJobHuntingMemberBoard(jobHunt);
+            int memberBoard = memberJobHuntingDao.findJobHuntingMemberBoard(jobHunt); //게시글 고유번호 찾기
             String stringMemberBoard = String.valueOf(memberBoard);  // int를 String으로 변환*/ 왜필요한거지??
             System.out.println("memberBoard1 = " + memberBoard);
 
@@ -84,15 +90,36 @@ public class MemberJobHuntingServiceImpl {
                 String originalFileName = getFile.getOriginalFilename(); //파일의 본래 파일명
                 String storedFileName = uuid + "_" + originalFileName; // 파일의 중복되지 않는 값을 더한 파일명
 
-                /*String savePath = "files"; //파일경로, properies도 함께 참고
-                String location = "C:\\Users\\admin\\Documents\\FC_project\\src\\main\\resources\\static\\jobHunting\\files"; //DB에 저장할 경로*/
                 File saveFile = new File(savePath, storedFileName);
                 getFile.transferTo(saveFile);//파일이동
+                
+                //섬네일 파일 이름 생성
+                String thumbnailName ="s_"+storedFileName;
+                // 파일 경로 + 이름
+                File thumbnailFile = new File(savePath, "s_"+storedFileName);
+
+                // BufferedImage에 ImageIo를 이용하여 saveFile 객체를 담음
+                BufferedImage bo_image = ImageIO.read(saveFile);
+                // 비어있는 이미지 생성
+                BufferedImage bt_image = new BufferedImage(100, 100, BufferedImage.TYPE_3BYTE_BGR);
+
+                // 오지리날 이미지를 썸네일 이미지로 변환
+                Graphics2D graphic = bt_image.createGraphics();
+                graphic.drawImage(bo_image, 0, 0,100,100, null);
+
+                // 저장 :: 1. 만든 썸네일 이미지 2. 사진 형식 3. File
+                ImageIO.write(bt_image, "png", thumbnailFile);
+
 
                 /*파일 저장*/
                 MemberJobHuntingFilesVo files = MemberJobHuntingFilesVo.toSetterFilesVo((long) memberBoard, originalFileName, storedFileName, savePath);
                 int resultFiles = memberJobHuntingFilesDao.insertJobHuntingFiles(files);
                 System.out.println("resultFiles = " + resultFiles);
+                
+                /*섬네일 저장*/
+                MemberJobHuntingThumnailVo thumbnails = MemberJobHuntingThumnailVo.builder().memberBoard(Long.valueOf(memberBoard)).savePath(thumnailPath).build();
+                int resultThumbnails = memberJobHuntingThumnailDao.insertJobHuntingThumnailVo(thumbnails);
+                
 
             }
         }
@@ -135,4 +162,16 @@ public class MemberJobHuntingServiceImpl {
         return jobHuntingList;
     }
 
+    //poster기능 : 특정 게시글 보기
+    public MemberJobHuntingVo findAllByMemberBoard(MemberJobHuntingVo memberBoard) {
+        MemberJobHuntingVo writerInfo = memberJobHuntingDao.findAllByMemberBoard(memberBoard);//작성자 모든 정보 불러오기
+
+        return writerInfo;
+    }
+
+    public List<MemberJobHuntingFilesVo> findAllFilesByMemberBoard(Long memberBoard) {
+        List<MemberJobHuntingFilesVo> writerFilesInfo = memberJobHuntingFilesDao.findAllFilesByMemberBoard(memberBoard);//작성자가 등록한 이미지 모두 불러오기
+
+        return writerFilesInfo;
+    }
 }
