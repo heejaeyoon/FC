@@ -18,6 +18,6 @@ public class MemberVo {
     private String gender;
     private String birth;
     private String role;
-    private String member_id;
+
 
 }
