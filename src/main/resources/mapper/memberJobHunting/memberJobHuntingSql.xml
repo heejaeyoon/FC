@@ -17,4 +17,13 @@
         insert into member_stack (member_board, stack) values (#{stringMemberBoard}, #{stack});
     </insert>
 
+<!--    <select id="findAllJobHunting" parameterType="java.lang.Integer" resultType="com.example.fc.member.memberVo.MemberJobHuntingVo">
+        select * from job_hunting
+            order by create_date limit 6 offset 0;
+    </select>-->
+
+    <select id="findAllJobHunting" resultType="com.example.fc.member.memberVo.MemberJobHuntingVo">
+        select * from job_hunting order by create_date desc
+    </select>
+
 </mapper>
