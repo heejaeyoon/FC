@@ -11,7 +11,20 @@
         values (#{title}, #{detail},#{email},#{categories}, now());
     </insert>
 
+    <select id="epOneToOneCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT count(*) FROM ep_onetoone where email = #{email};
+    </select>
 
+    <select id="epOneToOneFindEmail" resultType="com.example.fc.support.supportVo.EpOneToOneVo" parameterType="java.lang.String" >
+        SELECT * FROM ep_onetoone where email = #{email};
+    </select>
+
+    <!--  1대1 상세보기-->
+    <select id="oneToOneList" resultType="com.example.fc.support.supportVo.EpOneToOneVo">
+        select *
+        from ep_onetoone
+        where id = #{id}
+    </select>
 
 
 </mapper>

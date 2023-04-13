@@ -1,16 +1,20 @@
 package com.example.fc.support.supportController;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportService.EpOneToOneService;
 import com.example.fc.support.supportService.MemberOneToOneService;
 import com.example.fc.support.supportVo.EpOneToOneVo;
 import com.example.fc.support.supportVo.MemberOneToOneVo;
+import com.example.fc.support.supportVo.SupportVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class OneToOneController {
@@ -62,5 +66,60 @@ public class OneToOneController {
         }
             return "/ex";
     }
+    @GetMapping("/epPage")
+    public String myPage(HttpSession session, Model model) {
+        EpOneToOneVo epOneToOneVo = (EpOneToOneVo) session.getAttribute("epOneToOneVo");
+        if (epOneToOneVo == null) {
+            epOneToOneVo = new EpOneToOneVo();
+            session.setAttribute("epOneToOneVo", epOneToOneVo);
+        }
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        System.out.println("Epvo ==>>>> " + epVo);
+        int count = epOneToOneService.epOneToOneCount(epVo.getEmail());
+        model.addAttribute("count", count);
+//    System.out.println("epOneToOneVo = " + epOneToOneVo);
+//    System.out.println("count = " + count);
+//    session.getAttribute("epLogin");
+//    System.out.println("세션값 -----------------" + session.getAttribute("epLogin"));
+        return "/ep/epMyPageForm";
+    }
+
+
+
+    @GetMapping("/epOneToOneFindEmail")
+    public String epOneToOneFindEmail(Model model, HttpSession session) {
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        EpOneToOneVo epOneToOneVo = (EpOneToOneVo) session.getAttribute("epOneToOneVo");
+        int count = epOneToOneService.epOneToOneCount(epVo.getEmail());
+        String emails = epVo.getEmail();
+        List<EpOneToOneVo> epOneToOneFindEmail = epOneToOneService.epOneToOneFindEmail(emails);
+        System.out.println("epOneToOneFindEmail---------------------------------------------------- = " + epOneToOneFindEmail);
+        model.addAttribute("oneToOneList", epOneToOneFindEmail);
+        String noOneToOne ="";
+        if (count ==0){
+           return "redirect:/failFindEmail";
+        }else {
+        return "/support/epOneToOneFindEmail";
+        }
+    }
+        @ResponseBody
+        @GetMapping("/failFindEmail")
+        public String failFindEmail(){
+          String  noOneToOne = "<script>alert('1:1문의가 존재하지않습니다 문의후 이용해주세요.'); history.go(-1);</script>";
+            return noOneToOne;
+        }
+
+//       1대1문의 상세 조회
+    @GetMapping("/oneToOneList")
+    public String noticeOneList(EpOneToOneVo epOneToOneVo, Model model, int id) {
+        epOneToOneVo = epOneToOneService.noticeOneList(id);
+        model.addAttribute("oneToOneList", epOneToOneVo);
+        System.out.println("-===========================" + id);
+        System.out.println("-===========================" + epOneToOneVo);
+        return "/support/oneToOneDetailForm";
+    }
+
+
+
 
 }

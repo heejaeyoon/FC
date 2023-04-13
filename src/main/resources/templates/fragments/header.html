@@ -51,7 +51,8 @@
                     <span>[[${session.epLogin.name}]]님 환영합니다.</span>
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
                     </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/epModify'">기업 페이지</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
+                        <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
                 </div>
 
                 <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">

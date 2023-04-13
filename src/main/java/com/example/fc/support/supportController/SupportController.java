@@ -44,7 +44,7 @@ public class SupportController {
 
 
     //   공지사항 상세 조회
-    @GetMapping("/noticeOneList")
+    @GetMapping("/noticeOneListDetail")
     public String noticeOneList(SupportVo supportVo, Model model, int noticeBoard) {
         supportVo = supportService.noticeOneList(noticeBoard);
         model.addAttribute("noticeList", supportVo);
