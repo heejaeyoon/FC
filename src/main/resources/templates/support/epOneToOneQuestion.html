@@ -3,6 +3,7 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+
 <head>
     <style>
         .stack {
@@ -32,6 +33,12 @@
         }
     </style>
 </head>
+<!--th:block 해주어야 자바스크립트에서 세션의 사용이가능하다 -->
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let name1 = [[${session.epLogin.name}]];
+    </script>
+</th:block>
 <body>
 <div layout:fragment="content" class="container">
     <form action="/personalInquire" method="post">
@@ -45,7 +52,7 @@
                 </td>
             </tr>
             <tr>
-                <th>카테고리: &nbsp; </th>
+                <th>카테고리: &nbsp;</th>
                 <td>
                     <input type="radio" id="일반" name="categories" value="일반" checked>
                     <label for="일반">일반</label>
@@ -71,7 +78,9 @@
                     <br>
                     <div class="submitDiv">
                         <!-- <button style="margin-left: 280px" type="submit" class="btn btn-primary">첨부파일</button>&nbsp; -->
-                        <button type="submit" class="btn btn-success">문의 하기</button>
+                        <button type="submit" class="btn btn-success" onclick="alert(name1+'에서 남긴 문의글은 기업페이지에서 확인 가능합니다.')">문의
+                            하기
+                        </button>
                     </div>
                 </td>
             </tr>
