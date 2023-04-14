@@ -26,5 +26,14 @@
         where id = #{id}
     </select>
 
+    <update id="oneToOneModify" parameterType="com.example.fc.support.supportVo.EpOneToOneVo">
+        update ep_onetoone SET title = #{title},detail = #{detail}
+        WHERE id = #{id}
+    </update>
+    
+    <delete id="epOneToOneDelete" parameterType="com.example.fc.support.supportVo.EpOneToOneVo">
+        delete from ep_onetoone where id = #{id}
+    </delete>
+
 
 </mapper>

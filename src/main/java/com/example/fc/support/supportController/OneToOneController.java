@@ -118,6 +118,25 @@ public class OneToOneController {
         System.out.println("-===========================" + epOneToOneVo);
         return "/support/oneToOneDetailForm";
     }
+    
+    //1대1 수정
+    @PostMapping("/oneToOneModify")
+    public String oneToOneModify(EpOneToOneVo epOneToOneVo, HttpSession session){
+        System.out.println("session*********************************** = " + session);
+        System.out.println("epOneToOneVo.getIdgetIdgetIdgetIdgetIdgetIdgetIdgetId = " + epOneToOneVo);
+        session.setAttribute("oneToOneList",epOneToOneVo);
+        epOneToOneService.epOneToOneModify(epOneToOneVo);
+        return "redirect:/epOneToOneFindEmail";
+    }
+//    1대 1문의 삭제
+    @PostMapping("/epOneToOneDelete")
+    public String epOneToOneDelete(EpOneToOneVo epOneToOneVo, HttpSession session){
+        System.out.println("session*********************************** = " + session);
+        System.out.println("epOneToOneVo.deletedeletedeletedeletedeletedeletedelete = " + epOneToOneVo);
+        session.setAttribute("oneToOneList",epOneToOneVo);
+        epOneToOneService.epOneToOneDelete(epOneToOneVo);
+        return "redirect:/epOneToOneFindEmail";
+    }
 
 
 

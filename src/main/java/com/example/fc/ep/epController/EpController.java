@@ -35,7 +35,6 @@ public class EpController {
     public String memberJoin(EpVo epVo){
         log.info("회원가입 폼에서 입력받은 데이터: {}",epVo);
         epService.epJoin(epVo);
-
         return "/ex";
     }
 
@@ -81,9 +80,7 @@ public class EpController {
     @PostMapping("/epDelete")
     public String epDelete(EpVo epVo, HttpSession session){
         epService.epDelete(epVo);
-        System.out.println("지우기~!! 성공했습니다");
         session.removeAttribute("epLogin");
-
         return "/ex";
     }
     @ResponseBody // 값 변환을 위해 꼭 필요함

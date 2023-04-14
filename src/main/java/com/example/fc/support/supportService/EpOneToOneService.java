@@ -1,5 +1,6 @@
 package com.example.fc.support.supportService;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportDao.EpOneToOneDao;
 import com.example.fc.support.supportVo.EpOneToOneVo;
 import com.example.fc.support.supportVo.SupportVo;
@@ -32,5 +33,10 @@ public class EpOneToOneService {
     public EpOneToOneVo noticeOneList(int id) {
         return epOneToOneDao.oneToOneList(id);
     }
+
+    //1대1 문의 수정
+    public void epOneToOneModify(EpOneToOneVo epOneToOneVo) {epOneToOneDao.oneToOneModify(epOneToOneVo);}
+    //1대일 문의 삭제
+    public void epOneToOneDelete(EpOneToOneVo epOneToOneVo) {epOneToOneDao.epOneToOneDelete(epOneToOneVo);}
 
 }
