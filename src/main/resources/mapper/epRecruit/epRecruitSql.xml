@@ -23,8 +23,13 @@
     </insert>
 
     <!--    기업 > 모집 공고 -->
-    <select id="epFindById" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO" parameterType="java.lang.Long">
+    <select id="epRecruitFindById" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO" parameterType="java.lang.Long">
         select * from ep_recruit where ep_board = #{epBoard};
+    </select>
+
+<!--   기업 > 모집 공고 글쓴이 정보 -->
+    <select id="epFindById" resultType="java.util.HashMap" parameterType="java.lang.Long">
+        SELECT * FROM ep where ep_id = #{epId};
     </select>
 
     <!-- 기업게시판 left join 기업썸네일 역순정렬 -->

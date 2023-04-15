@@ -18,6 +18,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -185,7 +186,13 @@ public class EpRecruitService {
     }
 
     public EpRecruitVO epRecruitFindOne(Long epBoard) {
-        return epRecruitDao.epFindById(epBoard);
+        return epRecruitDao.epRecruitFindById(epBoard);
+    }
+
+    public HashMap<String, Object> epFindById(Long epBoard) {
+        EpRecruitVO epRecruitVO = epRecruitDao.epRecruitFindById(epBoard);
+        Long epId = epRecruitVO.getEpId();
+        return epRecruitDao.epFindById(epId);
     }
 
     public List<EpRecruitStackVO> epRecruitStacksByBoard(Long epBoard) {

@@ -6,7 +6,9 @@ import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import com.example.fc.pageNation.pageVo.PageNationVo;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EpRecruitDao {
@@ -18,7 +20,10 @@ public interface EpRecruitDao {
     public int epRecruitSave(EpRecruitVO epRecruitVO);
 
 //    기업 구인 상세페이지
-    public EpRecruitVO epFindById(Long epBoard);
+    public EpRecruitVO epRecruitFindById(Long epBoard);
+
+//   기업 구인게시판 글쓴이 정보
+    public HashMap<String, Object> epFindById(Long epId);
 
 //    기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다
     public Long epRecruitLastId();

@@ -119,11 +119,13 @@ public class EpRecruitController {
   }
 
   @GetMapping("epBoard")
+//  기업 게시글
   public String getEpBoard(Model model, Long epBoard) {
     EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
     List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
-    epRecruitStacksByBoard.forEach(s -> System.out.println(s.getStack()));
+    HashMap<String, Object> ep = epRecruitService.epFindById(epBoard);
 
+    model.addAttribute("ep", ep);
     model.addAttribute("epRecruit", epRecruitFindOne);
     model.addAttribute("epRecruitStack", epRecruitStacksByBoard);
     return "epRecruit/epRecruitPoster";
