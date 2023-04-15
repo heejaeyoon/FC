@@ -18,8 +18,8 @@
 
     <!-- 기업 > 모집공고 Insert -->
     <insert id="epRecruitSave" parameterType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
-        INSERT INTO ep_recruit(title, stack, period, recruit, gender, payment, work_day_start, work_day_end, addr, detail, ep_name, create_date, update_date, file_attached)
-        VALUES (#{title}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, #{epName}, now(), now(), #{fileAttached} );
+        INSERT INTO ep_recruit(title, ep_id, stack, period, recruit, gender, payment, work_day_start, work_day_end, addr, detail, ep_name, create_date, update_date, file_attached)
+        VALUES (#{title}, #{epId}, #{stack}, #{period}, #{recruit}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, #{epName}, now(), now(), #{fileAttached} );
     </insert>
 
     <!--    기업 > 모집 공고 -->

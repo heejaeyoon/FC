@@ -1,14 +1,14 @@
 package com.example.fc.epRecruit.epRecruitController;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import com.example.fc.epRecruit.epRecruitVo.*;
 import com.example.fc.pageNation.pageVo.PageNationVo;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.io.FileUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -20,9 +20,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/epRecruit")
@@ -33,6 +36,9 @@ public class EpRecruitController {
 
   @GetMapping("/epRecruitForm")
   public String recruitForm(HttpSession session) {
+    EpVo epVo = (EpVo) session.getAttribute("epLogin");
+    System.out.println("session >>" + epVo);
+
     if (session.getAttribute("epLogin") != null) {
       return "/epRecruit/epRecruitForm";
     } else {
@@ -47,8 +53,6 @@ public class EpRecruitController {
   public String epRecruitSave(EpRecruitVO epRecruitVO,@RequestParam("file") MultipartFile[] files, HttpSession session) throws IOException {
     int res = epRecruitService.epRecruitSave(epRecruitVO, files, session);
 
-
-
     return "redirect:/epRecruit/epRecruitForm";
   }
 
@@ -59,6 +63,36 @@ public class EpRecruitController {
 //
 //    return res;
 //  }
+  @PostMapping(value = "uploadSummernoteImageFile", produces = "application/json")
+  @ResponseBody
+  public JsonObject uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile) {
+
+    JsonObject jsonObject = new JsonObject();
+
+    String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+    String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
+    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+
+    String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+
+    File targetFile = new File(fileRoot + savedFileName);
+
+    try {
+      InputStream fileStream = multipartFile.getInputStream();
+      FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
+      jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+      jsonObject.addProperty("responseCode", "success");
+
+    } catch (IOException e) {
+      FileUtils.deleteQuietly(targetFile);	//저장된 파일 삭제
+      jsonObject.addProperty("responseCode", "error");
+      e.printStackTrace();
+    }
+
+    System.out.println("/uploadSummernoteImageFile >>> 요청드러옹ㅁ");
+    return jsonObject;
+  }
+
 
   @GetMapping("epRecruitActionSuccess")
   public String epRecruitActionSuccess(Model model) {
@@ -87,8 +121,11 @@ public class EpRecruitController {
   @GetMapping("epBoard")
   public String getEpBoard(Model model, Long epBoard) {
     EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
+    List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
+    epRecruitStacksByBoard.forEach(s -> System.out.println(s.getStack()));
 
     model.addAttribute("epRecruit", epRecruitFindOne);
+    model.addAttribute("epRecruitStack", epRecruitStacksByBoard);
     return "epRecruit/epRecruitPoster";
   }
 }
