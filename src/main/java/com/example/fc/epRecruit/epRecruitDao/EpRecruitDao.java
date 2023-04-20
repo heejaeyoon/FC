@@ -1,7 +1,6 @@
 package com.example.fc.epRecruit.epRecruitDao;
 
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
-import com.example.fc.pageNation.pageVo.PageNationVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

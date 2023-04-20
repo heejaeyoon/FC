@@ -2,7 +2,6 @@ package com.example.fc.epRecruit.epRecruitService;
 
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
-import com.example.fc.pageNation.pageVo.PageNationVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

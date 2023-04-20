@@ -3,33 +3,40 @@
         PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.fc.support.supportDao.SupportDao">
+<mapper namespace="com.example.fc.support.supportDao.NoticeDao">
     <!--공지사항 모두 조회-->
-    <select id="noticeAllList" resultType="com.example.fc.support.supportVo.SupportVo">
+    <select id="noticeAllList" resultType="com.example.fc.support.supportVo.NoticeVo">
         select notice_board, title, detail, sortation, create_Date
         from notice;
     </select>
 
     <!-- 공지사항 등록 -->
-    <insert id="noticeInsert" parameterType="com.example.fc.support.supportVo.SupportVo">
-        insert into notice(title, detail, sortation, create_Date)
-        values (#{title}, #{detail}, #{sortation}, now());
+    <insert id="noticeInsert" parameterType="com.example.fc.support.supportVo.NoticeVo">
+        insert into notice(title, detail, sortation,file_attached)
+        values (#{title}, #{detail}, #{sortation}, #{fileAttached});
     </insert>
 
+<!--    공지사항 게시판 번호 조회-->
+    <select id="findNoticeBoard" resultType="java.lang.Integer">
+        select notice_board from notice where title = #{title} and detail = #{detail};
+    </select>
+    
+    
     <!--  공지사항 상세보기-->
-    <select id="noticeOneList" resultType="com.example.fc.support.supportVo.SupportVo">
+    <select id="noticeOneList" resultType="com.example.fc.support.supportVo.NoticeVo">
         select notice_board,
                title,
                detail,
                sortation,
-               create_date
+               create_date,
+            file_attached
         from notice
         where notice_board = #{noticeBoard}
-
-
     </select>
+
+
     <!-- 공지사항 수정 modify -->
-    <update id="noticeModify" parameterType="com.example.fc.support.supportVo.SupportVo">
+    <update id="noticeModify" parameterType="com.example.fc.support.supportVo.NoticeVo">
         update notice
         set title=#{title},
             detail=#{detail},
