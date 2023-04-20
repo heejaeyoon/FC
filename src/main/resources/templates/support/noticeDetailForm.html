@@ -59,7 +59,13 @@
                 <th>상세내용</th>
                 <td>
                     <textarea class="textAreaInfo" name="detail" th:value="${noticeList.getDetail()}"
-                              th:text="${noticeList.getDetail()}"></textarea>
+                              th:text="${noticeList.getDetail()}">
+                    </textarea>
+                </td>
+            </tr>
+            <tr th:if="${noticeList.fileAttached == 1}">
+                <td th:each="list : ${noticeFilesList}">
+                    <img th:src="@{/notice/} + ${list.storedFileName}">
                 </td>
             </tr>
         </form>

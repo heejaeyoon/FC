@@ -7,6 +7,7 @@ import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+
 import com.example.fc.member.memberVo.MemberJobHuntingFilesVo;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
