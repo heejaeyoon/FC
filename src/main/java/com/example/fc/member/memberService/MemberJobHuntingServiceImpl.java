@@ -5,12 +5,18 @@ import com.example.fc.member.memberDao.MemberJobHuntingFilesDao;
 import com.example.fc.member.memberVo.MemberJobHuntingFilesVo;
 import com.example.fc.member.memberVo.MemberJobHuntingVo;
 import lombok.RequiredArgsConstructor;
+
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -21,12 +27,17 @@ public class MemberJobHuntingServiceImpl {
     private final MemberJobHuntingDao memberJobHuntingDao;
     private final MemberJobHuntingFilesDao memberJobHuntingFilesDao;
 
+    @Value("${saveJobHuntingFile}")
+    String savePath;
+
     //구직게시글 insert기능, 타임스탬프 이용함으로써 게시글 저장 날짜 자동 생성(now()사용 x)
     public int insertJobHunting(MemberJobHuntingVo jobHunt, MultipartFile[] file) throws IOException {
+
         System.out.println("file.length = " + file.length);
         //파일이 미첨부시 바로 저장
         if (file[0].isEmpty() || file[0].getOriginalFilename() == null || file[0].getOriginalFilename().equals("")) {
-            jobHunt.setFileAttached(0);
+            jobHunt.setFileAttached(0);//첨부된 파일 없다.
+
             int result = memberJobHuntingDao.insertJobHunting(jobHunt); //파일 저장
 
             /*member_stack테이블에 stack 저장*/
@@ -73,13 +84,14 @@ public class MemberJobHuntingServiceImpl {
                 UUID uuid = UUID.randomUUID(); // 중복되지 않은 값
                 String originalFileName = getFile.getOriginalFilename(); //파일의 본래 파일명
                 String storedFileName = uuid + "_" + originalFileName; // 파일의 중복되지 않는 값을 더한 파일명
-                String savePath = "files"; //파일경로, properies도 함께 참고
-                String location = "C:\\Users\\admin\\Documents\\FC_project\\src\\main\\resources\\static\\jobHunting\\files"; //DB에 저장할 경로
+
+                /*String savePath = "files"; //파일경로, properies도 함께 참고
+                String location = "C:\\Users\\admin\\Documents\\FC_project\\src\\main\\resources\\static\\jobHunting\\files"; //DB에 저장할 경로*/
                 File saveFile = new File(savePath, storedFileName);
                 getFile.transferTo(saveFile);//파일이동
 
                 /*파일 저장*/
-                MemberJobHuntingFilesVo files = MemberJobHuntingFilesVo.toSetterFilesVo((long) memberBoard,originalFileName,storedFileName,location);
+                MemberJobHuntingFilesVo files = MemberJobHuntingFilesVo.toSetterFilesVo((long) memberBoard, originalFileName, storedFileName, savePath);
                 int resultFiles = memberJobHuntingFilesDao.insertJobHuntingFiles(files);
                 System.out.println("resultFiles = " + resultFiles);
 
@@ -106,4 +118,22 @@ public class MemberJobHuntingServiceImpl {
         }
         return 1;
     }
+
+    //모든 구직 게시글
+/*    public List<MemberJobHuntingVo> findAllJobHunting(int limit, int offset) {
+
+        *//*컨트롤러에서 정한 한 페이지에 보여줄 게시글 갯수랑 초기 페이지값을 dao로 보내쥼*//*
+        List<MemberJobHuntingVo> jobHuntingList = memberJobHuntingDao.findAllJobHunting(limit, offset);
+
+        return jobHuntingList;
+    }*/
+
+    public List<MemberJobHuntingVo> findAllJobHunting() {
+
+        /*컨트롤러에서 정한 한 페이지에 보여줄 게시글 갯수랑 초기 페이지값을 dao로 보내쥼*/
+        List<MemberJobHuntingVo> jobHuntingList = memberJobHuntingDao.findAllJobHunting();
+
+        return jobHuntingList;
+    }
+
 }

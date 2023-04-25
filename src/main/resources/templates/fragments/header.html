@@ -19,6 +19,7 @@
                 <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0" class="nav-link px-2 text-white">구직</a></li>
                 <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인</a></li>
                 <li th:if="${session.memberLogin}"><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
+
                 <li><a href="#" class="nav-link px-2 text-white">추가기능</a></li>
 
                 <div class="dropdown">
