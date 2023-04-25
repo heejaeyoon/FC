@@ -25,6 +25,7 @@ dependencies {
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect' // templates의 구조를 잡기 위해 이 dependencies 를 추가해주어야한다
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation"org.springframework.boot:spring-boot-starter-websocket" //채팅구현을 위한 웹소캣
 
 
 }
