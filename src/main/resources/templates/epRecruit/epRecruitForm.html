@@ -16,7 +16,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0">기술스택</div>
+                <div class="col-form-label col-sm-2 pt-0"><label>기술스택</label></div>
 
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
@@ -80,7 +80,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0">게시글 기간</div>
+                <div class="col-form-label col-sm-2 pt-0"><label>게시글 기간</label></div>
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="1month" name="period" value="1개월">
@@ -99,7 +99,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0">모집상태</div>
+                <div class="col-form-label col-sm-2 pt-0"><label>모집상태</label></div>
 
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
@@ -116,7 +116,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0">성별</div>
+                <div class="col-form-label col-sm-2 pt-0"><label>성별</label></div>
                 <div class="col-sm-10">
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" id="any" name="gender" value="무관" checked>
@@ -138,7 +138,7 @@
                 <label class="col-form-label col-sm-2 pt-0" for="intPay">계약금</label>
                 <div class="col-sm-10">
                     <div class="input-group">
-                        <input class="form-control" id="intPay" type="number" name="payment" step="100000" min="0">
+                        <input class="form-control" id="intPay" type="number" name="payment" min="0">
                         <input class="form-control" id="stringPay" type="text" disabled style="color: gray">
                         <span class="input-group-text">원</span>
                     </div>
@@ -154,7 +154,7 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0">계약기간</div>
+                <div class="col-form-label col-sm-2 pt-0"><label>계약기간</label></div>
                 <div class="col-sm-10">
                     <div class="input-group">
                         <input class=" form-control" id="startDate" type="date" name="workDayStart">
@@ -187,10 +187,10 @@
             </div>
 
             <div class="row mb-3">
-                <label class="col-sm-2 col-form-label" for="file">사진 업로드</label>
+                <label class="col-sm-2 col-form-label" for="file">썸네일 등록</label>
                 <div class="col-sm-10">
                     <input class="form-control" type="file" id="file" name="file"
-                           accept=".jpg, .jpeg, .png" multiple/>
+                           accept=".jpg, .jpeg, .png"/>
                 </div>
             </div>
 
@@ -220,7 +220,7 @@
                 // 에디터 한글 설정
                 lang: "ko-KR",
                 // 에디터에 커서 이동 (input창의 autofocus라고 생각)
-                focus: true,
+                focus: false,
                 toolbar: [
                     // 글자 크기 설정
                     ['style', ['style']],
@@ -275,26 +275,6 @@
                     }
                 });
             }
-
-            // function submitBtn() {
-            //     let data = new FormData($("#form")[0]);
-            //
-            //     $.ajax({
-            //         url: "/epRecruit/epRecruitActionAjax",
-            //         method: 'POST',
-            //         contentType: false,
-            //         processData: false,
-            //         data: data,
-            //         success: function (res) {
-            //             if (res === 1) {
-            //                 console.log("save")
-            //             }
-            //         },
-            //         error: function () {
-            //             alert("통신실패")
-            //         }
-            //     });
-            // }
 
             document.querySelector("#startDate").value = new Date().toISOString().substring(0, 10);
             document.querySelector("#endDate").value = new Date().toISOString().substring(0, 10);

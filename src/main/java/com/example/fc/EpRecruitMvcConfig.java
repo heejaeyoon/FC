@@ -16,13 +16,17 @@ public class EpRecruitMvcConfig implements WebMvcConfigurer {
     String getEpRecruitThumbnailPath;
     @Value("${getEpRecruitMainThumbnailPath}")
     String getEpRecruitMainThumbnailPath;
+    @Value("${getEpRecruitContentPath}")
+    String getEpRecruitContentPath;
     @Value("${uploadEpRecruit}")
     String uploadEpRecruit;
+    @Value("${uploadEpRecruitContent}")
+    String uploadEpRecruitContent;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler(uploadEpRecruit).addResourceLocations(getEpRecruitMainThumbnailPath);
-        registry.addResourceHandler("/summernoteImage/**").addResourceLocations("file:///C:/summernote_image/");
+        registry.addResourceHandler(uploadEpRecruitContent).addResourceLocations(getEpRecruitContentPath);
     }
 
 //    @Bean

@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @Log4j2
 public class EpRecruitController {
+  @Value("${epRecruitContentUploadPath}")
+  String epRecruitContentUploadPath;
   private final EpRecruitService epRecruitService;
 
   @GetMapping("/epRecruitForm")
@@ -69,7 +72,7 @@ public class EpRecruitController {
 
     JsonObject jsonObject = new JsonObject();
 
-    String fileRoot = "C:\\summernote_image\\";	//저장될 외부 파일 경로
+    String fileRoot = epRecruitContentUploadPath;	//저장될 외부 파일 경로  C:\\summernote_image\\
     String originalFileName = multipartFile.getOriginalFilename();	//오리지날 파일명
     String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
 
@@ -80,7 +83,7 @@ public class EpRecruitController {
     try {
       InputStream fileStream = multipartFile.getInputStream();
       FileUtils.copyInputStreamToFile(fileStream, targetFile);	//파일 저장
-      jsonObject.addProperty("url", "/summernoteImage/"+savedFileName);
+      jsonObject.addProperty("url", "/epRecruitContent/"+savedFileName);
       jsonObject.addProperty("responseCode", "success");
 
     } catch (IOException e) {

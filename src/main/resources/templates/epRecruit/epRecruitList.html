@@ -18,9 +18,9 @@
                     </div>
                     <!--          <img src="..." class="card-img-top" alt="...">-->
                     <div class="card-body">
-                        <h5 class="card-title">[[${ ep.getEpBoard() }]]</h5>
+                        <h5 class="card-title" th:text="${ ep.getTitle() }"></h5>
                         <!--            <h5 class="card-title">[[${ ep.getTitle() }]]</h5>-->
-                        <p class="card-text">[[${ ep.getStack() }]]</p>
+                        <p class="card-text" th:text="${ ep.getStack() }"></p>
                     </div>
                     <div class="card-footer">
                         <!--                        <small class="text-body-secondary">Last updated 3 mins ago</small>-->
