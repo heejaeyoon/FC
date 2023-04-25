@@ -35,7 +35,7 @@
 </head>
 <div layout:fragment="content" class="container">
     <table>
-        <form action="/noticeInsert" method="post">
+        <form action="/noticeInsert" method="post" enctype="multipart/form-data">
             <tr>
                 <th>제목</th>
                 <td>
@@ -63,8 +63,8 @@
                 <td colspan="2">
                     <br>
                     <div class="submitDiv">
-                        <button style="margin-left: 280px" type="submit" class="btn btn-primary">
-                            첨부파일</button>&nbsp;
+                        <input style="margin-left: 280px" type="file" class="btn btn-primary" name="file" multiple>
+                            </input>&nbsp;
                         <button type="submit" class="btn btn-success">게시글 등록</button>
                     </div>
                 </td>
