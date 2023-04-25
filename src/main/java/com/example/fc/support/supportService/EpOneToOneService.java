@@ -1,11 +1,8 @@
 package com.example.fc.support.supportService;
 
-import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportDao.EpOneToOneDao;
 import com.example.fc.support.supportVo.EpOneToOneVo;
-import com.example.fc.support.supportVo.SupportVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

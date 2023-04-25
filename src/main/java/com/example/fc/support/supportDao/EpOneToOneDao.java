@@ -1,9 +1,7 @@
 package com.example.fc.support.supportDao;
 
 
-import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportVo.EpOneToOneVo;
-import com.example.fc.support.supportVo.SupportVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
