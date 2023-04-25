@@ -2,15 +2,18 @@ package com.example.fc.ep.epController;
 
 import com.example.fc.ep.epService.EpService;
 import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.support.supportService.EpOneToOneService;
+import com.example.fc.support.supportVo.EpOneToOneVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Parameter;
 
 @Controller
 @Slf4j
@@ -18,6 +21,8 @@ public class EpController {
 
     @Autowired
     EpService epService;
+    @Autowired
+    EpOneToOneService epOneToOneService;
 
 
     /* 회원가입 */
@@ -29,7 +34,6 @@ public class EpController {
     public String memberJoin(EpVo epVo){
         log.info("회원가입 폼에서 입력받은 데이터: {}",epVo);
         epService.epJoin(epVo);
-
         return "/ex";
     }
 
@@ -74,10 +78,8 @@ public class EpController {
     }
     @PostMapping("/epDelete")
     public String epDelete(EpVo epVo, HttpSession session){
-        int vo = epService.epDelete(epVo);
-        System.out.println("지우기~!! 성공했습니다");
+        epService.epDelete(epVo);
         session.removeAttribute("epLogin");
-
         return "/ex";
     }
     @ResponseBody // 값 변환을 위해 꼭 필요함
@@ -125,9 +127,38 @@ public class EpController {
         }else{
             System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
             //스크립트를 넣고 로케이션은 다음이동화면을 설정
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+            failmessage = "<script>alert('로그인후 이용해 주세요.'); history.go(-1);</script>";
             return failmessage;
         }
 
     }
+//    @GetMapping("/epPage")
+//    public String myPage(EpOneToOneVo epOneToOneVo, HttpSession session,Model model) {
+//        session.setAttribute("epOneToOneVo", epOneToOneVo);
+//        int count = epOneToOneService.epOneToOneCount(epOneToOneVo);
+//        System.out.println("epOneToOneVo = " + epOneToOneVo);
+//        model.addAttribute("count",count);
+//        System.out.println("count = " + count);
+//        session.getAttribute("epLogin");
+//        System.out.println("세션값 -----------------" + session.getAttribute("epLogin"));
+//        return "/ep/epMyPageForm";
+//    }
+//@GetMapping("/epPage")
+//public String myPage(HttpSession session, Model model) {
+//    EpOneToOneVo epOneToOneVo = (EpOneToOneVo) session.getAttribute("epOneToOneVo");
+//    if (epOneToOneVo == null) {
+//        epOneToOneVo = new EpOneToOneVo();
+//        epOneToOneVo.setEmail(session.getAttribute("epLogin").getEmail()); // email 속성 설정
+//        session.setAttribute("epOneToOneVo", epOneToOneVo);
+//    }
+//    int count = epOneToOneService.epOneToOneCount(epOneToOneVo);
+//    System.out.println("epOneToOneVo = " + epOneToOneVo);
+//    model.addAttribute("count", count);
+//    System.out.println("count = " + count);
+//    session.getAttribute("epLogin");
+//    System.out.println("세션값 -----------------" + session.getAttribute("epLogin"));
+//    return "/ep/epMyPageForm";
+//}
+
+
 }

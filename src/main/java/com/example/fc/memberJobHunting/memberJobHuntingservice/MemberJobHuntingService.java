@@ -42,7 +42,8 @@ public class MemberJobHuntingService {
         System.out.println("file.length = " + file.length);
         //파일이 미첨부시 바로 저장
         if (file[0].isEmpty() || file[0].getOriginalFilename() == null || file[0].getOriginalFilename().equals("")) {
-            jobHunt.setFileAttached(0);
+            jobHunt.setFileAttached(0);//첨부된 파일 없다.
+
             int result = memberJobHuntingDao.insertJobHunting(jobHunt); //파일 저장
 
             /*member_stack테이블에 stack 저장*/

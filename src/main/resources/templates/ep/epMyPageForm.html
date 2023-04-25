@@ -14,10 +14,10 @@
         <div id="content">
             <div class="wrap_my_home">
                 <div class="wrap_title_box">
-                    <h1 class="wrap_title"><strong>[[${session.memberLogin.nickName}]]님</strong></h1>
+                    <h1 class="wrap_title"><strong>[[${session.epLogin.name}]]님</strong></h1>
                     <div class="toolTipWrap">
                         <button type="button" class="btn_setting job_state"
-                                onclick="location.href='/modify'" style="margin-left: -430px;">내 정보 수정
+                                onclick="location.href='/epModify'" style="margin-left: -430px;">내 정보 수정
                         </button>
 
                         <div id="wrap_notification">
@@ -25,16 +25,12 @@
                                 <ul class="tabWrap">
                                     <li class="select">
                                         <button type="button" class="tab">지원 현황<span
-                                                class="badge">0</span>
+                                                class="badge">[[${session.epLogin.name}]]</span>
                                         </button>
                                     </li>
                                     <li>
-                                        <button type="button" class="tab">기업의 요청<span
-                                                class="badge">0</span></button>
-                                    </li>
-                                    <li>
-                                        <button type="button" class="tab">나의 문의 현황<span
-                                                class="badge">0</span></button>
+                                        <button type="button" class="tab" onclick="location.href='/epOneToOneFindEmail'"> 우리기업 총 1:1 문의<span
+                                                th:text="${count}" class="badge"></span></button>
                                     </li>
                                 </ul>
                                 <div class="wrap_cards">
