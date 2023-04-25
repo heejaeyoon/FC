@@ -42,7 +42,7 @@ public class ChatController {
 
     @MessageMapping("/chat.addUser")
     @SendTo("/topic/public")
-    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor, HttpSession session) {
+    public ChatMessage addUser(@Payload ChatMessage chatMessage, SimpMessageHeaderAccessor headerAccessor) {
         System.out.println("chatMessage aaa = " + chatMessage);
         //일반회원 로그인시 chatMessage 안 memberVo객체에 값을 저장
 
@@ -64,9 +64,8 @@ public class ChatController {
 */
 
         // Add username in web socket session
-
-        headerAccessor.getSessionAttributes().put("username", chatMessage.getSender());
-        System.out.println("ct addUser  getSender= " + chatMessage.getSender());
+        headerAccessor.getSessionAttributes().put("username",chatMessage.getMemberVo());
+        System.out.println("ct addUser  getSender= " + chatMessage.getMemberVo());
 
 
      /*   chatService.insertChatRoom(chatMessage.getSender()); // 채팅방 생성*/

@@ -74,7 +74,7 @@
 
             }else if([[${session.memberLogin}]]){
                 userInfo= [[${session.memberLogin}]];
-                console.log(userInfo.nickName+"asdsad")
+                console.log(userInfo+"asdsad")
             }else {
                 alert('로그인 해주세요');
             }
@@ -113,7 +113,7 @@
                 // Tell your username to the server
                 stompClient.send("/app/chat.addUser",
                     {},
-                    JSON.stringify({sender: userInfo.nickName, type: 'JOIN'})
+                    JSON.stringify({memberVo: userInfo, type: 'JOIN'})
                 )
 
                /* connectingElement.classList.add('hidden');*/
