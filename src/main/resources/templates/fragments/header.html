@@ -14,9 +14,7 @@
             </a>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-
-
+                <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
                 <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1" class="nav-link px-2 text-white">구인</a></li>
                 <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0" class="nav-link px-2 text-white">구직</a></li>
                 <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인</a></li>
@@ -31,7 +29,7 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
                         <li><a class="dropdown-item" href="#">FAQ</a></li>
-                        <li><a class="dropdown-item" href="#">1:1 문의</a></li>
+                        <li><a class="dropdown-item" href="/personalInsert">1:1 문의</a></li>
                     </ul>
                 </div>
                 </li>
@@ -54,7 +52,8 @@
                     <span>[[${session.epLogin.name}]]님 환영합니다.</span>
                     <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
                     </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/epModify'">기업 페이지</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
+                        <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
                 </div>
 
                 <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
@@ -62,6 +61,7 @@
                     </button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
                 </div>
+
             </div>
 
         </div>

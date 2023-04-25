@@ -1,6 +1,6 @@
-package com.example.fc.member.memberDao;
+package com.example.fc.memberJobHunting.memberJobHuntingDao;
 
-import com.example.fc.member.memberVo.MemberJobHuntingVo;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -20,4 +20,7 @@ public interface MemberJobHuntingDao {
 
    //모든 게시글 => 페이징을 위해서
    public List<MemberJobHuntingVo> findAllJobHunting();
+
+   //poster기능 => 특정 게시글 보기
+   MemberJobHuntingVo findAllByMemberBoard(MemberJobHuntingVo memberBoard);
 }

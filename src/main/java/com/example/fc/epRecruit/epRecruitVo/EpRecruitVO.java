@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 public class EpRecruitVO {
   private Long epBoard;
+  private Long epId;
   private String title;
   private String stack;
   private String period;
