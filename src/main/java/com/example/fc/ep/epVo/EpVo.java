@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class EpVo {
-
+    private Long epId;
     private String name;
     private String content;
     private String password;

@@ -1,8 +1,11 @@
 package com.example.fc.epRecruit.epRecruitService;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitFilesDao;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitMainThumbnailDao;
+import com.example.fc.epRecruit.epRecruitDao.EpRecruitStackDao;
+import com.example.fc.epRecruit.epRecruitVo.*;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
@@ -12,7 +15,6 @@ import com.example.fc.member.memberVo.MemberJobHuntingFilesVo;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,8 +25,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -41,17 +41,39 @@ public class EpRecruitService {
     @Value("${epRecruitMainThumbnailUploadPath}")
     private String epRecruitMainThumbnailPath;
     private final EpRecruitDao epRecruitDao;
+    private final EpRecruitStackDao epRecruitStackDao;
     private final EpRecruitFilesDao epRecruitFilesDao;
     private final EpRecruitMainThumbnailDao epRecruitMainThumbnailDao;
 
     public int epRecruitSave(EpRecruitVO epRecruitVO, MultipartFile[] files, HttpSession session) throws IOException {
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        System.out.println("session >>" + epVo);
+
+        epRecruitVO.setEpId(epVo.getEpId());
+
+        if ( epRecruitVO.getEpId() == null) {
+            epRecruitVO.setEpId(-1L);
+        }
+
+        if ( epRecruitVO.getPayment().equals("0,추후협상") ) {
+            epRecruitVO.setPayment("추후협상");
+        }
 
         //파일이 미첨부시 바로 저장
         if ( files[0].isEmpty() ) {
             epRecruitVO.setFileAttached("0");
             int result = epRecruitDao.epRecruitSave(epRecruitVO);
-
-
+//          스택테이블에 저장
+            String[] stackLst = epRecruitVO.getStack().split(",");
+//          스택 길이만큼 스택 테이블에 저장
+            for (String stack : stackLst) {
+//              필요한것: 현재 로그인한 id, 게시글 번호, 스택
+                Long epId = epVo.getEpId();
+                Long epBoard = epRecruitDao.epRecruitLastId();
+                EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
+                int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+                System.out.println("StackSave>"+stack+">>>" + res);
+            }
 
 //            나도 만약 기술을 저장할때 ',' 구분자말고 ' ' 로 구분할때 제웅이형이 만든 코드 참고하기
 
@@ -80,6 +102,18 @@ public class EpRecruitService {
             if ( result == 1) {
                 lastEpBoard = epRecruitDao.epRecruitLastId();
             }
+//          스택테이블에 저장
+            String[] stackLst = epRecruitVO.getStack().split(",");
+//          스택 길이만큼 스택 테이블에 저장
+            for (String stack : stackLst) {
+//              필요한것: 현재 로그인한 id, 게시글 번호, 스택
+                Long epId = epVo.getEpId();
+                Long epBoard = epRecruitDao.epRecruitLastId();
+                EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
+                int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+                System.out.println("StackSave>"+stack+">>>" + res);
+            }
+
             // 모든 사진들 업로드 및 썸네일들 생성
             for (MultipartFile file : files) {
                 UUID uuid = UUID.randomUUID(); // 랜덤 식별자 생성
@@ -159,7 +193,17 @@ public class EpRecruitService {
     }
 
     public EpRecruitVO epRecruitFindOne(Long epBoard) {
-        return epRecruitDao.epFindById(epBoard);
+        return epRecruitDao.epRecruitFindById(epBoard);
+    }
+
+    public HashMap<String, Object> epFindById(Long epBoard) {
+        EpRecruitVO epRecruitVO = epRecruitDao.epRecruitFindById(epBoard);
+        Long epId = epRecruitVO.getEpId();
+        return epRecruitDao.epFindById(epId);
+    }
+
+    public List<EpRecruitStackVO> epRecruitStacksByBoard(Long epBoard) {
+        return epRecruitStackDao.findEpRecruitStacksByBoard(epBoard);
     }
 
     public Long epRecruitLastId() {
