@@ -1,6 +1,5 @@
 package com.example.fc.support.supportService;
 
-import com.example.fc.member.memberDao.MemberJobHuntingFilesDao;
 import com.example.fc.support.supportDao.NoticeDao;
 import com.example.fc.support.supportDao.NoticeFilesDao;
 import com.example.fc.support.supportVo.NoticeFilesVo;
