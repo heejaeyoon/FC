@@ -1,4 +1,4 @@
-package com.example.fc.member.memberVo;
+package com.example.fc.memberJobHunting.memberJobHuntingVo;
 
 import lombok.*;
 
