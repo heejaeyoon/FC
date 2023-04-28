@@ -8,7 +8,8 @@
     <div class="container">
         <div class="headTitle">
             <div class="h1">구인 리스트</div>
-            <a class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
+            <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
+
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <div class="col" th:each="ep : ${epList}">

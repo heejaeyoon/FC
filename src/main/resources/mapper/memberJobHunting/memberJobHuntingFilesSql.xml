@@ -11,5 +11,4 @@
     <select id="findAllFilesByMemberBoard" parameterType="java.lang.Long" resultType="com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingFilesVo">
         select * from job_hunting_files where member_board = #{memberBoard}
     </select>
-
 </mapper>

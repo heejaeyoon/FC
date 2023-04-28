@@ -17,7 +17,6 @@ public class NoticeVo {
     private int ing;
     private String updateDate;
     private String createDate;
-    private String categories;
     private int fileAttached; //파일 첨부상태 : 0 미첨부, 1 첨부
 
 
