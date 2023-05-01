@@ -22,7 +22,6 @@ public class EpRecruitVO {
   private String addr;
   private String detail;
   private String createDate;
-  private String epName;
   private String updateDate;
   private String fileAttached;
 }
