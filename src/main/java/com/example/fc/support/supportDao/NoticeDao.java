@@ -1,7 +1,6 @@
 package com.example.fc.support.supportDao;
 
 
-import com.example.fc.member.memberVo.MemberJobHuntingVo;
 import com.example.fc.support.supportVo.NoticeVo;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,19 +1,15 @@
 package com.example.fc.member.memberController;
 
-import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -27,7 +23,7 @@ public class MemberController {
 
     @GetMapping("/")
     public String member() {
-        return "ex";
+        return "main";
     }
 
     /* 회원가입 전 회원/기업 선택 */
@@ -87,7 +83,7 @@ public class MemberController {
             session.setAttribute("memberLogin", vo);
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
             //로그인 성공시
-            returnURL = "/ex";
+            returnURL = "/main";
             System.out.println("session 저장 값 : " + session.getAttribute( "memberLogin" ));
         } else {
             //로그인 실패시

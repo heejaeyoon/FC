@@ -35,20 +35,22 @@
 </head>
 <div layout:fragment="content" class="container">
     <table>
-        <form action="/noticeInsert" method="post" enctype="multipart/form-data">
+        <form action="/noticeModify" method="post" id="modifySuccess">
             <tr>
                 <th>제목</th>
                 <td>
-                    <input type="text" name="title" class="inputInfo">
+                    <input type="text" name="noticeBoard" class="inputInfo" th:value="${noticeList.getNoticeBoard()}"
+                           hidden="hidden">
+                    <input type="text" name="title" class="inputInfo" th:value="${noticeList.getTitle()}">
                 </td>
             </tr>
             <tr>
                 <div>
                     <th>구분</th>
                     <td>
-                        <input type="radio" id="public" name="sortation" value="공지사항" checked>
+                        <input type="radio" id="public" name="sortation" value="공지사항" th:checked="${#strings.contains(noticeList.getSortation(),'공지사항')}">
                         <label for="public">공지사항</label>
-                        <input type="radio" id="private" name="sortation" value="이벤트">
+                        <input type="radio" id="private" name="sortation" value="이벤트" th:checked="${#strings.contains(noticeList.getSortation(),'이벤트')}">
                         <label for="private">이벤트</label>
                     </td>
                 </div>
@@ -56,20 +58,37 @@
             <tr>
                 <th>상세내용</th>
                 <td>
-                    <textarea class="textAreaInfo" id="detail" name="detail"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <br>
-                    <div class="submitDiv">
-                        <button type="submit" class="btn btn-success">게시글 등록</button>
-                    </div>
+                    <textarea th:class="form-control" id="detail" name="detail" th:utext="${noticeList.getDetail()}" />
                 </td>
             </tr>
         </form>
     </table>
+    <table>
+        <tr>
+            <td colspan="2">
+                <br>
+                <div class="submitDiv">
+                        <span>
+                            <button style="margin-left: 70px" type="submit" class="btn btn-primary"
+                                    onclick="location.href='/noticeAllList'">목록으로</button>&nbsp
+                        </span>
+                    <div th:if="${session.memberLogin}">
+                        <div th:if="${session.memberLogin.role}=='admin'">
 
+                            <button style="margin-left: 600px" type="submit" class="btn btn-success" form="modifySuccess">수정 완료</button>
+                            <form action="/noticeDelete" method="post" style="display: inline-block">
+                                <input name="noticeBoard" type="text" th:value="${noticeList.getNoticeBoard()}"
+                                       hidden="hidden">
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- Content Page의 CSS fragment 삽입 -->
     <th:block layout:fragment="css">
         <link th:rel="stylesheet" th:href="@{/css/summernote/summernote-lite.min.css}">
     </th:block>
@@ -130,7 +149,7 @@
                 $.ajax({
                     data : data,
                     type : "POST",
-                    url : "/uploadSummernoteImageFile",
+                    url : "/epRecruit/uploadSummernoteImageFile",
                     contentType : false,
                     processData : false,
                     success : function(data) {
@@ -143,6 +162,5 @@
             }
         </script>
     </th:block>
-
 </div>
 </html>
