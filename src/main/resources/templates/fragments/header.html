@@ -2,107 +2,103 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"/>
 //      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <style>
+        .container {
+            position: relative;
+            width: 50%;
+        }
+
+        .image {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #008CBA;
+            overflow: hidden;
+            width: 0;
+            height: 100%;
+            transition: .5s ease;
+        }
+
+        .container:hover .overlay {
+            width: 100%;
+        }
+
+        .text {
+            color: white;
+            font-size: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<header class="d-flex justify-content-center py-3">
+    <div class="w-100 d-flex justify-content-between" style="align-items: center; padding:0 80px;">
+        <ul class="d-flex" style="align-items: center">
+            <li class="me-5"><a href="/" class="nav-link px-2 text-white"><img src="../css/img/FC.png" width="200"
+                                                                               height="100"></a></li>
+            <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1"
+                                                                            class="nav-link px-2 text-dark"><i
+                    class="fa fa-fw fa-user"></i>구인</a></li>
+            <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0"
+                                                                            class="nav-link px-2 text-dark">구직</a></li>
+            <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark"><i
+                    class="fa fa-fw fa-user"></i>구인</a></li>
+            <li th:if="${session.memberLogin}"><a href="/memberJobHunting" class="nav-link px-2 text-dark">구직</a></li>
+
+            <li><a href="#" class="nav-link px-2 text-dark">추가기능</a></li>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">고객지원
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
+                    <li><a class="dropdown-item" href="#">FAQ</a></li>
+                    <li><a class="dropdown-item" href="/personalInsert">1:1 문의</a></li>
+                </ul>
+            </div>
+            </li>
+        </ul>
 
 
-<header class="p-3 text-bg-dark">
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
-                    <use xlink:href="#bootstrap"/>
-                </svg>
-            </a>
+        <div class="text-end">
+            <div th:if="${session.memberLogin}">
+                <span>[[${session.memberLogin.nickName}]]님 환영합니다.</span>
+                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/logout'">로그아웃
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
+            </div>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-                <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1" class="nav-link px-2 text-white">구인</a></li>
-                <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0" class="nav-link px-2 text-white">구직</a></li>
-                <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-white">구인</a></li>
-                <li th:if="${session.memberLogin}"><a href="/memberJobHunting" class="nav-link px-2 text-white">구직</a></li>
+            <div th:if="${session.epLogin}">
+                <span>[[${session.epLogin.name}]]님 환영합니다.</span>
+                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/logout'">로그아웃
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
+                    <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
+            </div>
 
-                <li><a href="#" class="nav-link px-2 text-white">추가기능</a></li>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                            data-bs-toggle="dropdown" aria-expanded="false">고객지원
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
-                        <li><a class="dropdown-item" href="#">FAQ</a></li>
-                        <li><a class="dropdown-item" href="/personalInsert">1:1 문의</a></li>
-                    </ul>
-                </div>
-                </li>
-            </ul>
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..."
-                       aria-label="Search">
-            </form>
-
-            <div class="text-end">
-                <div th:if="${session.memberLogin}">
-                    <span>[[${session.memberLogin.nickName}]]님 환영합니다.</span>
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
-                    </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
-                </div>
-
-                <div th:if="${session.epLogin}">
-                    <span>[[${session.epLogin.name}]]님 환영합니다.</span>
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/logout'">로그아웃
-                    </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
-                        <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
-                </div>
-
-                <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
-                    <button type="button" class="btn btn-outline-light me-2" onclick="location.href='/login'">로그인
-                    </button>
-                    <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
-                </div>
-
+            <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
+                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/login'">로그인
+                </button>
+                <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
             </div>
 
         </div>
+
     </div>
 </header>
 </html>
-
-<!--<div th:fragment="header">-->
-<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
-<!--        <div class="container-fluid">-->
-<!--            <a class="navbar-brand" href="/">heejae Shop</a>-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--                    <li class="nav-item" >//sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/admin/item/new">상품등록</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">// sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/admin/items">상품관리</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/cart">장바구니</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" > // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/orders">구매이력</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAnonymous()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/member/login">로그인</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/member/logout">로그아웃</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <form class="d-flex" role="search">-->
-<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</div>-->
-<!--</html>-->

@@ -46,7 +46,7 @@ public class OneToOneController {
         } else if (session.getAttribute("memberLogin") !=null) {
             return "/support/memberOneToOneQuestion";
         }else {
-            return "ex";
+            return "main";
         }
     }
 
@@ -63,7 +63,7 @@ public class OneToOneController {
             memberOneToOneService.mPersonalInquire(memberOneToOneVo);
             System.out.println("personalVo 입력성공하였습니다. === " + memberOneToOneVo);
         }
-            return "/ex";
+            return "main";
     }
     @GetMapping("/epPage")
     public String myPage(HttpSession session, Model model) {

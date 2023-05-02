@@ -7,7 +7,7 @@
     <!--공지사항 모두 조회-->
     <select id="noticeAllList" resultType="com.example.fc.support.supportVo.NoticeVo">
         select notice_board, title, detail, sortation, create_Date
-        from notice;
+        from notice order by create_date desc ;
     </select>
 
     <!-- 공지사항 등록 -->
