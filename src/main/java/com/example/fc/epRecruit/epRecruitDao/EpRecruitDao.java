@@ -1,13 +1,10 @@
 package com.example.fc.epRecruit.epRecruitDao;
 
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import org.apache.ibatis.annotations.Mapper;
-
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface EpRecruitDao {
@@ -26,6 +23,12 @@ public interface EpRecruitDao {
 
 //    기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다
     public Long epRecruitLastId();
+
+//    기업게시판 삭제
+    public int epRecruitDeleteById(Long epBoard);
+
+//    기업게시판 수정
+    public int epRecruitUpdateById(EpRecruitVO epRecruitVO);
 
 //    기업게시판 + 썸네일 리스트
     public List<EpRecruitLeftJoinMainThumbnailVO> epRecruitMainList();
