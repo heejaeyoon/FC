@@ -8,7 +8,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 
-public class NoticeVo {
+public class EpOneToOneVo {
+
 
     private Long id;
     private String title;
@@ -18,8 +19,6 @@ public class NoticeVo {
     private String updateDate;
     private String createDate;
     private String categories;
-    private int fileAttached; //파일 첨부상태 : 0 미첨부, 1 첨부
-
 
 
 }

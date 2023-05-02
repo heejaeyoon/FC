@@ -4,7 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
-
 <div layout:fragment="content" class="container">
     <form  method="post">
         <table width="800">
@@ -99,7 +98,7 @@
 <!--                    &lt;!&ndash; href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다&ndash;&gt;-->
 <!--                    <button type="submit" class="btn btn-success">수정하기</button>-->
                     <input type="submit" class="btn btn-success"  value="수정" formaction="/epModify" method="post">
-                    <input type="submit" class="btn btn-success"  value="삭제" formaction="/epDelete" method="post">
+                    <input type="submit" class="btn btn-success"  value="회원탈퇴" formaction="/epDelete" method="post" onclick="alert('회원탈퇴에 성공했습니다~!')">
                 </td>
             </tr>
         </table>

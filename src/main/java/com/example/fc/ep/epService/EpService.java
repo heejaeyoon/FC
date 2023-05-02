@@ -4,6 +4,7 @@ import com.example.fc.ep.epDao.EpDao;
 import com.example.fc.ep.epVo.EpVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Service
 public class EpService {
