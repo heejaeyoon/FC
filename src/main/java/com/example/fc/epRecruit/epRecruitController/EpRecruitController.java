@@ -2,15 +2,11 @@ package com.example.fc.epRecruit.epRecruitController;
 
 
 import com.example.fc.ep.epVo.EpVo;
-import com.example.fc.epRecruit.epRecruitDao.EpRecruitDao;
 import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
-import com.example.fc.epRecruit.epRecruitVo.*;
-import com.google.gson.JsonObject;
-import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
-import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitStackVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
@@ -21,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-
 import java.util.List;
 import java.util.UUID;
 
