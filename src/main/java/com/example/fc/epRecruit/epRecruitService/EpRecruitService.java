@@ -41,9 +41,12 @@ public class EpRecruitService {
     private final EpRecruitFilesDao epRecruitFilesDao;
     private final EpRecruitMainThumbnailDao epRecruitMainThumbnailDao;
 
-    public int epRecruitSave(EpRecruitVO epRecruitVO, MultipartFile[] files, HttpSession session) throws IOException {
+    public int epRecruitSave(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin, MultipartFile[] files, HttpSession session) throws IOException {
         EpVo epVo = (EpVo) session.getAttribute("epLogin");
         System.out.println("session >>" + epVo);
+
+        String showingPeriod = showingDate + " " + showingHour + ":" + showingMin + ":59"; //yyyy-mm-dd hh:mm:ss 으로 저장
+        epRecruitVO.setShowingPeriod(showingPeriod);
 
         epRecruitVO.setEpId(epVo.getEpId());
 
@@ -212,7 +215,7 @@ public class EpRecruitService {
         int epRecruitStackDeleteByIdRes = epRecruitStackDao.epRecruitStackDeleteById(epBoard);
     }
 
-    public void epRecruitUpdate(EpRecruitVO epRecruitVO, HttpSession session, Long epBoard) {
+    public void epRecruitUpdate(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin, HttpSession session, Long epBoard) {
 //        epRecruit 수정
 //        epRecruit 스택들 수정
 //        -- 순서 --
@@ -223,6 +226,11 @@ public class EpRecruitService {
 
 //        중복부분 수정
         if (epRecruitVO.getPayment().equals("0,추후협상")) epRecruitVO.setPayment("추후협상");
+
+//        게시기간 수정
+        String showingPeriod = showingDate + " " + showingHour + ":" + showingMin + ":59"; //yyyy-mm-dd hh:mm:ss 으로 저장
+        epRecruitVO.setShowingPeriod(showingPeriod);
+
 //        epRecruit 업데이트 쿼리 수행
         int epRecruitUpdateByIdRes = epRecruitDao.epRecruitUpdateById(epRecruitVO);
 

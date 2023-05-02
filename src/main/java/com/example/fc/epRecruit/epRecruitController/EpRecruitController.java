@@ -52,8 +52,12 @@ public class EpRecruitController {
     //  구인 게시판 저장
     @PostMapping("/epRecruitAction")
     @ResponseBody
-    public String epRecruitSave(EpRecruitVO epRecruitVO, @RequestParam("file") MultipartFile[] files, HttpSession session) throws IOException {
-        int res = epRecruitService.epRecruitSave(epRecruitVO, files, session);
+    public String epRecruitSave(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin, @RequestParam("file") MultipartFile[] files, HttpSession session) throws IOException {
+
+        String showingPeriod = showingDate + " " + showingHour + ":" + showingMin + ":59";
+        log.info("showingPeriod>>> " + showingPeriod);
+
+        int res = epRecruitService.epRecruitSave(epRecruitVO, showingDate, showingHour, showingMin, files, session);
 
         return "redirect:/epRecruit/epRecruitForm";
     }
@@ -138,12 +142,12 @@ public class EpRecruitController {
     }
 
     @PostMapping("updateAction")
-    public String update(EpRecruitVO epRecruitVO, HttpSession session, Long epBoard, RedirectAttributes redirect) {
+    public String update(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin,HttpSession session, Long epBoard, RedirectAttributes redirect) {
 //        epRecruit 수정
 //        epRecruit 스택들 수정
         log.info("update >>> " + epBoard);
         log.info("update >>> " + epRecruitVO);
-        epRecruitService.epRecruitUpdate(epRecruitVO, session, epBoard);
+        epRecruitService.epRecruitUpdate(epRecruitVO, showingDate, showingHour, showingMin, session, epBoard);
 
         redirect.addAttribute("epBoard", epBoard);
         return "redirect:/epRecruit/poster";

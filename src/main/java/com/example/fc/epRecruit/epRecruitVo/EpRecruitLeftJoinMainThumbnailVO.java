@@ -12,7 +12,7 @@ public class EpRecruitLeftJoinMainThumbnailVO {
   private Long epBoard;
   private String title;
   private String stack;
-  private String period;
+  private String showingPeriod;
   private String recruit;
   private String gender;
   private String payment;

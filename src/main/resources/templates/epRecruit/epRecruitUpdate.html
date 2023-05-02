@@ -128,19 +128,13 @@
             </div>
 
             <div class="row mb-3">
-                <div class="col-form-label col-sm-2 pt-0"><label>게시글 기간</label></div>
+                <div class="col-form-label col-sm-2 pt-0"> <label>게시글 종료 기간</label> </div>
                 <div class="col-sm-10">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input month1" type="radio" id="1month" name="period" value="1개월">
-                        <label class="form-check-label" for="1month">1개월</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input month3" type="radio" id="3month" name="period" value="3개월" >
-                        <label class="form-check-label" for="3month">3개월</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input month6" type="radio" id="6month" name="period" value="6개월">
-                        <label class="form-check-label" for="6month">6개월</label>
+                    <div class="input-group">
+                        <input class=" form-control" id="showingDate" type="date" name="showingDate">
+<!--                        <span class="input-group-text">~</span>-->
+                        <select class="form-select" name="showingHour" id="showingHour"></select>
+                        <select class="form-select" name="showingMin" id="showingMin"></select>
                     </div>
                 </div>
             </div>
@@ -197,6 +191,17 @@
         <script th:src="@{/js/summernote/summernote-lite.min.js}"></script>
         <script th:src="@{/js/summernote/lang/summernote-ko-KR.min.js}"></script>
         <script th:inline="javascript">
+            const showingPerioud = [[${ epRecruit.showingPeriod }]];
+
+            const showingDate = showingPerioud.substring(0,10);
+            const showingHour = showingPerioud.substring(11,13);
+            const showingMin = showingPerioud.substring(14,16);
+
+            const inpShowingDate = document.querySelector("#showingDate");
+            const selShowingHour = document.querySelector("#showingHour");
+            const selShowingMin = document.querySelector("#showingMin");
+
+            inpShowingDate.value = showingDate;
 
             const checkboxjava = document.querySelector("#java");
             const checkboxjavascript = document.querySelector("#javascript");
@@ -209,9 +214,6 @@
             const checkboxjpa = document.querySelector("#jpa");
             const checkboxthymeleaf = document.querySelector("#thymeleaf");
             const checkboxbootstarp = document.querySelector("#bootstrap");
-            const checkbox1month = document.querySelector(".month1");
-            const checkbox3month = document.querySelector(".month3");
-            const checkbox6month = document.querySelector(".month6");
             const checkboxpublic = document.querySelector("#public");
             const checkboxprivate = document.querySelector("#private");
             const checkboxany = document.querySelector("#any");
@@ -222,7 +224,7 @@
             const intPay = document.getElementById("intPay");
 
             const epRecruitStacks = [[${epRecruit.stack}]]; // 스택들
-            const epRecruitPeriod = [[${epRecruit.period}]] // 게시글기간
+
             const epRecruitRecruitStatus = [[${epRecruit.recruit}]] // 모집상태
             const epRecruitGender = [[${epRecruit.gender}]] // 성별
             const epRecruitPayment = [[${epRecruit.payment}]] // 계약금
@@ -232,16 +234,6 @@
             if (epRecruitPayment.includes("추후협상")) {
                 checkBoxPay.checked = true;
                 intPay.disabled = true;
-            }
-
-            if (epRecruitPeriod.includes(checkbox1month.value)) {
-                checkbox1month.checked = true;
-            }
-            if (epRecruitPeriod.includes(checkbox3month.value)) {
-                checkbox3month.checked = true;
-            }
-            if (epRecruitPeriod.includes(checkbox6month.value)) {
-                checkbox6month.checked = true;
             }
 
             if (epRecruitRecruitStatus.includes(checkboxpublic.value)) {
@@ -294,6 +286,27 @@
             if (stacksArr.includes(checkboxthymeleaf.value)) {
                 checkboxthymeleaf.checked = true;
             }
+
+            for (let i = 0; i < 24; i++) {
+                let opt = document.createElement("option");
+                opt.value = i;
+                opt.innerText = i + "시";
+                if ( i === Number(showingHour)) {
+                    opt.selected = true;
+                }
+                selShowingHour.options.add(opt)
+            }
+
+            for (let i = 0; i < 60; i++) {
+                let opt = document.createElement("option");
+                opt.value = i;
+                opt.innerText = i + "분";
+                if ( i === Number(showingMin)) {
+                    opt.selected = true;
+                }
+                selShowingMin.options.add(opt)
+            }
+
             $('#detail').summernote({
                 // 에디터 높이
                 height: 500,
