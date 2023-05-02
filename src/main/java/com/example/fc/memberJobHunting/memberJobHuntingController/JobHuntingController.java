@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -59,17 +60,18 @@ public class JobHuntingController {
 
     //게시글 리스트
     @GetMapping("/memberJobHuntingList")
-    public String getMemberJobHuntingList(Model model, @PageableDefault(page = 0,size = 6) Pageable pageable){
-        List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
-        int start = (int)pageable.getOffset();
-        int end = Math.min(start + pageable.getPageSize(),jobHuntingList.size());
-        final Page<MemberJobHuntingVo> page = new PageImpl<>(jobHuntingList.subList(start, end), pageable, jobHuntingList.size());
-        System.out.println("jobHuntingList = " + jobHuntingList);
+    public String getMemberJobHuntingList(Model model, HttpSession session, @PageableDefault(page = 0,size = 6) Pageable pageable){
+        if(session.getAttribute("epLogin") !=null || session.getAttribute("memberLogin") !=null){
+            List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
+            int start = (int) pageable.getOffset();
+            int end = Math.min(start + pageable.getPageSize(), jobHuntingList.size());
+            final Page<MemberJobHuntingVo> page = new PageImpl<>(jobHuntingList.subList(start, end), pageable, jobHuntingList.size());
+            System.out.println("jobHuntingList = " + jobHuntingList);
 
-        model.addAttribute("list", page);
-      /*  model.addAttribute("list", jobHuntingList);*/
-        return "jobHunting/memberJobHuntingList";
-    }
+            model.addAttribute("list", page);
+            /*  model.addAttribute("list", jobHuntingList);*/
+            return "jobHunting/memberJobHuntingList";
+        }else {return "redirect:/login";}}
     
 
     //작성된 게시글 보기
