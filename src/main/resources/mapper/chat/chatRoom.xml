@@ -5,8 +5,5 @@
 
 <mapper namespace="com.example.fc.chat.chatDao.ChatRoomDao">
 
-    <insert id="insertChatRoom" parameterType="com.example.fc.chat.chatVo.ChatRoomVo">
-        insert into
-    </insert>
-    
+
 </mapper>
