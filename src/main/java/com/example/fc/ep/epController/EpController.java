@@ -41,6 +41,11 @@ public class EpController {
         session.removeAttribute("emailFind");
         return "/loginForm";
     }
+    @GetMapping("/addMoreGetJob")
+    public String addMoreGetJob(){
+
+        return "/loginForm";
+    }
 
     @PostMapping("/epLogin")
     public String epLogin(EpVo epVo, HttpSession session){
@@ -61,6 +66,7 @@ public class EpController {
         }
 
     }
+
     @GetMapping("/epModify")
     public String epModify(){
         System.out.println("epService = " + epService);
@@ -128,6 +134,10 @@ public class EpController {
             return failmessage;
         }
 
+    }
+    @GetMapping("/M")
+    public String M(){
+        return "/Modal";
     }
 //    @GetMapping("/epPage")
 //    public String myPage(EpOneToOneVo epOneToOneVo, HttpSession session,Model model) {

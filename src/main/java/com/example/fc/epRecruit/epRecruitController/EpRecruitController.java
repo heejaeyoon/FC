@@ -110,10 +110,21 @@ public class EpRecruitController {
         return "/epRecruit/epRecruitActionSuccess";
     }
 
-    @GetMapping("/epRecruitList")
-    public String EpRecruitList(Model model, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+  @GetMapping("epRecruitActionSuccess")
+  public String epRecruitActionSuccess(Model model) {
+    Long epRecruitLastId = epRecruitService.epRecruitLastId();
+    model.addAttribute("epRecruitLastId", epRecruitLastId);
+    return "/epRecruit/epRecruitActionSuccess";
+  }
+
+
+  @GetMapping("/epRecruitList")
+  public String EpRecruitList(Model model, HttpSession session,@PageableDefault(page = 0, size = 6) Pageable pageable) {
+
+    if(session.getAttribute("epLogin") !=null || session.getAttribute("memberLogin") !=null){
 //    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
-        List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+      System.out.println("session = " + session.getId());
+    List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
 
 //    getOffset은 현제 페이지 넘버를 알려주는 함수
         final int start = (int) pageable.getOffset();
@@ -123,9 +134,10 @@ public class EpRecruitController {
 
         final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
-        model.addAttribute("epList", page);
-        return "/epRecruit/epRecruitList";
-    }
+    model.addAttribute("epList", page);
+
+      return "/epRecruit/epRecruitList";
+    }else {return "redirect:/login";}}
 
     @GetMapping("updateForm")
     public String update(Model model, Long epBoard) {
