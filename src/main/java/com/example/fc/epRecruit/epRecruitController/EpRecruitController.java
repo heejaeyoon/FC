@@ -110,13 +110,6 @@ public class EpRecruitController {
         return "/epRecruit/epRecruitActionSuccess";
     }
 
-  @GetMapping("epRecruitActionSuccess")
-  public String epRecruitActionSuccess(Model model) {
-    Long epRecruitLastId = epRecruitService.epRecruitLastId();
-    model.addAttribute("epRecruitLastId", epRecruitLastId);
-    return "/epRecruit/epRecruitActionSuccess";
-  }
-
 
   @GetMapping("/epRecruitList")
   public String EpRecruitList(Model model, HttpSession session,@PageableDefault(page = 0, size = 6) Pageable pageable) {
