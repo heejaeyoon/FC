@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -54,7 +55,6 @@ public class EpRecruitController {
 
     //  구인 게시판 저장
     @PostMapping("/epRecruitAction")
-    @ResponseBody
     public String epRecruitSave(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin, @RequestParam("file") MultipartFile[] files, HttpSession session) throws IOException {
 
         String showingPeriod = showingDate + " " + showingHour + ":" + showingMin + ":59";
@@ -62,7 +62,7 @@ public class EpRecruitController {
 
         int res = epRecruitService.epRecruitSave(epRecruitVO, showingDate, showingHour, showingMin, files, session);
 
-        return "redirect:/epRecruit/epRecruitForm";
+        return "redirect:/epRecruit/epRecruitList";
     }
 
     //  @PostMapping("/epRecruitActionAjax")
@@ -110,26 +110,34 @@ public class EpRecruitController {
         return "/epRecruit/epRecruitActionSuccess";
     }
 
+
     @GetMapping("/epRecruitList")
-    public String EpRecruitList(Model model, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+    public String EpRecruitList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+
+
+        if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
 //    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
-        List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+            System.out.println("session = " + session.getId());
+            List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
 
 //    getOffset은 현제 페이지 넘버를 알려주는 함수
-        final int start = (int) pageable.getOffset();
+            final int start = (int) pageable.getOffset();
 //    getPageSize() 는 화면에 보여줄 리스트 수
-        final int end = Math.min(start + pageable.getPageSize(), epRecruitList.size());
+            final int end = Math.min(start + pageable.getPageSize(), epRecruitList.size());
 //    System.out.println("epRecruitList.size() == " + epRecruitList.size());
 
-        final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
+            final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
-        model.addAttribute("epList", page);
-        return "/epRecruit/epRecruitList";
+            model.addAttribute("epList", page);
+
+            return "/epRecruit/epRecruitList";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("updateForm")
     public String update(Model model, Long epBoard) {
-        log.info("update >>> " + epBoard);
 
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard); // 게시판 정보
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard); // 스택들
@@ -145,7 +153,7 @@ public class EpRecruitController {
     }
 
     @PostMapping("updateAction")
-    public String update(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin,HttpSession session, Long epBoard, RedirectAttributes redirect) {
+    public String update(EpRecruitVO epRecruitVO, String showingDate, String showingHour, String showingMin, HttpSession session, Long epBoard, RedirectAttributes redirect) {
 //        epRecruit 수정
 //        epRecruit 스택들 수정
         log.info("update >>> " + epBoard);

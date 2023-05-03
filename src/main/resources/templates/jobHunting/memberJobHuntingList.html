@@ -23,8 +23,9 @@
 <div layout:fragment="content">
     <div class="container">
         <div class="listTile">
-            <h1>구인 리스트</h1>
-            <a class="btn btn-primary" href="/memberJobHunting">구직 등록</a>
+            <h1>구직 리스트</h1>
+            <a th:if="${session.memberLogin}"  class="btn btn-primary" href="/memberJobHunting">구직 등록</a>
+
         </div>
         <div th:unless="${list}">
             등록된 게시글이 없습니다.
@@ -32,7 +33,6 @@
         <div class="row row-cols-1 row-cols-md-3 g-4" th:if="${list}">
             <div class="col" th:each=" list : ${list}">
                 <div class="card h-100">
-                    <img class="rounded" th:src="@{/epRecruit/} + ${ep.getThumbnailFileName()}">
                     <div class="card-body">
                         <h5 class="card-title">[[${ list.getTitle() }]]</h5>
                         <p class="card-text">[[${ list.getStack() }]]</p>

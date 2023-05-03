@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.fc.chat.chatDao.ChatDao">
+
+    <!--member-->
+    <select id="findMemberRoomById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from chat_room where member_id = #{memberRoom} and
+    </select>
+
+    <insert id="createMemberRoom" parameterType="java.lang.Integer">
+        insert into chat_room (member_id) values (#{memberRoom})
+    </insert>
+
+    <insert id="insertMemberMsg" parameterType="com.example.fc.chat.chatModel.ChatMessage">
+        insert into chat_detail (chat_room, section, role, sender, chat_detail) values (#{memberRoom}, #{section}, #{role}, #{sender}, #{content})
+    </insert>
+
+    <select id="findMemberChatHistory" parameterType="java.util.HashMap" resultType="com.example.fc.chat.chatModel.ChatDetail">
+        select * from chat_detail where chat_room = #{memberRoom} and section = #{section} order by chat_time asc
+    </select>
+
+    <!--ep-->
+    <select id="findEpRoomById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(*) from chat_room where ep_id = #{epRoom}
+    </select>
+
+    <insert id="createEpRoom" parameterType="java.lang.Integer">
+        insert into chat_room (ep_id) values (#{epRoom})
+    </insert>
+
+    <insert id="insertEpMsg" parameterType="com.example.fc.chat.chatModel.ChatMessage">
+        insert into chat_detail (chat_room, section, role, sender, chat_detail) values (#{epRoom}, #{section} , #{role}, #{sender}, #{content})
+    </insert>
+
+    <select id="findEpChatHistory" parameterType="java.util.HashMap" resultType="com.example.fc.chat.chatModel.ChatDetail">
+        select * from chat_detail where chat_room = #{epRoom} and section = #{section} order by chat_time asc
+    </select>
+
+</mapper>

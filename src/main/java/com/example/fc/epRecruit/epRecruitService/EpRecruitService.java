@@ -6,18 +6,16 @@ import com.example.fc.epRecruit.epRecruitDao.EpRecruitFilesDao;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitMainThumbnailDao;
 import com.example.fc.epRecruit.epRecruitDao.EpRecruitStackDao;
 import com.example.fc.epRecruit.epRecruitVo.*;
-
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
-import lombok.Builder;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
@@ -65,17 +63,21 @@ public class EpRecruitService {
         if (files[0].isEmpty()) {
             epRecruitVO.setFileAttached("0");
             int result = epRecruitDao.epRecruitSave(epRecruitVO);
-//          스택테이블에 저장
-            String[] stackLst = epRecruitVO.getStack().split(",");
+
+            if (epRecruitVO.getStack() != null) {
+                //          스택테이블에 저장
+                String[] stackLst = epRecruitVO.getStack().split(",");
 //          스택 길이만큼 스택 테이블에 저장
-            for (String stack : stackLst) {
+                for (String stack : stackLst) {
 //              필요한것: 현재 로그인한 id, 게시글 번호, 스택
-                Long epId = epVo.getEpId();
-                Long epBoard = epRecruitDao.epRecruitLastId();
-                EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
-                int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
-                System.out.println("StackSave>" + stack + ">>>" + res);
+                    Long epId = epVo.getEpId();
+                    Long epBoard = epRecruitDao.epRecruitLastId();
+                    EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
+                    int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+                    System.out.println("StackSave>" + stack + ">>>" + res);
+                }
             }
+
 
 //            나도 만약 기술을 저장할때 ',' 구분자말고 ' ' 로 구분할때 제웅이형이 만든 코드 참고하기
 
@@ -104,16 +106,19 @@ public class EpRecruitService {
             if (result == 1) {
                 lastEpBoard = epRecruitDao.epRecruitLastId();
             }
-//          스택테이블에 저장
-            String[] stackLst = epRecruitVO.getStack().split(",");
-//          스택 길이만큼 스택 테이블에 저장
-            for (String stack : stackLst) {
-//              필요한것: 현재 로그인한 id, 게시글 번호, 스택
-                Long epId = epVo.getEpId();
-                Long epBoard = epRecruitDao.epRecruitLastId();
-                EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
-                int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
-                System.out.println("StackSave>" + stack + ">>>" + res);
+
+            if (epRecruitVO.getStack() != null) {
+//                  스택테이블에 저장
+                String[] stackLst = epRecruitVO.getStack().split(",");
+//                  스택 길이만큼 스택 테이블에 저장
+                for (String stack : stackLst) {
+//                  필요한것: 현재 로그인한 id, 게시글 번호, 스택
+                    Long epId = epVo.getEpId();
+                    Long epBoard = epRecruitDao.epRecruitLastId();
+                    EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
+                    int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+                    System.out.println("StackSave>" + stack + ">>>" + res);
+                }
             }
 
             // 모든 사진들 업로드 및 썸네일들 생성
@@ -240,14 +245,16 @@ public class EpRecruitService {
 //        epRecruitStack 삭제쿼리 수행
         int epRecruitStackDeleteByIdRes = epRecruitStackDao.epRecruitStackDeleteById(epBoard);
 
+        if (epRecruitVO.getStack() != null) {
 //        스택테이블에 저장
-        String[] stackLst = epRecruitVO.getStack().split(",");
+            String[] stackLst = epRecruitVO.getStack().split(",");
 //        스택 길이만큼 스택 테이블에 저장
-        for (String stack : stackLst) {
+            for (String stack : stackLst) {
 //            필요한것: 현재 로그인한 id, 게시글 번호, 스택
 //            stack에 boardId와 데이터 입력하기
-            EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
-            int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+                EpRecruitStackVO epRecruitStackVO = EpRecruitStackVO.builder().epId(epId).epBoard(epBoard).stack(stack).build();
+                int res = epRecruitStackDao.epRecruitStackSave(epRecruitStackVO);
+            }
         }
 
     }
