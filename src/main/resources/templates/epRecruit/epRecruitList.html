@@ -11,50 +11,34 @@
             <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
 
         </div>
-<!--        필터 시작       -->
-<!--        <button class="tablink" onclick="openPage('Home', this, 'red')">Home</button>-->
-<!--        <button class="tablink" onclick="openPage('News', this, 'green')" id="defaultOpen">News</button>-->
-<!--        <button class="tablink" onclick="openPage('Contact', this, 'blue')">Contact</button>-->
-<!--        <button class="tablink" onclick="openPage('About', this, 'orange')">About</button>-->
-
-<!--        <div id="Home" class="tabcontent">-->
-<!--            <h3>Home</h3>-->
-<!--            <p>Home is where the heart is..</p>-->
-<!--        </div>-->
-
-<!--        <div id="News" class="tabcontent">-->
-<!--            <h3>News</h3>-->
-<!--            <p>Some news this fine day!</p>-->
-<!--        </div>-->
-
-<!--        <div id="Contact" class="tabcontent">-->
-<!--            <h3>Contact</h3>-->
-<!--            <p>Get in touch, or swing by for a cup of coffee.</p>-->
-<!--        </div>-->
-
-<!--        <div id="About" class="tabcontent">-->
-<!--            <h3>About</h3>-->
-<!--            <p>Who we are and what we do.</p>-->
-<!--        </div>-->
-<!--        필터 끝        -->
 
         <div class="row row-cols-2 row-cols-md-3 g-4">
             <div class="col" th:each="ep : ${epList}">
-                <div class="card h-100">
-                    <div th:if="${ep.fileAttached} == 1" class="text-center">
+                <div class="epList h-100 position-relative">
+                    <div class="text-center" th:if="${ep.fileAttached} == 1">
                         <img class="rounded" th:src="@{/epRecruit/} + ${ep.getThumbnailFileName()}">
                     </div>
                     <!--          <img src="..." class="card-img-top" alt="...">-->
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${ ep.getTitle() }"></h5>
-                        <!--            <h5 class="card-title">[[${ ep.getTitle() }]]</h5>-->
-                        <span th:each="stack : ${ ep.getStack().split(',') }" th:text="${ stack } + ' '"></span>
+                    <div class="period">
+                        <!--                        <span>마감일 | </span>-->
+                        <span th:text="'마감일 | ' + ${ep.getShowingPeriod().substring(0, 10)}"></span>
                     </div>
-                    <div class="card-footer">
-                        <!--                        <small class="text-body-secondary">Last updated 3 mins ago</small>-->
-                        <a th:href="@{/epRecruit/poster( epBoard=${ep.getEpBoard()} )}"
-                           class="btn btn-primary stretched-link">확인하기</a>
+                    <div class="title">
+                        <span class="" th:text="${ ep.getTitle() }"></span>
                     </div>
+
+                    <div class="addr">
+                        <span class="" th:text="${ ep.getAddr() }"></span>
+                    </div>
+
+                    <div class="stack " th:if="${ ep.stack }">
+                        <span class="stackItem badge text-bg-primary " th:each="stack : ${ ep.getStack().split(',') }"
+                              th:text="${ stack } "></span>
+                    </div>
+                    <!--                        <small class="text-body-secondary">Last updated 3 mins ago</small>-->
+                    <!--                        stretched-link -->
+                    <a class="stretched-link"
+                       th:href="@{/epRecruit/poster( epBoard=${ep.getEpBoard()} )}"></a>
                 </div>
             </div>
         </div>
@@ -113,71 +97,57 @@
     </div>
 
     <th:block layout:fragment="css">
-<!--        필터 시작-->
-<!--        <style>-->
-<!--            * {box-sizing: border-box}-->
+        <!--        필터 시작-->
+        <style>
+            .epList {
+                border: #adb5bd solid 2px;
+                border-radius: 15px;
+                padding: 15px 15px;
+            }
 
-<!--            /* Set height of body and the document to 100% */-->
-<!--            body, html {-->
-<!--                height: 100%;-->
-<!--                margin: 0;-->
-<!--                font-family: Arial;-->
-<!--            }-->
+            .period > span {
+                color: #636464;
+                font-weight: bold;
+                font-size: 16px;
+            }
 
-<!--            /* Style tab links */-->
-<!--            .tablink {-->
-<!--                background-color: #555;-->
-<!--                color: white;-->
-<!--                float: left;-->
-<!--                border: none;-->
-<!--                outline: none;-->
-<!--                cursor: pointer;-->
-<!--                padding: 14px 16px;-->
-<!--                font-size: 17px;-->
-<!--                width: 25%;-->
-<!--            }-->
+            .title {
+                padding-top: 10px;
+                min-height: 120px;
+            }
 
-<!--            .tablink:hover {-->
-<!--                background-color: #777;-->
-<!--            }-->
+            .title > span {
+                font-weight: bold;
+                font-size: 23px;
+            }
 
-<!--            /* Style the tab content (and add height:100% for full page content) */-->
-<!--            .tabcontent {-->
-<!--                color: white;-->
-<!--                display: none;-->
-<!--                padding: 100px 20px;-->
-<!--                height: 100%;-->
-<!--            }-->
+            .addr > span {
+                color: #636464;
+                font-weight: bold;
+                font-size: 18px;
+            }
 
-<!--            #Home {background-color: red;}-->
-<!--            #News {background-color: green;}-->
-<!--            #Contact {background-color: blue;}-->
-<!--            #About {background-color: orange;}-->
-<!--        </style>-->
-<!--        필터 끝    -->
+            .stack > div {
+                /*color: #00beea;*/
+                font-weight: bold;
+                font-size: 17px;
+                padding: 5px 15px;
+            }
+
+            .stack > .stackItem {
+                margin: 2px 2px;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+        </style>
+        <!--        필터 끝    -->
     </th:block>
-<th:block layout:fragment="script">
-    <script>
-      //필터 시작
-        // function openPage(pageName,elmnt,color) {
-        //     var i, tabcontent, tablinks;
-        //     tabcontent = document.getElementsByClassName("tabcontent");
-        //     for (i = 0; i < tabcontent.length; i++) {
-        //         tabcontent[i].style.display = "none";
-        //     }
-        //     tablinks = document.getElementsByClassName("tablink");
-        //     for (i = 0; i < tablinks.length; i++) {
-        //         tablinks[i].style.backgroundColor = "";
-        //     }
-        //     document.getElementById(pageName).style.display = "block";
-        //     elmnt.style.backgroundColor = color;
-        // }
-        //
-        // // Get the element with id="defaultOpen" and click on it
-        // document.getElementById("defaultOpen").click();
-    // 필터 끝
+    <!--    <th:block layout:fragment="script">-->
+    <script th:inline="javascript">
+        console.log("Aa")
     </script>
-</th:block>
+    <!--    </th:block>-->
 </div>
 
 
