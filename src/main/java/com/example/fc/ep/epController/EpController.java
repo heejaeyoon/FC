@@ -128,12 +128,10 @@ public class EpController {
             session.setAttribute("passwordFind",vo);
             System.out.println("비밀번호 는 ============"+vo);
             return "/ep/epFindResult";
-        }else{
-            return "redirect:/epFindAlert";
         }
-
-
+            return "redirect:/epFindAlert";
     }
+
     @PostMapping("/emailFind")
     public String emailFind(EpVo epVo, HttpSession session){
         EpVo vo = epService.epEmailCheck(epVo);
@@ -144,10 +142,7 @@ public class EpController {
             session.setAttribute("emailFind",vo);
             System.out.println("이메일은 는 ============"+vo);
             return "/ep/epFindResult";
-        }else{
-            return "redirect:/epFindAlert";
-        }
-
+        }return "redirect:/epFindAlert";
     }
 
 
