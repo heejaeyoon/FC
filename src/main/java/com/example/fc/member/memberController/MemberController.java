@@ -1,21 +1,24 @@
 package com.example.fc.member.memberController;
 
 import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingController.JobHuntingController;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo;
+import com.example.fc.memberJobHunting.memberJobHuntingservice.MemberJobHuntingService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller // 컨트롤러는 값만 넘겨주는 역할
@@ -25,9 +28,20 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
+    @Autowired
+    EpRecruitService epRecruitService;
+
+    @Autowired
+    MemberJobHuntingService jobHunting;
+
+
     @GetMapping("/")
-    public String member() {
-        return "ex";
+    public String member(Model model) {
+        List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+        List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
+        model.addAttribute("epList", epRecruitList);
+        model.addAttribute("MList", jobHuntingList);
+        return "main";
     }
 
     /* 회원가입 전 회원/기업 선택 */
@@ -56,7 +70,11 @@ public class MemberController {
     public String memberLogin(HttpSession session, Model model, HttpServletRequest request) {
 
         String userType2 = request.getParameter("userType2");
-
+        if (session.getAttribute("memberLogin") != null || session.getAttribute("epLogin") != null ) {
+            //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
+            session.removeAttribute("memberLogin");
+            session.removeAttribute("epLogin");
+        }
         if(userType2 == null){
             userType2 = "0";
         }
@@ -87,8 +105,8 @@ public class MemberController {
             session.setAttribute("memberLogin", vo);
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
             //로그인 성공시
-            returnURL = "/ex";
             System.out.println("session 저장 값 : " + session.getAttribute( "memberLogin" ));
+            return "redirect:main";
         } else {
             //로그인 실패시
             System.out.println("로그인 실패");

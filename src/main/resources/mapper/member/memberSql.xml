@@ -49,4 +49,5 @@
     <select id="memberEmailCheck" resultType="com.example.fc.member.memberVo.MemberVo">
         select password, name,email From member where name = #{name} and phone = #{phone};
     </select>
+
 </mapper>

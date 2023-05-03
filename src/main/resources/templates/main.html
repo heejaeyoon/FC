@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <style>
+        html,
+        body {
+            position: relative;
+            height: 100%;
+        }
+
+        body {
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            color: #000;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+
+        /* 넓이 */
+        .inner{
+            width: 70%;
+            margin: 0 auto;
+        }
+
+        .swiper-wrapper .swiper-slide{
+            width: 100%;
+            height: 300px;
+        }
+
+        .swiper-wrapper .swiper-slide.s1{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
+        .swiper-wrapper .swiper-slide.s2{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
+        .swiper-wrapper .swiper-slide.s3{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
+
+    </style>
+</head>
+
+<div layout:fragment="content">
+    <!-- Swiper -->
+    <div class="inner">
+        <div class="swiper mySwiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide s1"></div>
+                <div class="swiper-slide s2"></div>
+                <div class="swiper-slide s3"></div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            var swiper = new Swiper(".mySwiper", {
+                autoplay:true,
+                speed:2000,
+                loop:true,
+                pagination: {
+                    el: ".swiper-pagination",
+                },
+            });
+        </script>
+    </th:block>
+
+</div>
+</html>

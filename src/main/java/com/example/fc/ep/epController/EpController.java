@@ -3,9 +3,7 @@ package com.example.fc.ep.epController;
 import com.example.fc.ep.epService.EpService;
 import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportService.EpOneToOneService;
-import com.example.fc.support.supportVo.EpOneToOneVo;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Parameter;
 
 @Controller
 @Slf4j
@@ -34,7 +31,7 @@ public class EpController {
     public String memberJoin(EpVo epVo){
         log.info("회원가입 폼에서 입력받은 데이터: {}",epVo);
         epService.epJoin(epVo);
-        return "/ex";
+        return "main";
     }
 
     /* 로그인 */
@@ -42,6 +39,11 @@ public class EpController {
     public String epLogin(HttpSession session) {
         session.removeAttribute("passwordFind");
         session.removeAttribute("emailFind");
+        return "/loginForm";
+    }
+    @GetMapping("/addMoreGetJob")
+    public String addMoreGetJob(){
+
         return "/loginForm";
     }
 
@@ -57,13 +59,14 @@ public class EpController {
         if (vo != null) {
             session.setAttribute("epLogin",vo);
             System.out.println("로그인이 성공하였습니다"+vo);
-            return "/ex";
+            return "main";
         }else{
             System.out.println("로그인 실패");
             return "/loginForm";
         }
 
     }
+
     @GetMapping("/epModify")
     public String epModify(){
         System.out.println("epService = " + epService);
@@ -74,13 +77,13 @@ public class EpController {
         epService.epModify(epVo);
         session.setAttribute("epLogin",epVo);
         System.out.println("업데이트 성공했습니다");
-            return "/ex";
+            return "main";
     }
     @PostMapping("/epDelete")
     public String epDelete(EpVo epVo, HttpSession session){
         epService.epDelete(epVo);
         session.removeAttribute("epLogin");
-        return "/ex";
+        return "main";
     }
     @ResponseBody // 값 변환을 위해 꼭 필요함
     @GetMapping("/idCheck") // 아이디 중복확인을 위한 값으로 따로 매핑
@@ -131,6 +134,10 @@ public class EpController {
             return failmessage;
         }
 
+    }
+    @GetMapping("/M")
+    public String M(){
+        return "/Modal";
     }
 //    @GetMapping("/epPage")
 //    public String myPage(EpOneToOneVo epOneToOneVo, HttpSession session,Model model) {

@@ -30,10 +30,9 @@ public class OneToOneController {
         String result;
         if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
             System.out.println("session31311312131213213131 = " + session);
-
             result = "<script>location.href='/personalQuestion';</script>";
         } else {
-            result = "<script>alert('올바르지 않은 정보입니다.');location.href='/login';</script>";
+            result = "<script>alert('로그인후 이용해 주세요.');location.href='/login';</script>";
         }
 
         return result;
@@ -46,7 +45,7 @@ public class OneToOneController {
         } else if (session.getAttribute("memberLogin") !=null) {
             return "/support/memberOneToOneQuestion";
         }else {
-            return "ex";
+            return "main";
         }
     }
 
@@ -63,7 +62,7 @@ public class OneToOneController {
             memberOneToOneService.mPersonalInquire(memberOneToOneVo);
             System.out.println("personalVo 입력성공하였습니다. === " + memberOneToOneVo);
         }
-            return "/ex";
+            return "main";
     }
     @GetMapping("/epPage")
     public String myPage(HttpSession session, Model model) {
@@ -104,18 +103,25 @@ public class OneToOneController {
         @ResponseBody
         @GetMapping("/failFindEmail")
         public String failFindEmail(){
-          String  noOneToOne = "<script>alert('1:1문의가 존재하지않습니다 문의후 이용해주세요.'); history.go(-1);</script>";
+          String  noOneToOne = "<script>alert('1:1문의가 존재하지않습니다 문의후 이용해주세요.');location.href='/epPage';</script>";
             return noOneToOne;
         }
 
 //       1대1문의 상세 조회
+
     @GetMapping("/oneToOneList")
-    public String noticeOneList(EpOneToOneVo epOneToOneVo, Model model, int id) {
+    public String noticeOneList(EpOneToOneVo epOneToOneVo, Model model, HttpSession session,int id) {
         epOneToOneVo = epOneToOneService.noticeOneList(id);
         model.addAttribute("oneToOneList", epOneToOneVo);
-        System.out.println("-===========================" + id);
-        System.out.println("-===========================" + epOneToOneVo);
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        if(epOneToOneVo.getEmail().equals(epVo.getEmail())){
         return "/support/oneToOneDetailForm";
+
+
+        }else {
+
+        return "redirect:/ex";
+        }
     }
     
     //1대1 수정

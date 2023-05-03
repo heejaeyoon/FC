@@ -10,7 +10,6 @@ import lombok.*;
 
 public class EpOneToOneVo {
 
-
     private Long id;
     private String title;
     private String detail;

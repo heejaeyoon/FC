@@ -41,31 +41,24 @@
                 <td>
                     <input type="text" name="noticeBoard" class="inputInfo" th:value="${noticeList.getNoticeBoard()}"
                            hidden="hidden">
-                    <input type="text" name="title" class="inputInfo" th:value="${noticeList.getTitle()}">
+                    <input type="text" name="title" class="inputInfo" th:value="${noticeList.getTitle()}" readonly>
                 </td>
             </tr>
             <tr>
                 <div>
                     <th>구분</th>
                     <td>
-                        <input type="radio" id="public" name="sortation" value="공지사항" checked>
-                        <label for="public" th:value="${noticeList.getSortation()}">공지사항</label>
-                        <input type="radio" id="private" name="sortation" value="이벤트">
-                        <label for="private" th:value="${noticeList.getSortation()}">이벤트</label>
+                        <input type="radio" id="public" name="sortation" value="공지사항" disabled th:checked="${#strings.contains(noticeList.getSortation(),'공지사항')}">
+                        <label for="public">공지사항</label>
+                        <input type="radio" id="private" name="sortation" value="이벤트" disabled th:checked="${#strings.contains(noticeList.getSortation(),'이벤트')}">
+                        <label for="private">이벤트</label>
                     </td>
                 </div>
             </tr>
             <tr>
                 <th>상세내용</th>
                 <td>
-                    <textarea class="textAreaInfo" name="detail" th:value="${noticeList.getDetail()}"
-                              th:text="${noticeList.getDetail()}">
-                    </textarea>
-                </td>
-            </tr>
-            <tr th:if="${noticeList.fileAttached == 1}">
-                <td th:each="list : ${noticeFilesList}">
-                    <img th:src="@{/notice/} + ${list.storedFileName}">
+                    <div th:class="form-control" id="detail" name="detail" th:utext="${noticeList.getDetail()}" />
                 </td>
             </tr>
         </form>
@@ -81,12 +74,7 @@
                         </span>
                     <div th:if="${session.memberLogin}">
                         <div th:if="${session.memberLogin.role}=='admin'">
-                            <button style="margin-left: 280px" type="submit" class="btn btn-primary"
-                                    form="modifySuccess">
-                                첨부파일
-                                수정
-                            </button>
-                            <button type="submit" class="btn btn-success" form="modifySuccess">게시글 수정</button>
+                            <button style="margin-left: 400px" type="submit" class="btn btn-success" th:onclick="|location.href='@{noticeModify(noticeBoard=${noticeList.noticeBoard})}'|">게시글 수정</button>
                             <form action="/noticeDelete" method="post" style="display: inline-block">
                                 <input name="noticeBoard" type="text" th:value="${noticeList.getNoticeBoard()}"
                                        hidden="hidden">
