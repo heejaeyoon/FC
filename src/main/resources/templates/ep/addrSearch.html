@@ -119,8 +119,7 @@
 	function addrPass() {
 		var roadAddr = document.getElementById("roadAddr").getAttribute("value");
 		var zipNo = document.getElementById("zipNo").getAttribute("value");
-		var roadAddrPart1 = document.getElementById("roadAddrPart1").getAttribute("value");
-		opener.receiveAddressValues(roadAddr, zipNo, roadAddrPart1);
+		opener.receiveAddressValues(roadAddr, zipNo);
 		window.close();
 	}
 

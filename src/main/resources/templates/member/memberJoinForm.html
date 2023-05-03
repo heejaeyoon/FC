@@ -103,13 +103,15 @@
                     <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
                     <td class="textlabel" width="15%">주 소</td>
                     <td>
-                        <input class="addrtext" type="text" size="10" name="addr" id="postcode" placeholder="     우편번호"
-                               readonly="readonly">
-                        <input class="btn btn-secondary btnbtn" type="button" value="우편번호 찾기"><br><br/>
-                        <input class="addrtext2" type="text" size="30" name="wRoadAddress" id="roadAddress" placeholder="  도로명주소"
-                               readonly="readonly">
+
+                        <input class="addrtext" type="text" size="10" name="addr" id="sample4_postcode" placeholder="     우편번호" readonly="readonly" >
+                        <input class="btn btn-secondary btnbtn"  type="button" onclick="searchAddr()" value="주소찾기"><br><br>
+                        <!--          <input type="button" onclick="window.open('/addrSearch' ,' _blank','width=569, height=553,top=300,left=600 '); return false;" value="주소찾기"><br>-->
+                        <input class="addrtext2" type="text" size="30" name="wRoadAddress" id="sample4_roadAddress" placeholder="  도로명주소"
+                               readonly="readonly" >
                         <br/><span id="guide" style="color:#999;font-size:10px;"></span>
                         <br/><input class="addrtext2" type="text" name="wRestAddress" placeholder="  나머지 주소" size="70"/>
+
                     </td>
                 </tr>
         </table>
@@ -127,6 +129,18 @@
 </div>
 </html>
 <script>
+    function searchAddr() {
+        var childWindow = window.open("addrSearch", "Child Window", "width=400,height=300");
+        return false;
+    }
+    function receiveAddressValues(roadAddr, zipNo) {
+        // Set the received address values in the parent window
+        document.getElementById("sample4_postcode").value = zipNo;
+        document.getElementById("sample4_roadAddress").value = roadAddr;
+
+    }
+
+
     let idck = 0;
 
     function emailCheckReset() {
@@ -186,6 +200,8 @@
             } else {
                 alert("회원가입을 축하합니다");
                 $("#submitBtn").submit();}
+        }else {
+            return false;
         }
     });
 
