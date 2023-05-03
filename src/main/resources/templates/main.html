@@ -4,7 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <style>
         html,
         body {
@@ -41,21 +41,28 @@
         }
 
 
-
         /* 넓이 */
-        .inner{
+        .inner {
             width: 70%;
             margin: 0 auto;
         }
 
-        .swiper-wrapper .swiper-slide{
+        .swiper-wrapper .swiper-slide {
             width: 100%;
             height: 300px;
         }
 
-        .swiper-wrapper .swiper-slide.s1{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
-        .swiper-wrapper .swiper-slide.s2{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
-        .swiper-wrapper .swiper-slide.s3{background: url('/main/mainnotice1.jpg') center center / cover no-repeat}
+        .swiper-wrapper .swiper-slide.s1 {
+            background: url('/main/mainnotice1.jpg') center center / cover no-repeat
+        }
+
+        .swiper-wrapper .swiper-slide.s2 {
+            background: url('/main/mainnotice1.jpg') center center / cover no-repeat
+        }
+
+        .swiper-wrapper .swiper-slide.s3 {
+            background: url('/main/mainnotice1.jpg') center center / cover no-repeat
+        }
 
     </style>
 </head>
@@ -74,20 +81,54 @@
     </div>
 
 
+    <div style="display: flex; text-align: center">
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <th:block layout:fragment="script">
-        <script th:inline="javascript">
-            var swiper = new Swiper(".mySwiper", {
-                autoplay:true,
-                speed:2000,
-                loop:true,
-                pagination: {
-                    el: ".swiper-pagination",
-                },
-            });
-        </script>
-    </th:block>
+        <div style="width: 600px">
+            <table class="table table-hover table-borderless w-100 p-3">
+                <td style="float: right">
+                    <div th:text="더보기" onclick="location.href='epRecruit/epRecruitList'"></div>
+                </td>
+                <tr th:each="ep,index : ${epList}" th:if="${index.index} < 5">
+                    <td>
+                        <a th:text="${ ep.getTitle() }" th:href="@{/epRecruit/poster(epBoard=${ep.getEpBoard()})}"/>
+                    </td>
+                </tr>
+                </tr>
+            </table>
+        </div>
+
+        <div style="width: 600px">
+            <table class="table table-hover table-borderless w-100 p-3">
+                <td style="float: right">
+                    <div th:text="더보기" onclick="location.href='/memberJobHuntingList'"></div>
+                </td>
+
+                <tr th:each="MList,index : ${MList}" th:if="${index.index} < 5">
+
+                    <td>
+                        <a th:text="${ MList.getTitle() }"
+                           th:href="@{/memberJobHuntingPoster(memberBoard=${MList.memberBoard})}"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        var swiper = new Swiper(".mySwiper", {
+            autoplay: true,
+            speed: 2000,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+            },
+        });
+    </script>
+</th:block>
 
 </div>
 </html>
