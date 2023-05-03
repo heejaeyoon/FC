@@ -114,6 +114,7 @@ public class EpRecruitController {
     @GetMapping("/epRecruitList")
     public String EpRecruitList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
 
+
         if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
 //    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
             System.out.println("session = " + session.getId());

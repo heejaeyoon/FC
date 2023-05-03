@@ -106,7 +106,7 @@ public class MemberController {
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
             //로그인 성공시
             System.out.println("session 저장 값 : " + session.getAttribute( "memberLogin" ));
-            return "redirect:main";
+            return "redirect:/";
         } else {
             //로그인 실패시
             System.out.println("로그인 실패");
