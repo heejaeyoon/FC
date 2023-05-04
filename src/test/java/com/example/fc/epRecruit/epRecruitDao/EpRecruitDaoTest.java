@@ -1,19 +1,19 @@
 package com.example.fc.epRecruit.epRecruitDao;
 
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
+@Slf4j
 class EpRecruitDaoTest {
 
     @Autowired
-    EpRecruitDao epRecruitDao;
+    private EpRecruitDao epRecruitDao;
 
     @Test
     public void LastIdTest() {
@@ -28,4 +28,5 @@ class EpRecruitDaoTest {
             System.out.println(ep);
         }
     }
+
 }
