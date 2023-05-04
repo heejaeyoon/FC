@@ -10,20 +10,19 @@ import java.util.Date;
 @Setter
 public class MemberJobHuntingVo {
     private Long memberBoard;
+    private Long memberId;
     private String title;
     private String stack;
-    private String period;
+    private String showingPeriod;
+    private String recruitCondition;
+    private String gender;
     private String payment;
-    private String workDay;
+    private String workDayStart;
+    private String workDayEnd;
     private String addr;
     private String detail;
-    private Date createDate;
-    private String memberId;
-    private String applicationPeriod;
-    private Date updateDate;
-    private String hunting;
-    private int fileAttached; //파일 첨부상태 : 0 미첨부, 1 첨부
-
-
+    private String createDate;
+    private String updateDate;
+    private int fileAttached;
 
 }

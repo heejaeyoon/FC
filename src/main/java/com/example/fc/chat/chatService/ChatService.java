@@ -1,7 +1,6 @@
 package com.example.fc.chat.chatService;
 
 import com.example.fc.chat.chatDao.ChatDao;
-import com.example.fc.chat.chatDao.ChatRoomDao;
 import com.example.fc.chat.chatModel.ChatDetail;
 import com.example.fc.chat.chatModel.ChatMessage;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ChatService {
 
-  private final ChatRoomDao chatRoomDao;
 
   private final ChatDao chatDao;
   
