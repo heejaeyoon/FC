@@ -1,12 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!--<script type="text/JavaScript" src="/js/jquery-1.8.3.min.js" ></script>-->
-	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--<script type="text/JavaScript" src="/js/jquery-1.8.3.min.js" ></script>-->
+	<script src="https://code.jquery.com/jquery-3.6.4.js"
+			integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
-<title>Insert title here</title>
+	<title>Insert title here</title>
 </head>
 <body>
 
@@ -15,8 +16,8 @@
 	<input type="hidden" name="countPerPage" value="10"/><!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
 	<input type="hidden" name="resultType" value="json"/> <!-- 요청 변수 설정 (검색결과형식 설정, json) -->
 	<input type="hidden" name="confmKey" value="devU01TX0FVVEgyMDIzMDUwMjEyMjkwMDExMzczNjE="/><!-- 요청 변수 설정 (승인키) -->
-	<input type="text" name="keyword" value="" onkeydown="enterSearch();"/><!-- 요청 변수 설정 (키워드) -->
-	<input type="button" id="submitBtn" onClick="getAddr();" value="주소검색하기"/>
+	<input class="form-control me-2" type="text"     name="keyword" value="" onkeydown="enterSearch();"/><!-- 요청 변수 설정 (키워드) -->
+	<input class="btn btn-outline-primary" type="button"  onClick="getAddr();" value="주소검색하기"/>
 	<div id="list" ></div><!-- 검색 결과 리스트 출력 영역 -->
 </form>
 
@@ -52,26 +53,26 @@
 		});
 	}
 
-	function makeListJson(jsonStr){
+	function makeListJson(jsonStr) {
 		var htmlStr = "";
 		htmlStr += "<table>";
 		htmlStr += "<tr>";
-		htmlStr += "<tr>";
-		htmlStr += "<td>"+"도로명주소"+"</td>";
-		htmlStr += "<td>"+"우편번호"+"</td>";
+		htmlStr += "<td>" + "도로명주소" + "</td>";
+		htmlStr += "<td>" + "우편번호" + "</td>";
 		htmlStr += "</tr>";
-		$(jsonStr.results.juso).each(function(){
+		$(jsonStr.results.juso).each(function () {
 			htmlStr += "<tr>";
-			htmlStr += "<td>"+"<a href=\"enterpriseJoinForm.html\"?변수=<%=this.roadAddr%>"+this.roadAddr+"</a>"+"</td>";
-			htmlStr += "<td>"+this.zipNo+"</td>";
+			htmlStr += "<td >" + "<a onclick='addrPass()' id='roadAddr'  value='" + this.roadAddr + "'>" + this.roadAddr + "</a>" + "</td>";
+			htmlStr += "<td>" + "<input id='zipNo' type='hidden' value='" + this.zipNo + "'>" + this.zipNo + "</td>";
 			htmlStr += "</tr>";
-			htmlStr += "<td>"+this.roadAddrPart1+"</td>";
+			htmlStr += "<tr>";
+			htmlStr += "<td>" + "<input id='roadAddrPart1' type='hidden' value='" + this.roadAddrPart1 + "'>" + this.roadAddrPart1 + "</td>";
 			htmlStr += "</tr>";
-
 		});
 		htmlStr += "</table>";
 		$("#list").html(htmlStr);
 	}
+
 
 	//특수문자, 특정문자열(sql예약어의 앞뒤공백포함) 제거
 	function checkSearchedWord(obj){
@@ -115,7 +116,12 @@
 		}
 	}
 
-
+	function addrPass() {
+		var roadAddr = document.getElementById("roadAddr").getAttribute("value");
+		var zipNo = document.getElementById("zipNo").getAttribute("value");
+		opener.receiveAddressValues(roadAddr, zipNo);
+		window.close();
+	}
 
 </script>
 

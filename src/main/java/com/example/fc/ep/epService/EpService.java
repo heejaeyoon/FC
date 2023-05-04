@@ -1,19 +1,50 @@
 package com.example.fc.ep.epService;
 
+import com.example.fc.email.model.EmailVerification;
+import com.example.fc.email.service.EmailSenderService;
 import com.example.fc.ep.epDao.EpDao;
 import com.example.fc.ep.epVo.EpVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class EpService {
 
     @Autowired
     EpDao epDao;
 
+    //이메일 보내기
+    private final EmailSenderService emailSenderService;
+
+
+    //인증을 위한 해쉬맵
+    private final HashMap<String, UUID> hashMap;
+
     public void  epJoin(EpVo epVo){
-        epDao.epJoin(epVo);
+        System.out.println("ep vervice epVo = " + epVo);
+        int result = epDao.epJoin(epVo);
+
+        if(result == 1){
+            //이메일 인증을 위한 암호코드
+            UUID code = UUID.randomUUID();
+            hashMap.put(epVo.getEmail(), code);
+            System.out.println("hashMap = " + hashMap.keySet());
+
+            //이메일 인증에 필요한 암호키를 저장
+            emailSenderService.insertEpVerification(epVo, code);
+
+            //이메일 전송
+            emailSenderService.epSignUpEmail(epVo.getEmail(), hashMap);
+
+        }
+
+
+
     }
 
     public  EpVo epLogin(EpVo epVo){
@@ -36,4 +67,16 @@ public class EpService {
     public EpVo epEmailCheck(EpVo epVo){return  epDao.epEmailCheck(epVo);
     }
 
+    //이메일 인증
+    public int epEmailVerifying(EpVo epVo, EmailVerification emailVerification) {
+
+        int check = emailSenderService.epCheckVerification(emailVerification);
+        if (check == 1) {
+            emailSenderService.epGotVerification(emailVerification);
+            int result = epDao.emailVerified(epVo);
+            return result;
+        }
+
+        return 0; //실패
+    }
 }

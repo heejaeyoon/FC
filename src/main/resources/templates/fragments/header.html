@@ -55,9 +55,11 @@
             <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1"
                                                                             class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users" ></i>&nbsp;구인</a></li>
             <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0"
+
                                                                             class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building fa-lg"></i>&nbsp;구직</a></li>
             <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users"></i>&nbsp;구인</a></li>
             <li th:if="${session.memberLogin}"><a href="/memberJobHuntingList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building"></i>&nbsp;구직</a></li>
+
 
             <div class="dropdown">
                 <button class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton1"
@@ -88,16 +90,20 @@
                 </button>
                 <button type="button" class="btn btn" onclick="location.href='/epPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">기업 페이지
                     <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
+                <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
             </div>
 
             <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
                 <button type="button" class="btn btn me-2" onclick="location.href='/login'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그인
                 </button>
+
                 <button type="button" class="btn btn" onclick="location.href='/joinSelect'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">회원가입</button>
+
             </div>
 
         </div>
 
+        </div>
     </div>
 </header>
 </html>
