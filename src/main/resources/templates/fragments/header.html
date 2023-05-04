@@ -1,52 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"/>
+      xmlns:th="http://www.thymeleaf.org">
 //      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <style>
-
-
-        .container {
-            position: relative;
-            width: 50%;
-        }
-
-        .image {
-            display: block;
-            width: 100%;
-            height: auto;
-        }
-
-        .overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #008CBA;
-            overflow: hidden;
-            width: 0;
-            height: 100%;
-            transition: .5s ease;
-        }
-
-        .container:hover .overlay {
-            width: 100%;
-        }
-
-        .text {
-            color: white;
-            font-size: 20px;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            -ms-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-            white-space: nowrap;
-        }
-    </style>
-</head>
-
 <header class="d-flex justify-content-center py-3">
     <div class="w-100 d-flex justify-content-between" style="align-items: center; padding:0 80px;">
         <ul class="d-flex" style="align-items: center; font-size: 20px; text-decoration: none">
@@ -79,31 +34,90 @@
         <div class="text-end">
             <div th:if="${session.memberLogin}">
                 <span style="color: #767673; font-weight: 5 00">[[${session.memberLogin.nickName}]]님</span>
-                <button type="button" class="btn btn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
+                <button type="button" class="btn navBtn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
                 </button>
-                <button type="button" class="btn btn" onclick="location.href='/myPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">마이페이지</button>
+                <button type="button" class="btn navBtn" onclick="location.href='/myPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">마이페이지</button>
             </div>
 
             <div th:if="${session.epLogin}">
                 <span style="color: #767673; font-weight: 500">[[${session.epLogin.name}]]님</span>
-                <button type="button" class="btn btn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
+                <button type="button" class="btn navBtn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
                 </button>
-                <button type="button" class="btn btn" onclick="location.href='/epPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">기업 페이지
+                <button type="button" class="btn navBtn" onclick="location.href='/epPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">기업 페이지
                     <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
-                <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
+                <a th:if="${session.epLogin}" class="btn navBtn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
             </div>
 
             <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
-                <button type="button" class="btn btn me-2" onclick="location.href='/login'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그인
+                <button type="button" class="btn navBtn me-2" onclick="location.href='/login'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그인
                 </button>
 
-                <button type="button" class="btn btn" onclick="location.href='/joinSelect'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">회원가입</button>
+                <button type="button" class="btn navBtn" onclick="location.href='/joinSelect'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">회원가입</button>
 
             </div>
 
         </div>
 
-        </div>
     </div>
+
+    <th:block th:fragment="css">
+        <style>
+            .container {
+                position: relative;
+                width: 50%;
+            }
+
+            .image {
+                display: block;
+                width: 100%;
+                height: auto;
+            }
+
+            .overlay {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: #008CBA;
+                overflow: hidden;
+                width: 0;
+                height: 100%;
+                transition: .5s ease;
+            }
+
+            .container:hover .overlay {
+                width: 100%;
+            }
+
+            .text {
+                color: white;
+                font-size: 20px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                -webkit-transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+                white-space: nowrap;
+            }
+
+            .nav-link:hover {
+                color: #4875ef !important;
+            }
+
+            .navBtn:hover {
+                color: #4875ef;
+            }
+
+            .dropdown:hover {
+                color: #4875ef;
+            }
+
+            .dropdown-item:hover {
+                color: #4875ef;
+                text-decoration: none;
+            }
+        </style>
+    </th:block>
 </header>
 </html>
