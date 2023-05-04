@@ -160,7 +160,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="detail">상세요강</label>
                 <div class="col-sm-10">
-                    <textarea id="detail" type="text" th:class="form-control" name="detail" th:utext="${epRecruit.getDetail()}"></textarea>
+                  <textarea class="detail" name="detail"></textarea>
                 </div>
             </div>
 
@@ -307,13 +307,14 @@
                 selShowingMin.options.add(opt)
             }
 
-            $('#detail').summernote({
+            $('.detail').summernote({
                 // 에디터 높이
                 height: 500,
                 // 에디터 한글 설정
                 lang: "ko-KR",
                 // 에디터에 커서 이동 (input창의 autofocus라고 생각)
                 focus: false,
+                placeholder: '최대 2048자까지 쓸 수 있습니다',
                 toolbar: [
                     // 글자 크기 설정
                     ['style', ['style']],
@@ -347,6 +348,8 @@
                     }
                 }
             });
+            // $('#summernote').summernote('enable');
+            $('#summernote').summernote('insertText', '써머노트에 쓸 텍스트');
 
             /**
              * 이미지 파일 업로드

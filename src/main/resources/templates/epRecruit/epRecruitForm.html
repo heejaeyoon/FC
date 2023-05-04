@@ -11,7 +11,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="inpTitle">채용제목</label>
                 <div class="col-sm-10">
-                    <input class="form-control" id="inpTitle" type="text" name="title" required>
+                    <input class="form-control" id="inpTitle" type="text" name="title" placeholder="제목을 입력하십시오." required>
                 </div>
             </div>
 
@@ -117,7 +117,7 @@
                 <label class="col-form-label col-sm-2 pt-0" for="intPay">계약금</label>
                 <div class="col-sm-10">
                     <div class="input-group">
-                        <input class="form-control" id="intPay" type="number" name="payment" min="0">
+                        <input class="form-control" id="intPay" type="number" name="payment" min="0" value="0">
                         <input class="form-control" id="stringPay" type="text" disabled style="color: gray">
                         <span class="input-group-text">원</span>
                     </div>
@@ -156,7 +156,7 @@
             <div class="row mb-3">
                 <label class="col-sm-2 col-form-label" for="inpAddr">주소</label>
                 <div class="col-sm-10">
-                    <input class="form-control" id="inpAddr" type="text" name="addr" required>
+                    <input class="form-control" id="inpAddr" type="text" name="addr" placeholder="주소를 입력하십시오." required>
                 </div>
             </div>
 
@@ -229,6 +229,7 @@
                 lang: "ko-KR",
                 // 에디터에 커서 이동 (input창의 autofocus라고 생각)
                 focus: false,
+                placeholder: '최대 2048자까지 쓸 수 있습니다',
                 toolbar: [
                     // 글자 크기 설정
                     ['style', ['style']],
