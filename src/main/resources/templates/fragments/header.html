@@ -4,6 +4,8 @@
 //      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <style>
+
+
         .container {
             position: relative;
             width: 50%;
@@ -47,28 +49,27 @@
 
 <header class="d-flex justify-content-center py-3">
     <div class="w-100 d-flex justify-content-between" style="align-items: center; padding:0 80px;">
-        <ul class="d-flex" style="align-items: center">
+        <ul class="d-flex" style="align-items: center; font-size: 20px; text-decoration: none">
             <li class="me-5"><a href="/" class="nav-link px-2 text-white"><img src="../css/img/FC.png" width="200"
                                                                                height="100"></a></li>
             <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=1"
-                                                                            class="nav-link px-2 text-dark"><i
-                    class="fa fa-fw fa-user"></i>구인</a></li>
+                                                                            class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users" ></i>&nbsp;구인</a></li>
             <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0"
-                                                                            class="nav-link px-2 text-dark">구직</a></li>
-            <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark"><i
-                    class="fa fa-fw fa-user"></i>구인</a></li>
-            <li th:if="${session.memberLogin}"><a href="/memberJobHuntingList" class="nav-link px-2 text-dark">구직</a></li>
 
-            <li><a href="#" class="nav-link px-2 text-dark">추가기능</a></li>
+                                                                            class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building fa-lg"></i>&nbsp;구직</a></li>
+            <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users"></i>&nbsp;구인</a></li>
+            <li th:if="${session.memberLogin}"><a href="/memberJobHuntingList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building"></i>&nbsp;구직</a></li>
+
 
             <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                        data-bs-toggle="dropdown" aria-expanded="false">고객지원
+                <button class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 18px; font-weight: 600; background: white; border:white" ><i style="font-size: 22px" class="fa-sharp fa-solid fa-headset"></i>&nbsp;
+                    고객지원
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
-                    <li><a class="dropdown-item" href="#">FAQ</a></li>
-                    <li><a class="dropdown-item" href="/personalInsert">1:1 문의</a></li>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" >
+                    <li><a class="dropdown-item" href="/noticeAllList" style="font-weight: 600">공지사항</a></li>
+                    <li><a class="dropdown-item" href="#" style="font-weight: 600">FAQ</a></li>
+                    <li><a class="dropdown-item" href="/personalInsert" style="font-weight: 600">1:1 문의</a></li>
                 </ul>
             </div>
             </li>
@@ -77,25 +78,26 @@
 
         <div class="text-end">
             <div th:if="${session.memberLogin}">
-                <span>[[${session.memberLogin.nickName}]]님 환영합니다.</span>
-                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/logout'">로그아웃
+                <span style="color: #767673; font-weight: 5 00">[[${session.memberLogin.nickName}]]님</span>
+                <button type="button" class="btn btn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
                 </button>
-                <button type="button" class="btn btn-warning" onclick="location.href='/myPage'">마이페이지</button>
+                <button type="button" class="btn btn" onclick="location.href='/myPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">마이페이지</button>
             </div>
 
             <div th:if="${session.epLogin}">
-                <span>[[${session.epLogin.name}]]님 환영합니다.</span>
-                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/logout'">로그아웃
+                <span style="color: #767673; font-weight: 500">[[${session.epLogin.name}]]님</span>
+                <button type="button" class="btn btn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
                 </button>
-                <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
+                <button type="button" class="btn btn" onclick="location.href='/epPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">기업 페이지
                     <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
                 <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
             </div>
 
             <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
-                <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/login'">로그인
+                <button type="button" class="btn btn me-2" onclick="location.href='/login'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그인
                 </button>
-                <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
+
+                <button type="button" class="btn btn" onclick="location.href='/joinSelect'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">회원가입</button>
 
             </div>
 
@@ -105,41 +107,3 @@
     </div>
 </header>
 </html>
-
-<!--<div th:fragment="header">-->
-<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
-<!--        <div class="container-fluid">-->
-<!--            <a class="navbar-brand" href="/">heejae Shop</a>-->
-<!--            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
-<!--                <span class="navbar-toggler-icon"></span>-->
-<!--            </button>-->
-<!--            <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
-<!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--                    <li class="nav-item" >//sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/admin/item/new">상품등록</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item">// sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/admin/items">상품관리</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/cart">장바구니</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" > // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/orders">구매이력</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAnonymous()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/member/login">로그인</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item"> // sec:authorize="isAuthenticated()">-->
-<!--                        <a class="nav-link active" aria-current="page" href="/member/logout">로그아웃</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <form class="d-flex" role="search">-->
-<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</div>-->
-<!--</html>-->
