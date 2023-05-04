@@ -1,9 +1,19 @@
 package com.example.fc.member.memberController;
 
+
 import com.example.fc.email.model.EmailVerification;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
 import lombok.RequiredArgsConstructor;
+import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
+import com.example.fc.member.memberService.MemberService;
+import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingController.JobHuntingController;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo;
+import com.example.fc.memberJobHunting.memberJobHuntingservice.MemberJobHuntingService;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Controller // 컨트롤러는 값만 넘겨주는 역할
@@ -25,8 +36,19 @@ public class MemberController {
 
    private final MemberService memberService;
 
+    @Autowired
+    EpRecruitService epRecruitService;
+
+    @Autowired
+    MemberJobHuntingService jobHunting;
+
+
     @GetMapping("/")
-    public String member() {
+    public String member(Model model) {
+        List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+        List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
+        model.addAttribute("epList", epRecruitList);
+        model.addAttribute("MList", jobHuntingList);
         return "main";
     }
 
@@ -56,7 +78,11 @@ public class MemberController {
     public String memberLogin(HttpSession session, Model model, HttpServletRequest request,  @RequestParam(required = false) String verifyingCode) {
 
         String userType2 = request.getParameter("userType2");
-
+        if (session.getAttribute("memberLogin") != null || session.getAttribute("epLogin") != null ) {
+            //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
+            session.removeAttribute("memberLogin");
+            session.removeAttribute("epLogin");
+        }
 
         if(userType2 == null){
             userType2 = "0";
@@ -94,8 +120,8 @@ public class MemberController {
             session.setAttribute("memberLogin", vo);
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);
             //로그인 성공시
-            returnURL = "/main";
             System.out.println("session 저장 값 : " + session.getAttribute( "memberLogin" ));
+            return "redirect:/";
         } else {
             //로그인 실패시
             System.out.println("로그인 실패");
@@ -155,7 +181,11 @@ public class MemberController {
     @GetMapping("/memberPassword")
     public String memberPassword() {return "member/memberFindPass";
     }
-    @ResponseBody
+    @GetMapping("/memberFindResult")
+    public String memberFindResult() {return "member/memberFindResult";
+    }
+
+    //비밀번호찾기
     @PostMapping("/mPasswordFind")
     public String mPasswordFind(MemberVo memberVo, HttpSession session) {
         MemberVo vo = memberService.memberPasswordCheck(memberVo);
@@ -163,31 +193,36 @@ public class MemberController {
         String failmessage ="";
 
         if (vo != null) {
+            failmessage ="";
             session.setAttribute("mPasswordFind", vo);
             System.out.println("비밀번호 는 ============" + vo);
-            return "/member/memberFindResult";
+            return "member/memberFindResult";
         } else {
-            System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+        return "redirect:/findAlert";
         }
     }
 
+    //실패시 알람창
     @ResponseBody
+    @GetMapping("/findAlert")
+    public String findAlert(){
+        String failmessage ="";
+        failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+        return failmessage;
+    }
+
+
     @PostMapping("/mEmailFind")
     public String mEmailFind(MemberVo memberVo, HttpSession session){
         MemberVo vo = memberService.memberEmailCheck(memberVo);
         System.out.println("vo = " + vo);
-        String failmessage ="";
-
         if (vo != null) {
             session.setAttribute("mEmailFind",vo);
             System.out.println("이메일은 는 ============"+vo);
-            return "/member/memberFindResult";
+            return "member/memberFindResult";
         }else{
-            System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+           return "redirect:/findAlert";
+
         }
 
     }

@@ -89,12 +89,14 @@
                 </button>
                 <button type="button" class="btn btn-warning" onclick="location.href='/epPage'">기업 페이지
                     <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
+                <a th:if="${session.epLogin}" class="btn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
             </div>
 
             <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
                 <button type="button" class="btn btn-outline-dark me-2" onclick="location.href='/login'">로그인
                 </button>
                 <button type="button" class="btn btn-warning" onclick="location.href='/joinSelect'">회원가입</button>
+
             </div>
 
         </div>

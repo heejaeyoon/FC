@@ -10,10 +10,22 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.UUID;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLEncoder;
 
 
 @Controller
@@ -54,6 +66,11 @@ public class EpController {
         
         //post로 로그인이 되기떄문에 hidden으로 암호키 post로 전송
         model.addAttribute("verifyingCode", verifyingCode);
+        return "/loginForm";
+    }
+    @GetMapping("/addMoreGetJob")
+    public String addMoreGetJob(){
+
         return "/loginForm";
     }
 
@@ -112,13 +129,6 @@ public class EpController {
         }
     }
 
-    //로그인 인증
-    @PostMapping("/epLoginVerfied")
-    public void epLoginVerfield() {
-
-
-    }
-
     @GetMapping("/epModify")
     public String epModify() {
         System.out.println("epService = " + epService);
@@ -154,7 +164,20 @@ public class EpController {
         return "ep/epFindPass";
     }
 
+
+    @GetMapping("/epFindResult")
+    public String epFindResult() {return "epFindResult";
+    }
+
     @ResponseBody
+    @GetMapping("/epFindAlert")
+    public String epFindAlert(){
+        String failmessage ="";
+        failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+        return failmessage;
+    }
+
+
     @PostMapping("/passwordFind")
     public String passwordFind(EpVo epVo, HttpSession session) {
         EpVo vo = epService.epPasswordCheck(epVo);
@@ -165,17 +188,13 @@ public class EpController {
             session.setAttribute("passwordFind", vo);
             System.out.println("비밀번호 는 ============" + vo);
             return "/ep/epFindResult";
-        } else {
-            System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
-            //스크립트를 넣고 로케이션은 다음이동화면을 설정
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+        }else{
+            return "redirect:/epFindAlert";
         }
 
 
     }
 
-    @ResponseBody//없으면 에러남
     @PostMapping("/emailFind")
     public String emailFind(EpVo epVo, HttpSession session) {
         EpVo vo = epService.epEmailCheck(epVo);
@@ -186,14 +205,12 @@ public class EpController {
             session.setAttribute("emailFind", vo);
             System.out.println("이메일은 는 ============" + vo);
             return "/ep/epFindResult";
-        } else {
-            System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
-            //스크립트를 넣고 로케이션은 다음이동화면을 설정
-            failmessage = "<script>alert('로그인후 이용해 주세요.'); history.go(-1);</script>";
-            return failmessage;
+        }else{
+            return "redirect:/epFindAlert";
         }
-
     }
+
+
 //    @GetMapping("/epPage")
 //    public String myPage(EpOneToOneVo epOneToOneVo, HttpSession session,Model model) {
 //        session.setAttribute("epOneToOneVo", epOneToOneVo);
@@ -221,6 +238,39 @@ public class EpController {
 //    System.out.println("세션값 -----------------" + session.getAttribute("epLogin"));
 //    return "/ep/epMyPageForm";
 //}
+
+    //주소API컨트롤러
+    @RequestMapping(value="/sample/getAddrApi.do")
+    public void getAddrApi(HttpServletRequest req, ModelMap model, HttpServletResponse response) throws Exception {
+        // 요청변수 설정
+        String currentPage = req.getParameter("currentPage");    //요청 변수 설정 (현재 페이지. currentPage : n > 0)
+        String countPerPage = req.getParameter("countPerPage");  //요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100)
+        String resultType = req.getParameter("resultType");      //요청 변수 설정 (검색결과형식 설정, json)
+        String confmKey = req.getParameter("confmKey");          //요청 변수 설정 (승인키)
+        String keyword = req.getParameter("keyword");            //요청 변수 설정 (키워드)
+        // OPEN API 호출 URL 정보 설정
+        String apiUrl = "https://business.juso.go.kr/addrlink/addrLinkApi.do?currentPage="+currentPage+"&countPerPage="+countPerPage+"&keyword="+ URLEncoder.encode(keyword,"UTF-8")+"&confmKey="+confmKey+"&resultType="+resultType;
+        URL url = new URL(apiUrl);
+        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(),"UTF-8"));
+        StringBuffer sb = new StringBuffer();
+        String tempStr = null;
+
+        while(true){
+            tempStr = br.readLine();
+            if(tempStr == null) break;
+            sb.append(tempStr);								// 응답결과 JSON 저장
+        }
+        br.close();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/xml");
+        response.getWriter().write(sb.toString());			// 응답결과 반환
+    }
+
+    @GetMapping("/addrSearch")
+
+    public String addTest() {
+        return "ep/addrSearch";
+    }
 
 
 }

@@ -50,8 +50,10 @@
         select password, name,email From member where name = #{name} and phone = #{phone};
     </select>
 
+
     <!--이메일 인증-->
     <update id="emailVerified" parameterType="com.example.fc.member.memberVo.MemberVo">
         UPDATE ep SET email_verified =1 where email=#{email} AND password =#{password}
     </update>
+
 </mapper>
