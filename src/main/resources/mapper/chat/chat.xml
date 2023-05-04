@@ -7,7 +7,7 @@
 
     <!--member-->
     <select id="findMemberRoomById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        select count(*) from chat_room where member_id = #{memberRoom} and
+        select count(*) from chat_room where member_id = #{memberRoom}
     </select>
 
     <insert id="createMemberRoom" parameterType="java.lang.Integer">
