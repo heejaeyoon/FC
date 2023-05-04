@@ -104,7 +104,20 @@ public class EpController {
     @GetMapping("/epPassword")
     public String epPassword() {return "ep/epFindPass";
     }
+
+    @GetMapping("/epFindResult")
+    public String epFindResult() {return "epFindResult";
+    }
+
     @ResponseBody
+    @GetMapping("/epFindAlert")
+    public String epFindAlert(){
+        String failmessage ="";
+        failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+        return failmessage;
+    }
+
+
     @PostMapping("/passwordFind")
     public String passwordFind(EpVo epVo, HttpSession session){
         EpVo vo = epService.epPasswordCheck(epVo);
@@ -116,15 +129,11 @@ public class EpController {
             System.out.println("비밀번호 는 ============"+vo);
             return "/ep/epFindResult";
         }else{
-            System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
-            //스크립트를 넣고 로케이션은 다음이동화면을 설정
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+            return "redirect:/epFindAlert";
         }
 
 
     }
-    @ResponseBody//없으면 에러남
     @PostMapping("/emailFind")
     public String emailFind(EpVo epVo, HttpSession session){
         EpVo vo = epService.epEmailCheck(epVo);
@@ -136,10 +145,7 @@ public class EpController {
             System.out.println("이메일은 는 ============"+vo);
             return "/ep/epFindResult";
         }else{
-            System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
-            //스크립트를 넣고 로케이션은 다음이동화면을 설정
-            failmessage = "<script>alert('로그인후 이용해 주세요.'); history.go(-1);</script>";
-            return failmessage;
+            return "redirect:/epFindAlert";
         }
 
     }

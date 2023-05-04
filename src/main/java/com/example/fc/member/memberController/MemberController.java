@@ -166,7 +166,11 @@ public class MemberController {
     @GetMapping("/memberPassword")
     public String memberPassword() {return "member/memberFindPass";
     }
-    @ResponseBody
+    @GetMapping("/memberFindResult")
+    public String memberFindResult() {return "member/memberFindResult";
+    }
+
+    //비밀번호찾기
     @PostMapping("/mPasswordFind")
     public String mPasswordFind(MemberVo memberVo, HttpSession session) {
         MemberVo vo = memberService.memberPasswordCheck(memberVo);
@@ -174,31 +178,36 @@ public class MemberController {
         String failmessage ="";
 
         if (vo != null) {
+            failmessage ="";
             session.setAttribute("mPasswordFind", vo);
             System.out.println("비밀번호 는 ============" + vo);
-            return "/member/memberFindResult";
+            return "member/memberFindResult";
         } else {
-            System.out.println("요청하는 회원의(비밀번호찾기)정보가 없습니다.");
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+        return "redirect:/findAlert";
         }
     }
 
+    //실패시 알람창
     @ResponseBody
+    @GetMapping("/findAlert")
+    public String findAlert(){
+        String failmessage ="";
+        failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
+        return failmessage;
+    }
+
+
     @PostMapping("/mEmailFind")
     public String mEmailFind(MemberVo memberVo, HttpSession session){
         MemberVo vo = memberService.memberEmailCheck(memberVo);
         System.out.println("vo = " + vo);
-        String failmessage ="";
-
         if (vo != null) {
             session.setAttribute("mEmailFind",vo);
             System.out.println("이메일은 는 ============"+vo);
-            return "/member/memberFindResult";
+            return "member/memberFindResult";
         }else{
-            System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");
-            failmessage = "<script>alert('올바르지 않은 정보입니다.'); history.go(-1);</script>";
-            return failmessage;
+           return "redirect:/findAlert";
+
         }
 
     }
