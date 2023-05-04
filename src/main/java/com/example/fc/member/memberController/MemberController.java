@@ -1,13 +1,16 @@
 package com.example.fc.member.memberController;
 
+import com.example.fc.email.model.EmailVerification;
 import com.example.fc.member.memberService.MemberService;
 import com.example.fc.member.memberVo.MemberVo;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,10 +19,11 @@ import javax.servlet.http.HttpSession;
 
 @Controller // 컨트롤러는 값만 넘겨주는 역할
 @Slf4j
+@RequiredArgsConstructor
 public class MemberController {
 
-    @Autowired
-    MemberService memberService;
+
+   private final MemberService memberService;
 
     @GetMapping("/")
     public String member() {
@@ -49,9 +53,10 @@ public class MemberController {
 
     /* 로그인 */
     @GetMapping("/login")
-    public String memberLogin(HttpSession session, Model model, HttpServletRequest request) {
+    public String memberLogin(HttpSession session, Model model, HttpServletRequest request,  @RequestParam(required = false) String verifyingCode) {
 
         String userType2 = request.getParameter("userType2");
+
 
         if(userType2 == null){
             userType2 = "0";
@@ -62,11 +67,15 @@ public class MemberController {
         session.removeAttribute("mPasswordFind");
         session.removeAttribute("mEmailFind");
         model.addAttribute("userType", userType);
+
+        //post로 로그인이 되기떄문에 hidden으로 암호키 post로 전송
+        model.addAttribute("verifyingCode", verifyingCode);
+
         return "/loginForm";
     }
 
     @PostMapping("/login")
-    public String memberLogin(MemberVo memberVo, HttpSession session) {
+    public String memberLogin(MemberVo memberVo, HttpSession session, EmailVerification emailVerification) {
         //로그인시 받아온 값을 서비스로 넘겨줌
         
         
@@ -77,6 +86,8 @@ public class MemberController {
         }
         MemberVo vo = memberService.memberLogin(memberVo);
         System.out.println(vo);
+        int result = memberService.memberEmailVerifying(emailVerification);
+        System.out.println("이메일 인증 결과 0실패, 1성공 = " + result);
 
         if (vo != null) {
             //세션에 memberLogin 이란 이름으로 memberVo 객체를 저장해 놓는다.

@@ -1,5 +1,6 @@
 package com.example.fc.member.memberDao;
 
+import com.example.fc.email.model.EmailVerification;
 import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.member.memberVo.MemberVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,4 +28,9 @@ public interface MemberDao {
     /* 이메일 찾기*/
     public MemberVo memberEmailCheck(MemberVo memberVo);
 
+    //이메일 어쩌구
+    int memberEmailVerified(MemberVo memberVo);
+
+    //member Table 이메일 인증
+    int emailVerified(EmailVerification emailVerification);
 }

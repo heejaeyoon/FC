@@ -18,5 +18,7 @@ public class EpVo {
     private String bn_number;
     private String email;
     private String role;
+    private int emailVerified; //email인증 0 미인증, 1인증
+    private int hiddenValue; // 0 : email인증 0, 1 : 이메일인증 1
 
 }
