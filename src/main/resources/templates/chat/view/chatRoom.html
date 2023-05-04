@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko" charset="utf-8"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
+<head>
+    <style>
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+            height: 700px;
+        }
+
+        div {
+            border: solid black 1px;
+        }
+
+        .memRoomList {
+            width: 15%;
+        }
+
+        /*msgBox 구간*/
+        .monitor {
+            width: 60%;
+        }
+
+        .msgHistory {
+            /*메세지 내용이 보이는 곳*/
+            width: 100%;
+            height: 92.5%;
+        }
+
+        .msgContentBox {
+            /*메세지 작성하는 텍스트 에어리어*/
+
+        }
+
+        .msgContent {
+            width: 90%;
+        }
+
+        .sendBtn {
+            width: 8%;
+        }
+
+
+        .epRoomList {
+            width: 15%;
+        }
+
+    </style>
+</head>
+<div layout:fragment="content" class="container wrapper">
+    <div class="memRoomList">
+        <div>
+            <ul th:unless="${memberList}">
+                메세지가 없습니다.
+                <li ><a href="/memberChat/enterMemberRoom/1?memberRoom=1">1 운영자</a></li>
+                <li class="memberli"><a href="/memberChat/enterMemberRoom/2?memberRoom=2">2번 회원</a></li>
+                <li>3번 기업</li>
+                <li>4번 기업</li>
+            </ul>
+            <ul th:if="${memberList}">
+                일반 채팅 리스트
+                <li th:each="list: ${memberList}" class=""><a th:href="@{/memberChat/enterMemberRoom/}+${list.id}">[["회원번호: "+ ${list.id}+" "+ "회원이름: "+${list.name}]]</a></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="monitor">
+        <div class="bb">
+
+        </div>
+    </div>
+
+    <div class="epRoomList">
+        <ul th:unless="${epList}">
+            메세지가 없습니다.
+
+            <li><a href="/epChat/enterEpRoom/19?epRoom=19">19번 고라니 기업</a></li>
+            <li><a href="/epChat/enterEpRoom/2?epRoom=2">2번 기업</a></li>
+            <li>3번 기업</li>
+            <li>4번 기업</li>
+        </ul>
+
+        <ul th:if="${epList}">
+            기업회원 채팅 리스트
+            <li th:each="list: ${epList}" class=""><a th:href="@{/epChat/enterEpRoom/}+${list.edId}">[[${list.epId}+" "+${list.name}]]</a></li>
+
+        </ul>
+    </div>
+</div>
+<th:block layout:fragment="script">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script th:inline="javascript">
+
+        let memberVo;
+        let epVo;
+        let msgForm = document.querySelector("#msgForm");
+        let message = document.querySelector(".msgContent");
+        let stompClient = null;
+        let memberli = document.querySelector('.memberli');
+
+        /*roomId 관련*/
+        if ([[${session.epLogin}]]) {
+            epVo = [[${session.epLogin}]];
+            roomId = epVo.epId;
+        } else if ([[${session.memberLogin}]]) {
+            memberVo = [[${session.memberLogin}]];
+            roomId = memberVo.id;
+            console.log(roomId);
+        }
+
+
+
+
+/*
+        /!*소켓 부분*!/
+        let sock = new SockJS("/ws");
+        stompClient = Stomp.over(sock);
+        stompClient.connect({}, onConnected, onError); //.연결(람다,실행함수,에러)
+
+        function onConnected(event) {
+
+            // Subscribe to the Public Topic
+            // 상대방에게 메세지를 주고 받기 위해선 uri 구독해야한다.
+            // (url주소, function())
+            //특정 방을 구독해야 구독한 사람들끼리 대화가능
+            stompClient.subscribe('/topic/chatRoom', receivedMessage);
+
+            /!*로그인한 조건에 의한 메세지 전달 내용*!/
+            if ([[${session.epLogin}]]) {
+                stompClient.send('/app/chat/message',
+                    {},
+                    JSON.stringify({
+                        epVo: epVo,
+                        roomId: roomId,
+                        type: 'JOIN'
+                    })
+                );
+            } else if ([[${session.memberLogin}]]){
+                stompClient.send('/app/chat/message',
+                    {},
+                    JSON.stringify({
+                        memberVo: memberVo,
+                        roomId: roomId,
+                        type: 'JOIN'
+                    })
+                );
+            }
+
+        }
+
+        function receivedMessage(payload){
+            let messages =JSON.parse(payload.body);
+            console.log(messages+"자바에서 받아옴");
+
+        }
+
+        function onError(error) {
+            connectingElement.textContent = 'Could not connect to WebSocket server. Please refresh this page to try again!';
+            connectingElement.style.color = 'red';
+        }
+
+        function sendMessage() {
+            let data = new FormData(msgForm);
+            data.JSON.stringify({
+                message: message
+            })
+            fetch("/chat/room/" + roomId, {})
+        }*/
+
+       /* msgForm.addEventListener('click', sendMessage);*/
+    </script>
+</th:block>
+</html>
