@@ -1,52 +1,71 @@
 package com.example.fc.ep.epController;
 
+import com.example.fc.email.model.EmailVerification;
+import com.example.fc.email.service.EmailSenderService;
 import com.example.fc.ep.epService.EpService;
 import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.support.supportService.EpOneToOneService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.UUID;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLEncoder;
 
+
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class EpController {
 
-    @Autowired
-    EpService epService;
-    @Autowired
-    EpOneToOneService epOneToOneService;
+    private final EpService epService;
 
+    private final EpOneToOneService epOneToOneService;
+
+    //이메일 보내기
+    private final EmailSenderService emailSenderService;
+
+
+    //인증을 위한 해쉬맵
+    private final HashMap<String, UUID> hashMap;
 
     /* 회원가입 */
     @GetMapping("/epInsert")
-    public String epJoin(){
+    public String epJoin() {
         return "/ep/enterpriseJoinForm";
     }
+
     @PostMapping("/epInsert")
-    public String memberJoin(EpVo epVo){
-        log.info("회원가입 폼에서 입력받은 데이터: {}",epVo);
+    public String memberJoin(EpVo epVo) {
+        log.info("회원가입 폼에서 입력받은 데이터: {}", epVo);
         epService.epJoin(epVo);
         return "main";
     }
 
     /* 로그인 */
     @GetMapping("/epLogin")
-    public String epLogin(HttpSession session) {
+    public String epLogin(HttpSession session, @RequestParam(required = false) String verifyingCode, Model model) {
+        System.out.println("verifiedCode = " + verifyingCode);
         session.removeAttribute("passwordFind");
         session.removeAttribute("emailFind");
+        
+        //post로 로그인이 되기떄문에 hidden으로 암호키 post로 전송
+        model.addAttribute("verifyingCode", verifyingCode);
         return "/loginForm";
     }
     @GetMapping("/addMoreGetJob")
@@ -55,7 +74,7 @@ public class EpController {
         return "/loginForm";
     }
 
-    @PostMapping("/epLogin")
+  /*  @PostMapping("/epLogin")
     public String epLogin(EpVo epVo, HttpSession session){
 
         if (session.getAttribute("epLogin") != null){
@@ -72,38 +91,79 @@ public class EpController {
             System.out.println("로그인 실패");
             return "/loginForm";
         }
+    }*/
 
+    @PostMapping("/epLogin")
+    public String epLogin(EpVo epVo, HttpSession session, EmailVerification emailVerification) {
+        System.out.println("epVo = " + epVo);
+        System.out.println("emailVerification = " + emailVerification);
+
+        if (session.getAttribute("epLogin") != null) {
+            session.removeAttribute("epLogin");
+        }
+        EpVo vo = epService.epLogin(epVo);
+        System.out.println("vo = " + vo);
+
+        //링크에서 로그인 시 emailVerified 1로 변경
+
+        int result = epService.epEmailVerifying(epVo, emailVerification);
+        System.out.println("이메일 인증 결과 0실패, 1성공 = " + result);
+
+
+        //이메일 인증이 됐으면 getEmailVerified == 1
+        if (vo != null && result == 1) {
+            session.setAttribute("epLogin", vo);
+            System.out.println("로그인이 성공하였습니다" + vo);
+            return "main";
+            
+        //이미 이메일 인증한 회원 로그인
+        } else if( vo != null && vo.getEmailVerified() == 1){
+            session.setAttribute("epLogin", vo);
+            System.out.println("로그인이 성공하였습니다" + vo);
+            return "main";
+
+         //이메일 미인증 접근
+        } else {
+            System.out.println("로그인 실패");
+            return "/loginForm";
+        }
     }
 
     @GetMapping("/epModify")
-    public String epModify(){
+    public String epModify() {
         System.out.println("epService = " + epService);
         return "/ep/epModify";
     }
+
     @PostMapping("/epModify")
-    public String epModify(EpVo epVo, HttpSession session){
+    public String epModify(EpVo epVo, HttpSession session) {
         epService.epModify(epVo);
-        session.setAttribute("epLogin",epVo);
+        session.setAttribute("epLogin", epVo);
         System.out.println("업데이트 성공했습니다");
-            return "main";
+        return "main";
     }
+
     @PostMapping("/epDelete")
-    public String epDelete(EpVo epVo, HttpSession session){
+    public String epDelete(EpVo epVo, HttpSession session) {
         epService.epDelete(epVo);
         session.removeAttribute("epLogin");
         return "main";
     }
+
     @ResponseBody // 값 변환을 위해 꼭 필요함
     @GetMapping("/idCheck") // 아이디 중복확인을 위한 값으로 따로 매핑
-    public int idCheck(EpVo epVo) throws Exception{
+    public int idCheck(EpVo epVo) throws Exception {
         System.out.println("epVo값 = " + epVo);
         int result = epService.idCheck(epVo); // 중복확인한 값을 int로 받음
         System.out.println("result +++++++++= 6+++++++++++++++++++::::" + result);
         return result;
     }
+
     @GetMapping("/epPassword")
-    public String epPassword() {return "ep/epFindPass";
+    public String epPassword() {
+        return "ep/epFindPass";
     }
+
 
     @GetMapping("/epFindResult")
     public String epFindResult() {return "epFindResult";
@@ -119,14 +179,14 @@ public class EpController {
 
 
     @PostMapping("/passwordFind")
-    public String passwordFind(EpVo epVo, HttpSession session){
+    public String passwordFind(EpVo epVo, HttpSession session) {
         EpVo vo = epService.epPasswordCheck(epVo);
         System.out.println("vo = " + vo);
 //        alert을 하기위해서 미리 메세지를 함수로 설정해준다 // 리스폰스바디를 해줘야한다.
-        String failmessage ="";
+        String failmessage = "";
         if (vo != null) {
-            session.setAttribute("passwordFind",vo);
-            System.out.println("비밀번호 는 ============"+vo);
+            session.setAttribute("passwordFind", vo);
+            System.out.println("비밀번호 는 ============" + vo);
             return "/ep/epFindResult";
         }else{
             return "redirect:/epFindAlert";
@@ -134,20 +194,20 @@ public class EpController {
 
 
     }
+
     @PostMapping("/emailFind")
-    public String emailFind(EpVo epVo, HttpSession session){
+    public String emailFind(EpVo epVo, HttpSession session) {
         EpVo vo = epService.epEmailCheck(epVo);
         System.out.println("vo = " + vo);
         //        alert을 하기위해서 미리 메세지를 함수로 설정해준다 // 리스폰스바디를 해줘야한다.
-        String failmessage ="";
+        String failmessage = "";
         if (vo != null) {
-            session.setAttribute("emailFind",vo);
-            System.out.println("이메일은 는 ============"+vo);
+            session.setAttribute("emailFind", vo);
+            System.out.println("이메일은 는 ============" + vo);
             return "/ep/epFindResult";
         }else{
             return "redirect:/epFindAlert";
         }
-
     }
 
 
