@@ -11,6 +11,12 @@
                                                                             class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users" ></i>&nbsp;구인</a></li>
             <li th:unless="${session.memberLogin} OR ${session.epLogin}"><a href="/login?userType2=0"
 
+                                                                            class="nav-link px-2 text-dark">구직</a></li>
+            <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark"><i
+                    class="fa fa-fw fa-user"></i>구인</a></li>
+            <li th:if="${session.memberLogin}"><a href="/jobHunting/jobHuntingList" class="nav-link px-2 text-dark">구직</a></li>
+
+
                                                                             class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building fa-lg"></i>&nbsp;구직</a></li>
             <li th:if="${session.epLogin}"><a href="/epRecruit/epRecruitList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-solid fa-users"></i>&nbsp;구인</a></li>
             <li th:if="${session.memberLogin}"><a href="/memberJobHuntingList" class="nav-link px-2 text-dark" style="margin: 20px; font-family: 나눔고딕; font-weight: 500; text-decoration: none"><i class="fa-regular fa-building"></i>&nbsp;구직</a></li>

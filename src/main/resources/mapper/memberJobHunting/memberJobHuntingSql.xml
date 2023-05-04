@@ -6,7 +6,8 @@
 <mapper namespace="com.example.fc.memberJobHunting.memberJobHuntingDao.MemberJobHuntingDao">
 
     <insert id="insertJobHunting" parameterType="com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo">
-        insert into job_hunting (title, stack, period, payment, detail, member_id, file_attached) values (#{title}, #{stack}, #{period}, #{payment}, #{detail}, '1', #{fileAttached});
+        insert into job_hunting(title, member_id, stack, showing_period, recruit_condition, gender, payment, work_day_start, work_day_end, addr, detail, create_date, update_date, file_attached)
+        VALUES (#{title}, #{memberId}, #{stack}, #{showingPeriod}, #{recruitCondition}, #{gender}, #{payment}, #{workDayStart}, #{workDayEnd}, #{addr}, #{detail}, now(), now(), #{fileAttached});
     </insert>
 
     <select id="findJobHuntingMemberBoard" resultType="java.lang.Integer">
