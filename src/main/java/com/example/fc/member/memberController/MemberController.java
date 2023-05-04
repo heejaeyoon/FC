@@ -62,7 +62,7 @@ public class MemberController {
         log.info("회원가입 폼에서 입력받은 데이터: {}", memberVo);
         memberService.memberJoin(memberVo);
 
-        return "/member/memberForm2";
+        return "/loginForm";
     }
 
     /* 로그인 */
@@ -164,7 +164,8 @@ public class MemberController {
         return result;
     }
     @GetMapping("/memberPassword")
-    public String memberPassword() {return "member/memberFindPass";
+    public String memberPassword() {
+        return "member/memberFindPass";
     }
     @ResponseBody
     @PostMapping("/mPasswordFind")
@@ -194,6 +195,7 @@ public class MemberController {
         if (vo != null) {
             session.setAttribute("mEmailFind",vo);
             System.out.println("이메일은 는 ============"+vo);
+
             return "/member/memberFindResult";
         }else{
             System.out.println("요청하는 회원의 정보(이메일찾기)가 없습니다.");

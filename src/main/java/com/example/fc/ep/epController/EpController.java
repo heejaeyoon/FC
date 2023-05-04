@@ -39,7 +39,7 @@ public class EpController {
     public String memberJoin(EpVo epVo){
         log.info("회원가입 폼에서 입력받은 데이터: {}",epVo);
         epService.epJoin(epVo);
-        return "main";
+        return "loginForm";
     }
 
     /* 로그인 */
