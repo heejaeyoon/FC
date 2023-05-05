@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
-import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
@@ -79,7 +78,7 @@ public class EpRecruitController {
 
         JsonObject jsonObject = new JsonObject();
 
-        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\summernote_image\\
+        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\upload\\epRecruit\\content\\
         String originalFileName = multipartFile.getOriginalFilename();    //오리지날 파일명
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
 
@@ -117,6 +116,7 @@ public class EpRecruitController {
 
 
         if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
+
 //    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
             System.out.println("session = " + session.getId());
             List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
@@ -129,6 +129,8 @@ public class EpRecruitController {
 
             final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
+            System.out.println("session!!!!!!!!! " + session.getAttribute("epLogin"));
+//            model.addAttribute()
             model.addAttribute("epList", page);
 
             return "/epRecruit/epRecruitList";

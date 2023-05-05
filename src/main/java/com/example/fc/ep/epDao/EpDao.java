@@ -30,5 +30,6 @@ public interface EpDao {
 
     EpVo epEmailCheck(EpVo epVo);
 
-
+    //이메일 인증
+    int emailVerified(EpVo epVo);
 }

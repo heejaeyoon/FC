@@ -31,7 +31,7 @@
 
     <!-- 로그인 -->
     <select id="epLogin" resultType="com.example.fc.ep.epVo.EpVo">
-        select ep_id,email,name,content, password,addr,phone,bn_number from ep where email = #{email} and password = #{password};
+        select ep_id, email_verified ,email, name, content, password, addr,phone, bn_number, role from ep where email = #{email} and password = #{password};
     </select>
 
     <!--정보수정-->
@@ -60,4 +60,9 @@
     <select id="epEmailCheck" resultType="com.example.fc.ep.epVo.EpVo">
         select password, name,email From ep where name = #{name} and bn_number = #{bnNumber};
     </select>
+
+    <!--이메일 인증-->
+    <update id="emailVerified" parameterType="com.example.fc.ep.epVo.EpVo">
+        UPDATE ep SET email_verified =1 where email=#{email} AND password =#{password}
+    </update>
 </mapper>
