@@ -12,17 +12,27 @@
 <body>
 
 <form name="form" action="#" id="form" method="post">
-	<input type="hidden" name="currentPage" value="1"/> <!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
+
+	<input type="hidden" name="totalCount" id="totalCount"/> <!--검색 총개수-->
+	<input type="hidden" name="currentPage" id="countPerPage" value="1"/> <!-- 요청 변수 설정 (현재 페이지. currentPage : n > 0) -->
 	<input type="hidden" name="countPerPage" value="10"/><!-- 요청 변수 설정 (페이지당 출력 개수. countPerPage 범위 : 0 < n <= 100) -->
 	<input type="hidden" name="resultType" value="json"/> <!-- 요청 변수 설정 (검색결과형식 설정, json) -->
 	<input type="hidden" name="confmKey" value="devU01TX0FVVEgyMDIzMDUwMjEyMjkwMDExMzczNjE="/><!-- 요청 변수 설정 (승인키) -->
-	<input class="form-control me-2" type="text"     name="keyword" value="" onkeydown="enterSearch();"/><!-- 요청 변수 설정 (키워드) -->
+	<input class="form-control me-2" type="text" name="keyword" value="" onkeydown="enterSearch();"/><!-- 요청 변수 설정 (키워드) -->
 	<input class="btn btn-outline-primary" type="button"  onClick="getAddr();" value="주소검색하기"/>
-	<div id="list" ></div><!-- 검색 결과 리스트 출력 영역 -->
+	<div id="list" ></div><!-- 검색 결과 리스트 출력 영역 --><br/>
 </form>
 
 
-<script language="javascript">
+
+
+<script>
+
+	const totalCount = $("#totalCount").val();
+	const countPerPage = $("#countPerPage").val();
+	const showButton = 5;
+	const maxPage  = Math.ceil(countPerPage / totalCount);
+
 	function getAddr(){
 		// 적용예 (api 호출 전에 검색어 체크)
 		if (!checkSearchedWord(document.form.keyword)) {
@@ -106,6 +116,8 @@
 		return true ;
 	}
 
+
+
 //값을 입력시킬때 enter키 안될시 사용된 함수로 다른기능으로 가는것은 막고, getAddr(); 만 실행되게 해둠
 	function enterSearch() {
 		// var evt_code = (window.netscape) ? ev.which : event.keyCode;
@@ -117,9 +129,9 @@
 	}
 
 	function addrPass() {
-		var roadAddr = document.getElementById("roadAddr").getAttribute("value");
+		var Addr = document.getElementById("roadAddr").getAttribute("value");
 		var zipNo = document.getElementById("zipNo").getAttribute("value");
-		opener.receiveAddressValues(roadAddr, zipNo);
+		opener.receiveAddressValues(Addr, zipNo);
 		window.close();
 	}
 
@@ -127,4 +139,3 @@
 
 </body>
 </html>
-						
