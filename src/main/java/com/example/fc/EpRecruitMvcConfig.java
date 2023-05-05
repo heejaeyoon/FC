@@ -16,10 +16,10 @@ public class EpRecruitMvcConfig implements WebMvcConfigurer {
     String getEpRecruitThumbnailPath;
     @Value("${getEpRecruitMainThumbnailPath}")
     String getEpRecruitMainThumbnailPath;
-    @Value("${getEpRecruitContentPath}")
-    String getEpRecruitContentPath;
     @Value("${uploadEpRecruit}")
     String uploadEpRecruit;
+    @Value("${getEpRecruitContentPath}")
+    String getEpRecruitContentPath;
     @Value("${uploadEpRecruitContent}")
     String uploadEpRecruitContent;
 
