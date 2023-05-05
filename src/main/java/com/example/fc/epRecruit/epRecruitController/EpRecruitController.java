@@ -77,7 +77,7 @@ public class EpRecruitController {
 
         JsonObject jsonObject = new JsonObject();
 
-        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\summernote_image\\
+        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\upload\\epRecruit\\content\\
         String originalFileName = multipartFile.getOriginalFilename();    //오리지날 파일명
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
 

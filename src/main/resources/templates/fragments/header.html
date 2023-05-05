@@ -30,7 +30,7 @@
 
         <div class="text-end">
             <div th:if="${session.memberLogin}">
-                <span style="color: #767673; font-weight: 5 00">[[${session.memberLogin.nickName}]]님</span>
+                <span style="color: #767673; font-weight: 500;">[[${session.memberLogin.nickName}]]님</span>
                 <button type="button" class="btn navBtn me-2" onclick="location.href='/logout'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">로그아웃
                 </button>
                 <button type="button" class="btn navBtn" onclick="location.href='/myPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">마이페이지</button>
@@ -42,7 +42,7 @@
                 </button>
                 <button type="button" class="btn navBtn" onclick="location.href='/epPage'" style="border: white; font-weight: 500; font-size: 18px; font-family: 나눔고딕">기업 페이지
                     <input type="hidden" id="email" name="email" th:value="${session.epLogin.email}"/></button>
-                <a th:if="${session.epLogin}" class="btn navBtn btn-primary" href="/epRecruit/epRecruitForm">구인 등록</a>
+                <a th:if="${session.epLogin}" class="rightNavLink nav-link " href="/epRecruit/epRecruitForm">구인 등록</a>
             </div>
 
             <div class="text-end" th:unless="${session.memberLogin} or ${session.epLogin}">
@@ -110,10 +110,29 @@
                 color: #4875ef;
             }
 
+            .dropdown-item {
+                transition: color .15s ease-in-out;
+            }
+
             .dropdown-item:hover {
                 color: #4875ef;
                 text-decoration: none;
             }
+
+            .rightNavLink {
+                display: inline-block;
+                font-weight: 600;
+                font-size: 18px;
+                padding: 6px 12px;
+                font-family: 나눔고딕;
+                top: 3px;
+                position: relative;
+            }
+
+            .rightNavLink:hover {
+                text-decoration: none;
+            }
+
         </style>
     </th:block>
 </header>

@@ -7,35 +7,27 @@
 <div layout:fragment="content">
     <div class="container">
 
-        <div class="row row-cols-2 row-cols-md-3 g-4">
-            <div class="col" th:each="ep : ${epList}">
-                <div class="epList h-100 position-relative">
+        <ul class="recruitUl">
+            <li class="recruitLi" th:each="ep : ${epList}">
                     <div class="text-center" th:if="${ep.fileAttached} == 1">
                         <img class="rounded" th:src="@{/epRecruit/} + ${ep.getThumbnailFileName()}">
                     </div>
-                    <!--          <img src="..." class="card-img-top" alt="...">-->
                     <div class="period">
-                        <!--                        <span>마감일 | </span>-->
                         <span th:text="'마감일 | ' + ${ep.getShowingPeriod().substring(0, 10)}"></span>
                     </div>
                     <div class="title">
-                        <span class="" th:text="${ ep.getTitle() }"></span>
+                        <a class="" th:href="@{/epRecruit/poster( epBoard=${ep.getEpBoard()} )}" th:text="${ ep.getTitle() }"></a>
                     </div>
-
                     <div class="addr">
                         <span class="" th:text="${ ep.getAddr() }"></span>
                     </div>
-
                     <div class="stack " th:if="${ ep.stack }">
                         <span class="stackItem badge text-bg-primary " th:each="stack : ${ ep.getStack().split(',') }"
                               th:text="${ stack } "></span>
                     </div>
-                    <!--                        <small class="text-body-secondary">Last updated 3 mins ago</small>-->
-                    <!--                        stretched-link -->
-                    <a class="stretched-link"
-                       th:href="@{/epRecruit/poster( epBoard=${ep.getEpBoard()} )}"></a>
-                </div>
-            </div>
+
+                </li>
+            </ul>
         </div>
 
         <div class="d-flex justify-content-center my-5" th:if="${!epList.isEmpty()}">
@@ -94,6 +86,44 @@
     <th:block layout:fragment="css">
         <!--        필터 시작-->
         <style>
+            .content {
+                font-family: 'NanumSquare','NanumBarunGothic', 'NanumSquareNeo','NanumGothic', "Malgun Gothic", dotum, gulim, sans-serif;
+
+            }
+
+            .recruitUl {
+
+            }
+
+            .recruitLi {
+                border-right: #4875ef solid 5px;
+                padding: 20px 20px;
+                border-radius: 10px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+                margin-bottom: 20px;
+            }
+
+            .recruitLi > .period {
+                float: right;
+            }
+
+            .recruitLi > .title {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+            }
+
+            .recruitLi > .title > a {
+                color: #171717;
+                font-size: 20px;
+                letter-spacing: 1px;
+                padding-top: 10px;
+                min-height: 120px;
+                font-weight: bold;
+                text-overflow: ellipsis; /* 텍스트길이가 넘어가면 ... 표시 */
+                -webkit-line-clamp: 1; /* 보여줄 텍스트 줄 수 */
+            }
+
             .epList {
                 border: #adb5bd solid 2px;
                 border-radius: 15px;
@@ -106,19 +136,9 @@
                 font-size: 16px;
             }
 
-            .title {
-                padding-top: 10px;
-                min-height: 120px;
-            }
-
-            .title > span {
-                font-weight: bold;
-                font-size: 23px;
-            }
-
             .addr > span {
                 color: #636464;
-                font-weight: bold;
+                font-weight: 500;
                 font-size: 18px;
             }
 
@@ -130,9 +150,11 @@
             }
 
             .stack > .stackItem {
+                font-family: 'NanumSquareNeo', "Malgun Gothic", dotum, gulim, sans-serif;
+
                 margin: 2px 2px;
-                font-weight: bold;
-                font-size: 15px;
+                font-weight: 500;
+                font-size: 13px;
             }
 
         </style>
