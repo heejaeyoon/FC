@@ -24,6 +24,8 @@ public interface EpDao {
 
     int idCheck(EpVo epVo) throws Exception;
 
+    int nameCheck(EpVo epVo) throws Exception;
+
     EpVo epPasswordCheck(EpVo epVo);
 
     EpVo epEmailCheck(EpVo epVo);

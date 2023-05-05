@@ -15,7 +15,7 @@ public class EpVo {
     private String password;
     private String addr;
     private String phone;
-    private String bn_number;
+    private String bnNumber;
     private String email;
     private String role;
 
