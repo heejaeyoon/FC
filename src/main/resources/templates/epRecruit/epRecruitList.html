@@ -7,6 +7,29 @@
 <div layout:fragment="content">
     <div class="container">
 
+        <form class="erSearchForm" action="/epRecruit/epRecruitList" method="get">
+            <select class="stack" name="stack">
+                <option value=>기술 선택</option>
+                <option value="java">java</option>
+                <option value="javascript">javascript</option>
+                <option value="mysql">mysql</option>
+                <option value="oracle">oracle</option>
+                <option value="mariaDB">mariaDB</option>
+                <option value="spring">spring</option>
+                <option value="springboot">springboot</option>
+                <option value="myBatis">myBatis</option>
+                <option value="jpa">jpa</option>
+                <option value="thymeleaf">thymeleaf</option>
+                <option value="bootstrap">bootstrap</option>
+            </select>
+            <button class="submit" type="submit"></button>
+            <input class="title" type="text" name="title" placeholder="프로젝트 제목 검색">
+        </form>
+
+        <div class="listImg">
+            <i class="fa-solid fa-angle-down" style="color: #4875ef;"></i>
+        </div>
+
         <ul class="recruitUl">
             <li class="recruitLi" th:each="ep : ${epList}">
                     <div class="text-center" th:if="${ep.fileAttached} == 1">
@@ -91,6 +114,46 @@
 
             }
 
+            .erSearchForm {
+                border-bottom: #4875ef solid 3px;
+                padding: 10px 10px;
+                border-radius: 10px;
+                box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+            }
+
+            .erSearchForm > .stack {
+                /*border: #c3c3c4 solid 1px;*/
+                /*box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;*/
+                border: none;
+                /*border-radius: 5px;*/
+            }
+
+            .erSearchForm > .stack:focus-visible {
+                outline-style: none;
+            }
+
+            .erSearchForm > .title {
+                float: right;
+                border: none;
+            }
+
+            .erSearchForm > .title:focus-visible {
+                outline-style: none;
+            }
+
+            .erSearchForm > .submit {
+                float: right;
+            }
+
+            .listImg {
+                text-align: center;
+            }
+
+            .listImg > i {
+                color: #4875ef;
+                font-size: 40px;
+            }
+
             .recruitUl {
 
             }
@@ -111,6 +174,7 @@
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 overflow: hidden;
+                height: 60px;
             }
 
             .recruitLi > .title > a {
