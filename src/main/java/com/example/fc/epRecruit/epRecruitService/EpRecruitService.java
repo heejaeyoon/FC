@@ -191,6 +191,16 @@ public class EpRecruitService {
         return epRecruitDao.epRecruitMainList();
     }
 
+    public List<EpRecruitVO> epFindByStackAndTitleList(String stack, String title) {
+        List<EpRecruitVO> lst = epRecruitDao.epFindByStackAndTitleList(stack, title);
+        return lst;
+    }
+
+    public List<EpRecruitVO> epFindByTitleList(String title) {
+        List<EpRecruitVO> lst = epRecruitDao.epFindByTitleList(title);
+        return lst;
+    }
+
     public List<EpRecruitFilesVo> findEpRecruitFilesAll() {
         return epRecruitFilesDao.findEpRecruitFilesAll();
     }

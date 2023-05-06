@@ -29,4 +29,11 @@ class EpRecruitDaoTest {
         }
     }
 
+    @Test
+    void epFindByStackListTest() {
+        List<EpRecruitVO> lst = epRecruitDao.epFindByStackList("java");
+
+        log.info(lst.toString());
+    }
+
 }

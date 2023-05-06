@@ -111,29 +111,38 @@ public class EpRecruitController {
 
 
     @GetMapping("/epRecruitList")
-    public String EpRecruitList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+    public String epRecruitList(String stack, String title, Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+        boolean epLogin = session.getAttribute("epLogin") != null; // 로그인 상태
+        boolean memberLogin = session.getAttribute("memberLogin") != null;
+        boolean stackIsNull = stack == null;
+        boolean titleIsNull = title == null;
 
+        List<EpRecruitVO> epRecruitList = null;
 
-        if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
+        if ( epLogin || memberLogin ) {
 
-//    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
-            System.out.println("session = " + session.getId());
-            List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+            if ((stackIsNull || stack.equals("") ) && ( titleIsNull || title.equals("") )) {
+                epRecruitList = epRecruitService.epRecruitList();
+                System.out.println("여기1");
+            } else if ((stackIsNull || stack.equals("") ) && !titleIsNull) {
+                epRecruitList = epRecruitService.epFindByTitleList(title);
+                System.out.println("여기2");
+            } else if ( !stackIsNull ) {
+                epRecruitList = epRecruitService.epFindByStackAndTitleList(stack, title);
+                System.out.println("여기3");
+            }
 
 //    getOffset은 현제 페이지 넘버를 알려주는 함수
             final int start = (int) pageable.getOffset();
 //    getPageSize() 는 화면에 보여줄 리스트 수
             final int end = Math.min(start + pageable.getPageSize(), epRecruitList.size());
-//    System.out.println("epRecruitList.size() == " + epRecruitList.size());
 
-            final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
+            final Page<EpRecruitVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
-            System.out.println("session!!!!!!!!! " + session.getAttribute("epLogin"));
-//            model.addAttribute()
             model.addAttribute("epList", page);
 
             return "/epRecruit/epRecruitList";
-        } else {
+        }  else {
             return "redirect:/login";
         }
     }
