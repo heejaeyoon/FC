@@ -62,7 +62,6 @@ public class EpController {
         System.out.println("verifiedCode = " + verifyingCode);
         session.removeAttribute("passwordFind");
         session.removeAttribute("emailFind");
-        
         //post로 로그인이 되기떄문에 hidden으로 암호키 post로 전송
         model.addAttribute("verifyingCode", verifyingCode);
         return "/loginForm";

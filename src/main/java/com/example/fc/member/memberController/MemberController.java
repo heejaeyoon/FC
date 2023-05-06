@@ -48,7 +48,7 @@ public class MemberController {
         List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
         List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
         model.addAttribute("epList", epRecruitList);
-        model.addAttribute("MList", jobHuntingList);
+        model.addAttribute("list", jobHuntingList);
         return "main";
     }
 

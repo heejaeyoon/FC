@@ -225,8 +225,7 @@
             color: #fff;
         }
 
-        .container {
-            width: 500px;
+        .mainContainer {
             margin: 0 auto;
         }
 
@@ -261,16 +260,14 @@
         <div class="gr">
             <!-- board seach area -->
             <div class="board-search">
-                <div class="container">
+                <div class="mainContainer">
                     <div class="search-window">
                         <form action="">
                             <div class="search-wrap" style="height: 38px;">
-
                                 <span class="search" type="text"
-                                      style="font-size: 18px; text-align: center;line-height: 2.5em; ">구인 리스트</span>
-                                <!--                            <button class="btnn btn-dark" onclick="location.href='epRecruit/epRecruitList'">더보기</button>-->
-                                <a style="text-decoration: none; line-height: 2.4em;" class="btnn btn-dark" onclick="location.href='/epRecruit/epRecruitList'">더보기</a>
-
+                                      style="font-size: 18px; text-align: center;line-height: 2.5em;">구직 리스트</span>
+                                <a style="text-decoration: none; line-height: 2.4em;" class="btnn btn-dark"
+                                   onclick="location.href='/epRecruit/epRecruitList'">더보기</a>
                             </div>
                         </form>
                     </div>
@@ -279,7 +276,7 @@
 
             <!-- board list area -->
             <div class="board-list">
-                <div class="container">
+                <div class="mainContainer">
                     <table class="board-table">
                         <thead>
                         <tr>
@@ -305,25 +302,24 @@
             </div>
         </div>
 
-
         <div class="gr">
             <!-- board seach area -->
             <div class="board-search">
-                <div class="container">
+                <div class="mainContainer">
                     <div class="search-window">
-                            <div class="search-wrap" style="height: 38px;">
+                        <div class="search-wrap" style="height: 38px;">
                                 <span class="search" type="text"
-                                      style="font-size: 18px; text-align: center;line-height: 2.5em;">구직 리스트</span>
-                                <a style="text-decoration: none; line-height: 2.4em;" class="btnn btn-dark" onclick="location.href='/memberJobHuntingList'">더보기</a>
-
-                            </div>
+                                      style="font-size: 18px; text-align: center;line-height: 2.5em;">구인 리스트</span>
+                            <a style="text-decoration: none; line-height: 2.4em;" class="btnn btn-dark"
+                               onclick="location.href='/jobHunting/jobHuntingList'">더보기</a>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- board list area -->
             <div class="board-list">
-                <div class="container">
+                <div class="mainContainer">
                     <table class="board-table">
                         <thead>
                         <tr>
@@ -333,14 +329,14 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="MList,index : ${MList}" th:if="${index.index} < 5">
-                            <td th:text="${ MList.getAddr() }"></td>
+                        <tr th:each="list,index : ${list}" th:if="${index.index} < 5">
+                            <td th:text="${ list.getAddr() }"></td>
                             <th th:unless="${session.memberLogin} or ${session.epLogin}">
-                                <a th:text="${ MList.getTitle() }" th:href="@{/login}"/>
+                                <a th:text="${ list.getTitle() }" th:href="@{/login}"/>
                             </th>
                             <th th:if="${session.memberLogin} or ${session.epLogin}">
-                            <a th:text="${ MList.getTitle() }" th:href="@{/memberJobHuntingPoster(memberBoard=${MList.memberBoard})}"/></th>
-                            <td th:text="${ MList.getCreateDate()}" th:href="@{/login}"/>
+                            <a th:text="${ list.getTitle() }" th:href="@{/jobHunting/jobHuntingPoster(memberBoard=${list.memberBoard})}"/></th>
+                            <td th:text="${ list.getCreateDate()}" th:href="@{/login}"/>
                             </td>
                         </tr>
                         </tbody>
