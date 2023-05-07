@@ -81,5 +81,15 @@ public class ChatService {
     return result;
   }
 
-
+  //모든 개인회원 채팅방 불러오기
+  public List<ChatDetail> findAllMemberChat() {
+    List<ChatDetail> list = chatDao.findAllMemberChat();
+    return list;
+  }
+  
+  //모든 기업회원 채팅방 불러오기
+  public List<ChatDetail> findAllEpChat(){
+    List<ChatDetail> list = chatDao.findAllEpChat();
+    return list;
+  }
 }

@@ -80,7 +80,12 @@ public class MemberService {
     //이메일 인증
     public int memberEmailVerifying(EmailVerification emailVerification) {
         System.out.println("memberVo = " + emailVerification);
+        
+        //로그인 이메일과 키값 비교
         int check = emailSenderService.memberCheckVerification(emailVerification);
+        System.out.println("check = " + check);
+        
+        //member 테이블의 emai_check 값 1 주기
         if (check == 1) {
             emailSenderService.memberGotVerification(emailVerification);
             int result = memberDao.emailVerified(emailVerification);

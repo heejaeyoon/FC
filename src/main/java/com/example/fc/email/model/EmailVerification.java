@@ -14,4 +14,5 @@ public class EmailVerification {
     private String verifyingCode;
     private int verified;
     private String email;
+    private String password;
 }

@@ -10,6 +10,7 @@ import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import com.example.fc.member.memberVo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -265,5 +266,12 @@ public class EpRecruitService {
             }
         }
 
+    }
+
+    //글쓴이 정보
+    public EpVo epInfo(Long epId) {
+        System.out.println("memberId ser = " + epId);
+        EpVo info = epRecruitDao.findEpById(epId);
+        return info;
     }
 }

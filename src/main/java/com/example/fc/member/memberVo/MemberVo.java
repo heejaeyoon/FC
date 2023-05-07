@@ -20,6 +20,7 @@ public class MemberVo {
     private String birth;
     private String role;
     private String nickName;
+    private int emailVerified; //email인증 0 미인증, 1인증
 
 
 }
