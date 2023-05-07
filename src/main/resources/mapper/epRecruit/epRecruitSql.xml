@@ -10,6 +10,25 @@
         select * from ep_recruit order by ep_board DESC;
     </select>
 
+<!--    기업 모집 공고 검색 리스트-->
+    <select id="epFindByTitleList" parameterType="String" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
+        select distinct er.ep_board, er.ep_id, er.title, er.stack,
+            er.showing_period, er.recruit, er.gender, er.payment, er.work_day_start,
+            er.work_day_end, er.addr, er.detail, er.create_date, er.update_date,
+            er.file_attached  from ep_recruit as er inner join ep_recruit_stack as ers
+            on er.ep_board = ers.ep_board where er.title like CONCAT('%', #{title}, '%') order by er.ep_board DESC;
+    </select>
+
+    <!--    기업 모집 공고 검색 리스트-->
+    <select id="epFindByStackAndTitleList" parameterType="String" resultType="com.example.fc.epRecruit.epRecruitVo.EpRecruitVO">
+        select distinct er.ep_board, er.ep_id, er.title, er.stack,
+            er.showing_period, er.recruit, er.gender, er.payment, er.work_day_start,
+            er.work_day_end, er.addr, er.detail, er.create_date, er.update_date,
+            er.file_attached  from ep_recruit as er inner join ep_recruit_stack as ers
+            on er.ep_board = ers.ep_board where ers.stack like #{stack}
+            and er.title like CONCAT('%', #{title}, '%') order by er.ep_board DESC;
+    </select>
+
     <!-- 기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다  -->
     <select id="epRecruitLastId" resultType="java.lang.Long">
         SELECT MAX(ep_board) FROM ep_recruit;
@@ -28,8 +47,8 @@
     </select>
 
 <!--   기업 > 모집 공고 글쓴이 정보 -->
-    <select id="epFindById" resultType="java.util.HashMap" parameterType="java.lang.Long">
-        SELECT * FROM ep where ep_id = #{epId};
+    <select id="epNameFindByEpBoard" resultType="java.util.HashMap" parameterType="java.lang.Long">
+        SELECT distinct e.name FROM fc.ep as e inner join fc.ep_recruit as er on e.ep_id = er.ep_id where er.ep_board = #{epBoard};
     </select>
 
     <!-- 기업게시판 left join 기업썸네일 역순정렬 -->

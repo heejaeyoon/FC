@@ -71,6 +71,7 @@ public class EpRecruitController {
         int res = epRecruitService.epRecruitSave(epRecruitVO, showingDate, showingHour, showingMin, files, session);
 
         return "redirect:/epRecruit/epRecruitList";
+
     }
 
     //  @PostMapping("/epRecruitActionAjax")
@@ -86,7 +87,7 @@ public class EpRecruitController {
 
         JsonObject jsonObject = new JsonObject();
 
-        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\summernote_image\\
+        String fileRoot = epRecruitContentUploadPath;    //저장될 외부 파일 경로  C:\\upload\\epRecruit\\content\\
         String originalFileName = multipartFile.getOriginalFilename();    //오리지날 파일명
         String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
 
@@ -119,29 +120,45 @@ public class EpRecruitController {
     }
 
     @GetMapping("/epRecruitList")
-    public String EpRecruitList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+    public String epRecruitList(@RequestParam(value = "stack", required = false, defaultValue = "") String stack,
+                                @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+        boolean epLogin = session.getAttribute("epLogin") != null; // 로그인 상태
+        boolean memberLogin = session.getAttribute("memberLogin") != null;
+        boolean stackIsNull = stack == null;
+        boolean titleIsNull = title == null;
 
+        System.out.println(stack);
+        System.out.println(title);
 
-        if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
+        List<EpRecruitVO> epRecruitList = null;
 
-//    List<EpRecruitVO> epRecruitList = epRecruitService.epRecruitList();
-            System.out.println("session = " + session.getId());
-            List<EpRecruitLeftJoinMainThumbnailVO> epRecruitList = epRecruitService.epRecruitMainList();
+        if ( epLogin || memberLogin ) {
+
+            if ((stackIsNull || stack.equals("") ) && ( titleIsNull || title.equals("") )) {
+                epRecruitList = epRecruitService.epRecruitList();
+                System.out.println("여기1");
+            } else if ((stackIsNull || stack.equals("") ) && !titleIsNull) {
+                epRecruitList = epRecruitService.epFindByTitleList(title);
+                System.out.println("여기2");
+            } else if ( !stackIsNull ) {
+                epRecruitList = epRecruitService.epFindByStackAndTitleList(stack, title);
+                System.out.println("여기3");
+            } else {
+                epRecruitList = epRecruitService.epRecruitList();
+            }
 
 //    getOffset은 현제 페이지 넘버를 알려주는 함수
             final int start = (int) pageable.getOffset();
 //    getPageSize() 는 화면에 보여줄 리스트 수
             final int end = Math.min(start + pageable.getPageSize(), epRecruitList.size());
-//    System.out.println("epRecruitList.size() == " + epRecruitList.size());
 
-            final Page<EpRecruitLeftJoinMainThumbnailVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
+            final Page<EpRecruitVO> page = new PageImpl<>(epRecruitList.subList(start, end), pageable, epRecruitList.size());
 
-            System.out.println("session!!!!!!!!! " + session.getAttribute("epLogin"));
-//            model.addAttribute()
             model.addAttribute("epList", page);
 
             return "/epRecruit/epRecruitList";
-        } else {
+        }  else {
             return "redirect:/login";
         }
     }
@@ -151,7 +168,7 @@ public class EpRecruitController {
 
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard); // 게시판 정보
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard); // 스택들
-        HashMap<String, Object> ep = epRecruitService.epFindById(epBoard); // 글쓴이 이름
+        HashMap<String, Object> ep = epRecruitService.epNameFindByEpBoard(epBoard); // 글쓴이 이름
 
         System.out.println("dasdsadasd  " + epRecruitStacksByBoard);
 
@@ -183,15 +200,21 @@ public class EpRecruitController {
         return "redirect:/epRecruit/epRecruitList";
     }
 
+    //  기업 게시글
     @GetMapping("poster")
-//  기업 게시글
-    public String getEpBoard(Model model, Long epBoard) {
+    public String getEpBoard(Model model, HttpSession session, Long epBoard) {
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        System.out.println();
+        log.info("poseter session >>> " + epVo);
+
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
-        HashMap<String, Object> ep = epRecruitService.epFindById(epBoard);
+        HashMap<String, Object> ep = epRecruitService.epNameFindByEpBoard(epBoard);
 
-        model.addAttribute("ep", ep);
+
+
         model.addAttribute("epRecruit", epRecruitFindOne);
+        model.addAttribute("ep", ep);
         model.addAttribute("epRecruitStack", epRecruitStacksByBoard);
         return "epRecruit/epRecruitPoster";
     }

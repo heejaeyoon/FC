@@ -37,18 +37,42 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         let name1 = [[${session.epLogin.name}]];
+
+        function contentChk() {
+            let title = $("#title").val();
+            if (title == '' || title == undefined) {
+                alert('제목 입력해라');
+                return false;
+            } else if (title.length > 45) {
+                alert('45자 넘었다');
+                return false;
+            }
+
+            let detail = $("#detail").val();
+            if (detail == '' || detail == undefined) {
+                alert('내용 입력해라');
+                return false;
+            } else if (detail.length > 500) {
+                alert('500자 넘었다');
+                return false;
+            }
+
+            alert(name1+'에서 남긴 문의글은 기업페이지에서 확인 가능합니다.')
+            $("#piSubmit").submit();
+        }
+
     </script>
 </th:block>
 <body>
 <div layout:fragment="content" class="container">
-    <form action="/personalInquire" method="post">
+    <form action="/personalInquire" method="post" id="piSubmit">
         <input type="hidden" th:if="${session.epLogin}" name="email" th:value="${session.epLogin.email}"/>
 
         <table>
             <tr>
                 <th>제목</th>
                 <td>
-                    <input type="text" name="title" class="inputInfo">
+                    <input type="text" name="title" id="title" class="inputInfo">
                 </td>
             </tr>
             <tr>
@@ -70,7 +94,7 @@
             <tr>
                 <th>상세내용</th>
                 <td>
-                    <textarea name="detail" class="textAreaInfo"></textarea>
+                    <textarea name="detail" id="detail" class="textAreaInfo"></textarea>
                 </td>
             </tr>
             <tr>
@@ -78,7 +102,7 @@
                     <br>
                     <div class="submitDiv">
                         <!-- <button style="margin-left: 280px" type="submit" class="btn btn-primary">첨부파일</button>&nbsp; -->
-                        <button type="submit" class="btn btn-success" onclick="alert(name1+'에서 남긴 문의글은 기업페이지에서 확인 가능합니다.')">문의
+                        <button type="button" class="btn btn-success" onclick="contentChk();">문의
                             하기
                         </button>
                     </div>
