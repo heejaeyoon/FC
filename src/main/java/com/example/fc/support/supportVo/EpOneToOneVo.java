@@ -19,5 +19,4 @@ public class EpOneToOneVo {
     private String createDate;
     private String categories;
 
-
 }

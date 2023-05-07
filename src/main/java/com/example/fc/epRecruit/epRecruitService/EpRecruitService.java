@@ -10,6 +10,7 @@ import com.example.fc.epRecruit.epRecruitVo.EpRecruitFilesVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitMainThumbnailVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
+import com.example.fc.member.memberVo.MemberVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
@@ -191,6 +192,16 @@ public class EpRecruitService {
         return epRecruitDao.epRecruitMainList();
     }
 
+    public List<EpRecruitVO> epFindByStackAndTitleList(String stack, String title) {
+        List<EpRecruitVO> lst = epRecruitDao.epFindByStackAndTitleList(stack, title);
+        return lst;
+    }
+
+    public List<EpRecruitVO> epFindByTitleList(String title) {
+        List<EpRecruitVO> lst = epRecruitDao.epFindByTitleList(title);
+        return lst;
+    }
+
     public List<EpRecruitFilesVo> findEpRecruitFilesAll() {
         return epRecruitFilesDao.findEpRecruitFilesAll();
     }
@@ -203,10 +214,8 @@ public class EpRecruitService {
         return epRecruitDao.epRecruitFindById(epBoard);
     }
 
-    public HashMap<String, Object> epFindById(Long epBoard) {
-        EpRecruitVO epRecruitVO = epRecruitDao.epRecruitFindById(epBoard);
-        Long epId = epRecruitVO.getEpId();
-        return epRecruitDao.epFindById(epId);
+    public HashMap<String, Object> epNameFindByEpBoard(Long epBoard) {
+        return epRecruitDao.epNameFindByEpBoard(epBoard);
     }
 
     public List<EpRecruitStackVO> epRecruitStacksByBoard(Long epBoard) {
@@ -257,5 +266,12 @@ public class EpRecruitService {
             }
         }
 
+    }
+
+    //글쓴이 정보
+    public EpVo epInfo(Long epId) {
+        System.out.println("memberId ser = " + epId);
+        EpVo info = epRecruitDao.findEpById(epId);
+        return info;
     }
 }
