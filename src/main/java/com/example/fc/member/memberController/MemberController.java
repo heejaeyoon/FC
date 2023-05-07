@@ -180,7 +180,8 @@ public class MemberController {
         return result;
     }
     @GetMapping("/memberPassword")
-    public String memberPassword() {return "member/memberFindPass";
+    public String memberPassword() {
+        return "member/memberFindPass";
     }
     @GetMapping("/memberFindResult")
     public String memberFindResult() {return "member/memberFindResult";
@@ -220,7 +221,9 @@ public class MemberController {
         if (vo != null) {
             session.setAttribute("mEmailFind",vo);
             System.out.println("이메일은 는 ============"+vo);
+
             return "member/memberFindResult";
+
         }else{
            return "redirect:/findAlert";
 

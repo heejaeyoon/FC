@@ -5,7 +5,42 @@
       layout:decorate="~{layouts/layout}" xmlns="http://www.w3.org/1999/html">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
 <head>
+    <style>
+    content {
+    justify-content: center;
+    text-align: -webkit-center;
+    }
+    h1 {
+    text-align: -webkit-center;
+    justify-content: center;
+    }
+    .wrap_title_box {
+    margin-left: 300px;
+    display: block;
+    text-align: -webkit-center;
+    justify-content: center;
+    }
+
+    .wrap_title {
+    position: absolute;
+    margin-left: 50px;
+    display: inline-block;
+    text-align: -webkit-center;
+    justify-content: center;
+    }
+    .my_notification {
+    position: relative;
+    text-align: -webkit-center;
+    justify-content: center;
+    }
+
+    .btn_setting job_state{
+    margin-left: -400px;
+    }
+
+    </style>
     <link th:href="@{/css/myPageForm.css}" rel="stylesheet">
+
 </head>
 
 
@@ -17,7 +52,7 @@
                     <h1 class="wrap_title"><strong>[[${session.epLogin.name}]]님</strong></h1>
                     <div class="toolTipWrap">
                         <button type="button" class="btn_setting job_state"
-                                onclick="location.href='/epModify'" style="margin-left: -430px;">내 정보 수정
+                                onclick="location.href='/epModify'" style="margin-left: -80px;">내 정보 수정
                         </button>
 
                         <div id="wrap_notification">
