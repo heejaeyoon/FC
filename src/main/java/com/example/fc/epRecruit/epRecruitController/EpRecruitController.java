@@ -185,15 +185,21 @@ public class EpRecruitController {
         return "redirect:/epRecruit/epRecruitList";
     }
 
+    //  기업 게시글
     @GetMapping("poster")
-//  기업 게시글
-    public String getEpBoard(Model model, Long epBoard) {
+    public String getEpBoard(Model model, HttpSession session, Long epBoard) {
+        EpVo epVo = (EpVo) session.getAttribute("epLogin");
+        System.out.println();
+        log.info("poseter session >>> " + epVo);
+
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
         HashMap<String, Object> ep = epRecruitService.epFindById(epBoard);
 
-        model.addAttribute("ep", ep);
+
+
         model.addAttribute("epRecruit", epRecruitFindOne);
+        model.addAttribute("ep", ep);
         model.addAttribute("epRecruitStack", epRecruitStacksByBoard);
         return "epRecruit/epRecruitPoster";
     }
