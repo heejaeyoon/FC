@@ -46,24 +46,29 @@
 </head>
 
 
-<div layout:fragment="content" class="container">
+<div layout:fragment="content">
     <form  method="post">
         <table width="800">
             <tr height="40">
-                <td align="center"><b>기업 정보수정</b></td>
+                <td align="center" style="font-size: 30px;"><b>기업 정보수정</b></td>
+            </tr>
+            <tr>
+                <td align="right" style="color: gray"><b>* 필수 입력 사항</b></td>
             </tr>
         </table>
         <table width="700" height="600" cellpadding="0" style="border-collapse:collapse; font-size:9pt; margin-left: 120px">
         <tr class="register" height="30">
             <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
-                <td class="textlabel" width="15%">이 메 일</td>
+                <td class="textlabel" width="15%">Email</td>
                 <td><input class="textinput"  type="text" name="email" th:value="${session.epLogin.email}" readonly="readonly"  required />&nbsp;
             </tr>
-            <tr height="7">
-                <td colspan="3">
-                    <hr/>
-                </td>
+
+            <tr class="register" height="30">
+                <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
+                <td class="textlabel" width="15%">기 업 명</td>
+                <td><input class="textinput" type="text" name="name" th:value="${session.epLogin.name}" required /></td>
             </tr>
+
             <tr class="register" height="30">
                 <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
                 <td class="textlabel" width="15%">비밀번호</td>
@@ -77,11 +82,6 @@
                         id="same"></span></td>
             </tr>
 
-            <tr class="register" height="30">
-                <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
-                <td class="textlabel" width="15%">기 업 명</td>
-                <td><input class="textinput" type="text" name="name" th:value="${session.epLogin.name}" required /></td>
-            </tr>
 
             <tr class="register" height="30">
                 <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
@@ -95,7 +95,7 @@
             </tr>
 
             <tr>
-                <td width="5%" align="center" style="padding: 0 3px; font-size: 20px">*</td>
+                <td width="5%" align="right" style="padding: 0 3px; font-size: 20px">*</td>
                 <td class="textlabel"s width="15%">회 사 주 소</td>
                 <td>
                     <input class="addrtext" type="text" size="10" name="Addr" id="sample4_postcode" placeholder="     우편번호" readonly="readonly" required>
@@ -115,8 +115,8 @@
 <!--                     <input type="hidden" name="role" value="일반"/>-->
 <!--                    &lt;!&ndash; href 로 경로를 지정해줄때는 controller로 매핑시켜놓은것으로 적어준다&ndash;&gt;-->
 <!--                    <button type="submit" class="btn btn-success">수정하기</button>-->
-                    <input type="submit" class="btn btn-success" style="    margin-right: 24px; margin-left: 381px;" value="수정"  id="submitBtn" formaction="/epModify" method="post">
-                    <input type="submit" class="btn btn-success"  value="회원탈퇴" formaction="/epDelete" method="post" onclick="alert('회원탈퇴에 성공했습니다~!')">
+                    <input type="submit" class="btn btn-success" style="   margin-right: 140px;" value="수정하기"  id="submitBtn" formaction="/epModify" method="post">
+                    <input type="submit" class="btn btn-danger"  value="탈퇴하기" formaction="/epDelete" method="post" onclick="alert('회원탈퇴에 성공했습니다~!')">
                 </td>
             </tr>
         </table>
