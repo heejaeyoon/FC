@@ -23,7 +23,7 @@ public interface EpRecruitDao {
     public EpRecruitVO epRecruitFindById(Long epBoard);
 
 //   기업 구인게시판 글쓴이 정보
-    public HashMap<String, Object> epFindById(Long epId);
+    public HashMap<String, Object> epNameFindByEpBoard(Long epBoard);
 
 //    기업 > 유저가 마지막으로 등록한 모집 공고인데 유저정보를 받아와야해서 현재 반쪽짜리 기능이다
     public Long epRecruitLastId();
