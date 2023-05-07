@@ -22,10 +22,6 @@
                     <li><a class="dropdown-item" href="/noticeAllList" style="font-weight: 600">공지사항</a></li>
                     <li><a class="dropdown-item" href="#" style="font-weight: 600">FAQ</a></li>
                     <li><a class="dropdown-item" href="/personalInsert" style="font-weight: 600">1:1 문의</a></li>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="/noticeAllList">공지사항</a></li>
-                    <li><a class="dropdown-item" href="#">FAQ</a></li>
-                    <li><a class="dropdown-item" href="/personalInsert">1:1 문의</a></li>
                     <li th:if="${session.memberLogin}">
                         <a th:if="${#strings.equals(session.memberLogin.role, 'admin')}" class="dropdown-item" href="/chatRoom">
                             채팅 문의 내역
