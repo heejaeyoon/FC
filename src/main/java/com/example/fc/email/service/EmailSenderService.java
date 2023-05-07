@@ -2,7 +2,9 @@ package com.example.fc.email.service;
 
 import com.example.fc.email.model.EmailVerification;
 import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.epRecruit.epRecruitDto.EpRecruitDto;
 import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingEmailDto.MemberJobHuntingEmailDto;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -37,6 +39,12 @@ public interface EmailSenderService {
 
     //이메일 인증을 완료
     void memberGotVerification(EmailVerification emailVerification);
+
+    //기업에게 지원서 보내기
+    int sendEmailToEp(MemberJobHuntingEmailDto dto);
+
+    //개인회원에게 지원서 보내기
+    int sendEmailToMember(EpRecruitDto dto);
 }
 
 

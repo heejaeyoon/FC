@@ -50,7 +50,10 @@
                               detail = #{detail}, update_date = now() WHERE ep_board = #{epBoard};
     </update>
 
-
+    <!--해당 id값 사용자의 모든정보-->
+    <select id="findEpById" resultType="com.example.fc.ep.epVo.EpVo">
+        select * from ep where ep_id =#{epId}
+    </select>
 
 
 

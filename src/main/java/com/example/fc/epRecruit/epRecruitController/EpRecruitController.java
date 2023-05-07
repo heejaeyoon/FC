@@ -1,12 +1,16 @@
 package com.example.fc.epRecruit.epRecruitController;
 
+import com.example.fc.email.service.EmailSenderService;
 import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.epRecruit.epRecruitDto.EpRecruitDto;
 import com.example.fc.epRecruit.epRecruitService.EpRecruitService;
 
 import com.example.fc.epRecruit.epRecruitVo.*;
+import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingEmailDto.MemberJobHuntingEmailDto;
+import com.example.fc.memberJobHunting.memberJobHuntingservice.MemberJobHuntingService;
 import com.google.gson.JsonObject;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
-
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -21,7 +25,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -38,6 +41,12 @@ public class EpRecruitController {
     @Value("${epRecruitContentUploadPath}")
     String epRecruitContentUploadPath;
     private final EpRecruitService epRecruitService;
+
+    //개인회원에게 이메일 보내기위함
+    public final MemberJobHuntingService jobHunting;
+    
+    //이메일 관련 서비스
+    private final EmailSenderService emailSenderService;
 
     @GetMapping("/epRecruitForm")
     public String recruitForm(HttpSession session) {
@@ -108,7 +117,6 @@ public class EpRecruitController {
         model.addAttribute("epRecruitLastId", epRecruitLastId);
         return "/epRecruit/epRecruitActionSuccess";
     }
-
 
     @GetMapping("/epRecruitList")
     public String EpRecruitList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
@@ -187,4 +195,30 @@ public class EpRecruitController {
         model.addAttribute("epRecruitStack", epRecruitStacksByBoard);
         return "epRecruit/epRecruitPoster";
     }
+
+    //지원 추천서 양식
+    @GetMapping("/sendEmail")
+    public String getSendEmail(@RequestParam Long toSendAddr, Model model){
+        MemberVo writerInfo = jobHunting.memberInfo(toSendAddr);
+       // EpVo writerInfo = epRecruitService.epInfo(toSendAddr);
+        System.out.println("ep writerInfo = " + writerInfo);
+
+        model.addAttribute("writerInfo",writerInfo);
+        return "epRecruit/epRecruitEmailForm";
+    }
+
+    //이력서 보내기
+    @PostMapping("/sendEmail")
+    @ResponseBody
+    public String PostSendEmail(EpRecruitDto dto){
+        System.out.println("dto = " + dto);
+        System.out.println("이프문 통과?");
+        int send = emailSenderService.sendEmailToMember(dto);
+        if (send==1) {
+            return "이메일을 성공적으로 보냈습니다";
+        }
+
+        return "이메일 보내기 실패.";
+    }
+
 }

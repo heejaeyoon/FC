@@ -4,14 +4,20 @@ import com.example.fc.email.dao.verification.EmailVerificationDao;
 import com.example.fc.email.model.EmailVerification;
 import com.example.fc.email.service.EmailSenderService;
 import com.example.fc.ep.epVo.EpVo;
+import com.example.fc.epRecruit.epRecruitDao.EpRecruitEmailDao;
+import com.example.fc.epRecruit.epRecruitDto.EpRecruitDto;
+import com.example.fc.epRecruit.epRecruitVo.EpRecruitEmailVo;
 import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingEmailDto.MemberJobHuntingEmailDto;
+import com.example.fc.memberJobHunting.memberJobHuntingDao.MemberJobHuntingEmailDao;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingEmailVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.UUID;
-
 
 
 @Service
@@ -23,7 +29,9 @@ public class EmailSenderServiceImpl implements EmailSenderService {
 
     private final EmailVerificationDao verification;
 
-    private final EmailVerification emailVerification;
+    private final MemberJobHuntingEmailDao memberJobHuntingEmailDao;
+
+    private final EpRecruitEmailDao epRecruitEmailDao;
 
 
     /*ep관련 이메일*/
@@ -56,13 +64,14 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         int result = verification.epCheckVerification(emailVerification);
         System.out.println(result);
 
-        if(result ==1 ){
+        if (result == 1) {
             return result;
         }
 
         return 0;
     }
 
+    //ep테이블 email_verified = 1 저장
     @Override
     public void epGotVerification(EmailVerification emailVerification) {
         verification.epGotVerification(emailVerification);
@@ -77,7 +86,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         simpleMailMessage.setFrom("fctester96@gmail.com");
         simpleMailMessage.setTo(to);
         simpleMailMessage.setSubject("FC 회원가입 인증 메일 입니다.");
-        simpleMailMessage.setText("http://localhost:8077/epLogin?verifyingCode=" + verifiedCode.get(to));
+        simpleMailMessage.setText("http://localhost:8077/login?verifyingCode=" + verifiedCode.get(to));
         System.out.println("mailsender 메일보내기 성공 : " + mailSender);
 
         this.mailSender.send(simpleMailMessage);
@@ -98,7 +107,7 @@ public class EmailSenderServiceImpl implements EmailSenderService {
         int result = verification.memberCheckVerification(emailVerification);
         System.out.println(result);
 
-        if(result ==1 ){
+        if (result == 1) {
             return result;
         }
 
@@ -108,6 +117,66 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     @Override
     public void memberGotVerification(EmailVerification emailVerification) {
         verification.memberGotVerification(emailVerification);
+    }
+
+    //구직 이메일 발송 == 기업에게 지원서 발송
+    @Override
+    public int sendEmailToEp(MemberJobHuntingEmailDto dto) {
+
+        System.out.println("dto 이메일 서비스 임플= " + dto);
+        //3부분으로 구분된 전화번를 한 문자열로 조합
+        String myPhone = dto.getFrontPh() + dto.getMiddlePh() + dto.getLastPh();
+        //dto를 vo로 저장
+        MemberJobHuntingEmailVo vo = MemberJobHuntingEmailVo.dtoToVo(dto);
+        // 조합된 번호 삽입
+        vo.setMyPhone(myPhone);
+
+        //db에 저장
+         int result = memberJobHuntingEmailDao.sendEmailToEp(vo);
+
+        //보내는이 정보
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(vo.getMyEmail()); //보낸 이
+        simpleMailMessage.setTo(vo.getToEmail()); //받는 이
+        simpleMailMessage.setSubject(vo.getTitle());
+        simpleMailMessage.setText("경력 : " + vo.getCareer() + "\n"
+                + "기술스택 : " + vo.getMyStack() + "\n"
+                + "프레임 워크 : " + vo.getMyFramework() + "\n"
+                + "계약금/기간 : " + vo.getPayment() + "만원" + "/" + vo.getContractPeriod() + "\n"
+                + "이메일/연락처 : " + vo.getMyEmail() + "/" + vo.getMyPhone() + "\n"
+                + "상세 내용 : " + vo.getDetail());
+        this.mailSender.send(simpleMailMessage);
+        System.out.println("이력서 보내기 성공");
+        return result;
+    }
+
+    @Override
+    public int sendEmailToMember(EpRecruitDto dto) {
+        System.out.println("dto 이메일 서비스 임플= " + dto);
+        //3부분으로 구분된 전화번를 한 문자열로 조합
+        String myPhone = dto.getFrontPh() + dto.getMiddlePh() + dto.getLastPh();
+        //dto를 vo로 저장
+        EpRecruitEmailVo vo = EpRecruitEmailVo.dtoToVo(dto);
+        // 조합된 번호 삽입
+        vo.setMyPhone(myPhone);
+
+        //db에 저장
+        int result = epRecruitEmailDao.sendEmailToMember(vo);
+
+        //보내는이 정보
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+        simpleMailMessage.setFrom(vo.getMyEmail()); //보낸 이
+        simpleMailMessage.setTo(vo.getToEmail()); //받는 이
+        simpleMailMessage.setSubject(vo.getTitle());
+        simpleMailMessage.setText("필요경력 : " + vo.getCareer() + "\n"
+                + "기술스택 : " + vo.getMyStack() + "\n"
+                + "프레임 워크 : " + vo.getMyFramework() + "\n"
+                + "계약금/기간 : " + vo.getPayment() + "만원" + "/" + vo.getContractPeriod() + "\n"
+                + "이메일/연락처 : " + vo.getMyEmail() + "/" + vo.getMyPhone() + "\n"
+                + "상세 내용 : " + vo.getDetail());
+        this.mailSender.send(simpleMailMessage);
+        System.out.println("이력서 보내기 성공");
+        return result;
     }
 
 }

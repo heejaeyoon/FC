@@ -64,6 +64,8 @@
             <!--                <h1> ( 댓글 기능도 넣을 계획 ) </h1>-->
             <!--            </div>-->
         </div>
+       <!-- <a class="btn btn-dark" th:href="@{/epRecruit/sendEmail(toSendAddr=${epRecruit.epId})}">이력서 보내기</a>-->
+        <a class="btn btn-dark" th:href="@{/jobHunting/sendEmail(toSendAddr=${epRecruit.getEpId()})}">채용추천서 보내기</a>
     </div>
 
     <th:block layout:fragment="css">

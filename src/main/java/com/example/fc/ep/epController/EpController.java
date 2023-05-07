@@ -110,7 +110,6 @@ public class EpController {
         int result = epService.epEmailVerifying(epVo, emailVerification);
         System.out.println("이메일 인증 결과 0실패, 1성공 = " + result);
 
-
         //이메일 인증이 됐으면 getEmailVerified == 1
         if (vo != null && result == 1) {
             session.setAttribute("epLogin", vo);

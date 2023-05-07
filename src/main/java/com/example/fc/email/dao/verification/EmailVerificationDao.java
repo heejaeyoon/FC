@@ -18,6 +18,7 @@ public interface EmailVerificationDao {
     //이메일 인증 완료
     void epGotVerification(EmailVerification emailVerification);
 
+
     /*개인회원 관련*/
     //인증코드를 발급한 이메일과 인증 코드 저장
     void insertMemberVerification(@Param("email") String email, @Param("strCode") String strCode);
