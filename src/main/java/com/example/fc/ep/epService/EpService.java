@@ -49,6 +49,7 @@ public class EpService {
 
     public  EpVo epLogin(EpVo epVo){
         return  epDao.epLogin(epVo);
+
     }
     
     public void epModify(EpVo epVo){
@@ -61,6 +62,11 @@ public class EpService {
     public int idCheck(EpVo epVo) throws Exception{
         System.out.println("epVo service = " + epVo);
         int result = epDao.idCheck(epVo);
+        return result;
+    }
+    public int nameCheck(EpVo epVo) throws Exception{
+        System.out.println("epVo service = " + epVo);
+        int result = epDao.nameCheck(epVo);
         return result;
     }
     public EpVo epPasswordCheck(EpVo epVo){return  epDao.epPasswordCheck(epVo);}

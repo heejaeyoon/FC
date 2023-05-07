@@ -15,7 +15,7 @@ public class EpVo {
     private String password;
     private String addr;
     private String phone;
-    private String bn_number;
+    private String bnNumber;
     private String email;
     private String role;
     private int emailVerified; //email인증 0 미인증, 1인증

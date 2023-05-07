@@ -12,6 +12,10 @@ public interface EpRecruitDao {
 //  기업게시판 리스트
     public List<EpRecruitVO> epList();
 
+//    기업게시판검색리스트
+    public List<EpRecruitVO> epFindByStackAndTitleList(String stack, String title);
+    public List<EpRecruitVO> epFindByTitleList(String title);
+
 //    기업 구인 등록
     public int epRecruitSave(EpRecruitVO epRecruitVO);
 
