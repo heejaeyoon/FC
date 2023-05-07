@@ -47,8 +47,8 @@
     </select>
 
 <!--   기업 > 모집 공고 글쓴이 정보 -->
-    <select id="epFindById" resultType="java.util.HashMap" parameterType="java.lang.Long">
-        SELECT * FROM ep where ep_id = #{epId};
+    <select id="epNameFindByEpBoard" resultType="java.util.HashMap" parameterType="java.lang.Long">
+        SELECT distinct e.name FROM fc.ep as e inner join fc.ep_recruit as er on e.ep_id = er.ep_id where er.ep_board = #{epBoard};
     </select>
 
     <!-- 기업게시판 left join 기업썸네일 역순정렬 -->

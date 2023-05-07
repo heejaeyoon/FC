@@ -153,7 +153,7 @@ public class EpRecruitController {
 
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard); // 게시판 정보
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard); // 스택들
-        HashMap<String, Object> ep = epRecruitService.epFindById(epBoard); // 글쓴이 이름
+        HashMap<String, Object> ep = epRecruitService.epNameFindByEpBoard(epBoard); // 글쓴이 이름
 
         System.out.println("dasdsadasd  " + epRecruitStacksByBoard);
 
@@ -194,7 +194,7 @@ public class EpRecruitController {
 
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
-        HashMap<String, Object> ep = epRecruitService.epFindById(epBoard);
+        HashMap<String, Object> ep = epRecruitService.epNameFindByEpBoard(epBoard);
 
 
 

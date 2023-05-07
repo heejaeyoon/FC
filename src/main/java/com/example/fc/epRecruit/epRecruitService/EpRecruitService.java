@@ -213,10 +213,8 @@ public class EpRecruitService {
         return epRecruitDao.epRecruitFindById(epBoard);
     }
 
-    public HashMap<String, Object> epFindById(Long epBoard) {
-        EpRecruitVO epRecruitVO = epRecruitDao.epRecruitFindById(epBoard);
-        Long epId = epRecruitVO.getEpId();
-        return epRecruitDao.epFindById(epId);
+    public HashMap<String, Object> epNameFindByEpBoard(Long epBoard) {
+        return epRecruitDao.epNameFindByEpBoard(epBoard);
     }
 
     public List<EpRecruitStackVO> epRecruitStacksByBoard(Long epBoard) {
