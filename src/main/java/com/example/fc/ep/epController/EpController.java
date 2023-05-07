@@ -112,15 +112,16 @@ public class EpController {
         if (vo != null && result == 1) {
             session.setAttribute("epLogin", vo);
             System.out.println("로그인이 성공하였습니다" + vo);
-            return "main";
-            
-        //이미 이메일 인증한 회원 로그인
+            return "redirect:/";
+
+            //이미 이메일 인증한 회원 로그인
         } else if( vo != null && vo.getEmailVerified() == 1){
             session.setAttribute("epLogin", vo);
             System.out.println("로그인이 성공하였습니다" + vo);
-            return "main";
+            return "redirect:/";
 
-         //이메일 미인증 접근
+
+            //이메일 미인증 접근
         } else {
             System.out.println("로그인 실패");
             return "/loginForm";
@@ -141,7 +142,7 @@ public class EpController {
         epService.epModify(epVo);
         session.setAttribute("epLogin", epVo);
         System.out.println("업데이트 성공했습니다");
-        return "main";
+        return "redirect:/";
     }
 
     @PostMapping("/epDelete")
