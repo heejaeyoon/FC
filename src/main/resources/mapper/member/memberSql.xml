@@ -33,7 +33,7 @@
 
     <!-- 로그인 -->
     <select id="memberLogin" resultType="com.example.fc.member.memberVo.MemberVo">
-        select id,name,addr,phone,gender,birth,role,email,nickName,password from member where email = #{email} and password = #{password};
+        select id,name,addr,phone,gender,birth,role,email,nickName,password, email_verified from member where email = #{email} and password = #{password};
     </select>
 
     <!--중복체크-->
@@ -45,15 +45,15 @@
     <select id="memberPasswordCheck" resultType="com.example.fc.member.memberVo.MemberVo">
         select password,email,name From member where email = #{email} and name = #{name};
     </select>
+
     <!--      이메일 찾기-->
     <select id="memberEmailCheck" resultType="com.example.fc.member.memberVo.MemberVo">
         select password, name,email From member where name = #{name} and phone = #{phone};
     </select>
 
-
     <!--이메일 인증-->
     <update id="emailVerified" parameterType="com.example.fc.member.memberVo.MemberVo">
-        UPDATE ep SET email_verified =1 where email=#{email} AND password =#{password}
+        UPDATE member SET email_verified =1 where email=#{email} AND password =#{password}
     </update>
 
 </mapper>

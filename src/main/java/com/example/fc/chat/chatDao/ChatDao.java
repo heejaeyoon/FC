@@ -37,4 +37,9 @@ public interface ChatDao {
 
     //채팅 내역 불러오기
     List<ChatDetail> findEpChatHistory(HashMap map);
+
+    //모든 멤버 채팅 불러오기
+    List<ChatDetail> findAllMemberChat();
+
+    List<ChatDetail> findAllEpChat();
 }

@@ -6,6 +6,7 @@ package com.example.fc.chat.chatController;
 import com.example.fc.chat.chatModel.ChatDetail;
 import com.example.fc.chat.chatModel.ChatMessage;
 import com.example.fc.chat.chatService.ChatService;
+import com.example.fc.chat.chatVo.ChatRoomVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -81,7 +82,22 @@ public class ChatController {
 
     //관리자용 모든 채팅방 보기
     @GetMapping("/chatRoom")
-    public String adminRoom(){
+    public String adminRoom(Model model){
+        //모든 채팅 불러오기
+        List<ChatDetail> allMemberChatList = chatService.findAllMemberChat();
+        System.out.println("allMemberChatList = " + allMemberChatList.size());
+        if(allMemberChatList.size()==0){
+            model.addAttribute("memberList","문의 내용이 없습니다.");
+        }
+        List<ChatDetail> allEpChatList = chatService.findAllEpChat();
+        System.out.println("allEpChatList = " + allEpChatList);
+        if(allEpChatList.size() == 0){
+            model.addAttribute("epList", "문의 내용이 없습니다.");
+        }
+
+        model.addAttribute("memberList", allMemberChatList);
+        model.addAttribute("epList",allEpChatList);
+
         return "chat/view/chatRoom";
     }
 

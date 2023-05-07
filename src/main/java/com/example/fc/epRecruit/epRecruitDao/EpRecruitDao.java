@@ -1,5 +1,6 @@
 package com.example.fc.epRecruit.epRecruitDao;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -39,4 +40,5 @@ public interface EpRecruitDao {
 //    기업게시판 + 썸네일 리스트
     public List<EpRecruitLeftJoinMainThumbnailVO> epRecruitMainList();
 
+    EpVo findEpById(Long epId);
 }
