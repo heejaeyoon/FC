@@ -1,5 +1,7 @@
 package com.example.fc.memberJobHunting.memberJobHuntingDao;
 
+import com.example.fc.member.memberVo.MemberVo;
+import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingStackVo;
 import com.example.fc.memberJobHunting.memberJobHuntingVo.MemberJobHuntingVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -8,6 +10,10 @@ import java.util.List;
 
 @Mapper
 public interface MemberJobHuntingDao {
+
+
+   //공통으로 쓸 수 있는 사용자 정보 찾기 메서드
+   MemberVo findMemberById(Long memberId);
 
    //구직 게시글 작성(insert)
    public int insertJobHunting(MemberJobHuntingVo memberJobHuntingVo);
@@ -23,4 +29,13 @@ public interface MemberJobHuntingDao {
 
    //poster기능 => 특정 게시글 보기
    MemberJobHuntingVo findAllByMemberBoard(MemberJobHuntingVo memberBoard);
+
+   //게시글에 해당 되는 모든 스택 찾기
+   List<MemberJobHuntingStackVo> findAllStacksByMemberBoard(MemberJobHuntingVo memberBoard);
+
+   //게시글 업데이트
+   int updateJobHuntingBoard(MemberJobHuntingVo memberBoard);
+   
+   //게시글 삭제
+   int deleteMemberBoardByMemberBoard(Long memberBoard);
 }

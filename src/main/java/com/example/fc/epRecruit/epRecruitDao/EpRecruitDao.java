@@ -1,8 +1,11 @@
 package com.example.fc.epRecruit.epRecruitDao;
 
+import com.example.fc.ep.epVo.EpVo;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitLeftJoinMainThumbnailVO;
 import com.example.fc.epRecruit.epRecruitVo.EpRecruitVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,8 +16,8 @@ public interface EpRecruitDao {
     public List<EpRecruitVO> epList();
 
 //    기업게시판검색리스트
-    public List<EpRecruitVO> epFindByStackAndTitleList(String stack, String title);
-    public List<EpRecruitVO> epFindByTitleList(String title);
+    public List<EpRecruitVO> epFindByStackAndTitleList(@Param("stack") String stack,@Param("title") String title);
+    public List<EpRecruitVO> epFindByTitleList(@Param("title") String title);
 
 //    기업 구인 등록
     public int epRecruitSave(EpRecruitVO epRecruitVO);
@@ -37,4 +40,5 @@ public interface EpRecruitDao {
 //    기업게시판 + 썸네일 리스트
     public List<EpRecruitLeftJoinMainThumbnailVO> epRecruitMainList();
 
+    EpVo findEpById(Long epId);
 }

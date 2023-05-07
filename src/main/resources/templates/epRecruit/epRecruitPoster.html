@@ -63,6 +63,8 @@
             <a class="btn btn-dark" th:if="${session.epLogin.epId == epRecruit.epId}" th:href="@{/epRecruit/delete( epBoard=${epRecruit.getEpBoard()} )}">삭제</a>
 
         </div>
+       <!-- <a class="btn btn-dark" th:href="@{/epRecruit/sendEmail(toSendAddr=${epRecruit.epId})}">이력서 보내기</a>-->
+        <a class="btn btn-dark" th:href="@{/jobHunting/sendEmail(toSendAddr=${epRecruit.getEpId()})}">채용추천서 보내기</a>
     </div>
 
     <th:block layout:fragment="css">
@@ -71,7 +73,7 @@
                 max-width: 960px;
             }
 
-            .detail > p > img, iframe {
+            .detail img, iframe {
                 width: 100% !important;
             }
         </style>

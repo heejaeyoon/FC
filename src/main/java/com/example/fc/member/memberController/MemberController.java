@@ -103,8 +103,9 @@ public class MemberController {
     @PostMapping("/login")
     public String memberLogin(MemberVo memberVo, HttpSession session, EmailVerification emailVerification) {
         //로그인시 받아온 값을 서비스로 넘겨줌
-        
-        
+        System.out.println("emailVerification ctr = " + emailVerification);
+        System.out.println("memberVo ctr= " + memberVo);
+
         String returnURL = "";
         if (session.getAttribute("memberLogin") != null) {
             //기존에 memberLogin 이란 세션 값이 존재한다면 기존 값을 제거해 준다.
@@ -115,7 +116,7 @@ public class MemberController {
         int result = memberService.memberEmailVerifying(emailVerification);
         System.out.println("이메일 인증 결과 0실패, 1성공 = " + result);
 
-        if (vo != null) {
+        if (vo != null && vo.getEmailVerified()==1) {
             //세션에 memberLogin 이란 이름으로 memberVo 객체를 저장해 놓는다.
             session.setAttribute("memberLogin", vo);
             System.out.println("로그인 되었습니다 이메일과 비밀번호는 :" + vo);

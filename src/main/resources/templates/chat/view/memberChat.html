@@ -21,10 +21,11 @@
 </head>
 <body>
 <div layout:fragment="content" class="container messageBox">
-    <div class="msgMonitor">
+    <div class="msgMonitor" style="overflow: scroll;">
         <ul class="messageArea">
             <div th:if="${chatHistory}" th:each="list : ${chatHistory}">
-                <li th:text="${list.sender}+': '+${list.chatDetail}"></li>
+                <li th:text="${list.sender}+': '+${list.chatDetail}"></li><br>
+                <li style="font-size:5px;" th:text="${list.chatTime}"></li>
             </div>
             <li th:unless="${session.memberLogin.role}=='admin'">운영자에게 질문 하실 내용을 입력해주세요.</li>
         </ul>
