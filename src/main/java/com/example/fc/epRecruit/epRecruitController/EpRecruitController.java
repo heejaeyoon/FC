@@ -112,11 +112,16 @@ public class EpRecruitController {
 
 
     @GetMapping("/epRecruitList")
-    public String epRecruitList(String stack, String title, Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
+    public String epRecruitList(@RequestParam(value = "stack", required = false, defaultValue = "") String stack,
+                                @RequestParam(value = "title", required = false, defaultValue = "") String title,
+                                Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
         boolean epLogin = session.getAttribute("epLogin") != null; // 로그인 상태
         boolean memberLogin = session.getAttribute("memberLogin") != null;
         boolean stackIsNull = stack == null;
         boolean titleIsNull = title == null;
+
+        System.out.println(stack);
+        System.out.println(title);
 
         List<EpRecruitVO> epRecruitList = null;
 
@@ -131,6 +136,8 @@ public class EpRecruitController {
             } else if ( !stackIsNull ) {
                 epRecruitList = epRecruitService.epFindByStackAndTitleList(stack, title);
                 System.out.println("여기3");
+            } else {
+                epRecruitList = epRecruitService.epRecruitList();
             }
 
 //    getOffset은 현제 페이지 넘버를 알려주는 함수
