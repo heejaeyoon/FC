@@ -208,11 +208,13 @@ public class EpRecruitController {
         log.info("poseter session >>> " + epVo);
 
         EpRecruitVO epRecruitFindOne = epRecruitService.epRecruitFindOne(epBoard);
+        Long writer = epRecruitFindOne.getEpId();
+        EpVo writerInfo = epRecruitService.epInfo(writer);
         List<EpRecruitStackVO> epRecruitStacksByBoard = epRecruitService.epRecruitStacksByBoard(epBoard);
         HashMap<String, Object> ep = epRecruitService.epNameFindByEpBoard(epBoard);
 
 
-
+        model.addAttribute("writerInfo", writerInfo);
         model.addAttribute("epRecruit", epRecruitFindOne);
         model.addAttribute("ep", ep);
         model.addAttribute("epRecruitStack", epRecruitStacksByBoard);

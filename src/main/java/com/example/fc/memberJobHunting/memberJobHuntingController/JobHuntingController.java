@@ -76,7 +76,7 @@ public class JobHuntingController {
     public String getMemberJobHuntingList(Model model, HttpSession session, @PageableDefault(page = 0, size = 6) Pageable pageable) {
         if (session.getAttribute("epLogin") != null || session.getAttribute("memberLogin") != null) {
             List<MemberJobHuntingVo> jobHuntingList = jobHunting.findAllJobHunting();
-            
+
             //페이징처리
             //getOffset은 현제 페이지 넘버를 알려주는 함수
             //getPageSize() 는 화면에 보여줄 리스트 수
@@ -143,7 +143,7 @@ public class JobHuntingController {
         System.out.println("게시글 삭제 결과는? = " + result);
         return "redirect:/jobHunting/jobHuntingList";
     }
-    
+
     //지원서 양식
     @GetMapping("/sendEmail")
     public String getSendEmail(@RequestParam Long toSendAddr, Model model){
@@ -167,7 +167,5 @@ public class JobHuntingController {
 
         return "이메일 보내기 실패.";
     }
-
-    
 
 }
