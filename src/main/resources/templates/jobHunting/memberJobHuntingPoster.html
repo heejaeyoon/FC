@@ -59,16 +59,17 @@
             <div class="detail fw-bold my-4" th:text="${writerInfo.getDetail()}"></div>
 
             <div class="btnDiv">
-                <div th:if="${writerInfo.getMemberId()}==${session.memberLogin.getId()}">
-                    <a class="btn btn-dark"
-                       th:href="@{/jobHunting/updateForm( memberBoard=${writerInfo.getMemberBoard()} )}">수정</a>
-                    <a class="btn btn-dark" onclick="deleteCheck()">삭제</a>
+                <div th:if="${session.memberLogin}">
+                    <div th:if="${writerInfo.getMemberId()}==${session.memberLogin.getId()}">
+                        <a class="btn btn-dark"
+                           th:href="@{/jobHunting/updateForm( memberBoard=${writerInfo.getMemberBoard()} )}">수정</a>
+                        <a class="btn btn-dark" onclick="deleteCheck()">삭제</a>
+                    </div>
                 </div>
-
                 <div>
                     <a class="btn btn-dark" th:href="@{/epRecruit/sendEmail(toSendAddr=${writerInfo.getMemberId()})}">지원서 보내기</a>
-                   <!-- <a class="btn btn-dark" th:href="@{/jobHunting/sendEmail(toSendAddr=${writerInfo.getMemberId()})}">이력서
-                        보내기</a>-->
+                    <!-- <a class="btn btn-dark" th:href="@{/jobHunting/sendEmail(toSendAddr=${writerInfo.getMemberId()})}">이력서
+                         보내기</a>-->
                 </div>
             </div>
         </div>
@@ -93,7 +94,6 @@
                         location.href = `/jobHunting/delete?memberBoard=${memberBoard}`;
                     }
                 }
-
             </script>
         </th:block>
     </div>
