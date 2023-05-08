@@ -241,7 +241,7 @@ public class MemberJobHuntingService {
 
         return writerInfo;
     }
-    
+
     //게시글에 해당되는 모든 파일들 찾기
     public List<MemberJobHuntingFilesVo> findAllFilesByMemberBoard(Long memberBoard) {
         List<MemberJobHuntingFilesVo> writerFilesInfo = memberJobHuntingFilesDao.findAllFilesByMemberBoard(memberBoard);//작성자가 등록한 이미지 모두 불러오기

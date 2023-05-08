@@ -50,7 +50,7 @@
 
         <ul th:if="${epList}">
             기업회원 채팅 리스트
-            <li th:each="eList: ${epList}" class=""><a th:href="@{/epChat/enterEpRoom/}+${eList.chatRoom}">
+            <li th:each="eList: ${epList}" class=""><a th:href="@{/epChat/enterEpRoom/}+|${eList.chatRoom}?epRoom=${eList.chatRoom}|">
                 기업번호 : [[${eList.chatRoom}]] <br>
                 문의내역 : [[${eList.chatDetail}]]
             </a></li>
