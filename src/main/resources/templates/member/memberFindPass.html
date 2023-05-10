@@ -4,6 +4,45 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">  <!-- 공통 양식으로 만들었던 layout 호출 -->
 
+<head>
+  <style>
+    .content {
+      justify-content: center;
+      text-align: center;
+      text-align: -webkit-center;
+    }
+    .textinput {
+      border : black solid 1px;
+      border-radius: 7px;
+      width: 300px;
+      height: 35px;
+    }
+
+    .textlabel {
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    .register {
+      height: 70px;
+    }
+
+    .btnbtn {
+      background: gray;
+      color: white;
+      font-size: 12px;
+    }
+
+    .addrtext {
+      border-radius: 7px; border: solid black 1px; height: 30px; width: 120px; font-size: 15px
+    }
+
+    .addrtext2 {
+      border-radius: 7px; border: solid black 1px; height: 30px; width: 300px; font-size: 15px
+    }
+
+  </style>
+</head>
 
 <div layout:fragment="content" class="container"><br/>
 <!--  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
@@ -17,23 +56,18 @@
       <tr class="register" height="10">
         <td width="5%" align="center">*</td>
         <td width="15%">사용자 이름</td>
-        <td><input type="text" name="name" required/></td>
+        <td><input class="textinput" type="text" name="name" required/></td>
         <!--        oninput은 클릭할때 마다 함수를 실행하는 속성-->
       </tr>
-      <tr height="6">
-        <td colspan="3">
-          <hr/>
-        </td>
+      <tr height="3">
+
       </tr>
       <tr class="register" height="10">
         <td width="5%" align="center">*</td>
         <td width="15%">휴대폰 번호</td>
-        <td><input type="text" name="phone" required/></td>
+        <td><input class="textinput" type="text" name="phone" required/></td>
       </tr>
-      <tr height="6">
-        <td colspan="3">
-          <hr/>
-        </td>
+      <tr height="3">
       </tr>
     </table>
     <table>
@@ -45,6 +79,9 @@
       </tr>
     </table><br>
   </form>
+        <td colspan="3">
+          <hr/>
+        </td>
   <div style="height: 50px"></div>
   <!--  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
   <!--  &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
@@ -60,23 +97,19 @@
       <tr class="register" height="10">
         <td width="5%" align="center">*</td>
         <td width="15%">이 메 일</td>
-        <td><input type="text" name="email" required/></td>
+        <td><input class="textinput" type="text" name="email" required/></td>
 <!--        oninput은 클릭할때 마다 함수를 실행하는 속성-->
       </tr>
-      <tr height="6">
-        <td colspan="3">
-          <hr/>
-        </td>
+      <tr height="3">
+
       </tr>
       <tr class="register" height="10">
         <td width="5%" align="center">*</td>
         <td width="15%">사용자 이름</td>
-        <td><input type="text" name="name" required/></td>
+        <td><input class="textinput" type="text" name="name" required/></td>
       </tr>
-      <tr height="6">
-        <td colspan="3">
-          <hr/>
-        </td>
+      <tr height="3">
+
       </tr>
     </table>
     <table>

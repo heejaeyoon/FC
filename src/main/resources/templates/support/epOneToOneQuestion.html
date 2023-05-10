@@ -41,19 +41,19 @@
         function contentChk() {
             let title = $("#title").val();
             if (title == '' || title == undefined) {
-                alert('제목 입력해라');
+                alert('제목을 입력해주세요');
                 return false;
             } else if (title.length > 45) {
-                alert('45자 넘었다');
+                alert('제목이 45자가 넘었습니다.');
                 return false;
             }
 
             let detail = $("#detail").val();
             if (detail == '' || detail == undefined) {
-                alert('내용 입력해라');
+                alert('내용을 입력해주세요');
                 return false;
             } else if (detail.length > 500) {
-                alert('500자 넘었다');
+                alert('내용이 500자가 넘었습니다.');
                 return false;
             }
 
